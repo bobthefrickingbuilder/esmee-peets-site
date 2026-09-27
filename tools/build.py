@@ -36,6 +36,14 @@ CATS = js_lit('CATS')
 EXPERIENCE = js_lit('EXPERIENCE')
 CREDS = js_lit('CREDS')
 REASONS = js_lit('REASONS')
+# Store: PRICES (id -> CAD or null) and the store's category list, both from the dc script.
+PRICES = ast.literal_eval(re.sub(r'([{,]\s*)([A-Za-z_]\w*)\s*:', r"\1'\2':",
+                          re.search(r'const PRICES = (\{.*?\});', script, re.S).group(1)).replace('null', 'None'))
+STORE_CATS_ALL = ast.literal_eval(re.search(r'const cats = (\[\[.*?\]\])\.filter', script).group(1))
+FOR_SALE = [w for w in WORKS if w['id'] in PRICES]
+def price_label(n): return 'Price on request' if n is None else '$' + format(n, ',') + ' CAD'
+def store_count(k): return len(FOR_SALE) if k == 'all' else sum(1 for w in FOR_SALE if w['cat'] == k)
+STORE_CATS = [(k, l) for k, l in STORE_CATS_ALL if store_count(k)]
 
 # ---------------- template tree ----------------
 tpl = re.search(r'</helmet>(.*)</x-dc>', src, re.S).group(1)
@@ -68,7 +76,7 @@ p = P(); p.feed(tpl); ROOT = p.root
 class Nav:
     def __init__(self, page, f=None): self.page, self.f = page, f
     def href(self):
-        base = {'home': '/', 'work': '/work/', 'about': '/about/', 'contact': '/contact/'}[self.page]
+        base = {'home': '/', 'work': '/work/', 'store': '/store/', 'about': '/about/', 'contact': '/contact/'}[self.page]
         return base + ('#' + self.f if self.f else '')
 class Act:
     def __init__(self, name, value=None): self.name, self.value = name, value
@@ -196,12 +204,15 @@ def context(page):
     for k, _ in CATS: initial['cat:' + k] = (k == 'all'); initial['cat-off:' + k] = (k != 'all')
     for r in REASONS: initial['reason:' + r] = (r == 'Drawing lessons'); initial['reason-off:' + r] = (r != 'Drawing lessons')
     for w in WORKS: initial['work:' + w['id']] = True
+    for k, _ in STORE_CATS: initial['scat:' + k] = (k == 'all'); initial['scat-off:' + k] = (k != 'all')
+    for w in FOR_SALE: initial['sitem:' + w['id']] = True; initial['cart:' + w['id']] = False; initial['cart-off:' + w['id']] = True
+    initial['cartbar'] = False
     return {
         '__initial': lambda k: initial[k],
         'rootRef': Ref('root'), 'stripRef': Ref('strip'), 'collageRef': Ref('collage'), 'videoRef': Ref('video'),
-        'isHome': page == 'home', 'isWork': page == 'work', 'isAbout': page == 'about', 'isContact': page == 'contact', 'notContact': page != 'contact',
+        'isHome': page == 'home', 'isWork': page == 'work', 'isAbout': page == 'about', 'isContact': page == 'contact', 'isStore': page == 'store', 'notContact': page != 'contact',
         'goHome': Nav('home'), 'goWork': Nav('work'), 'goAbout': Nav('about'), 'goContact': Nav('contact'),
-        'navLinks': [{'label': l, 'href': '#' + k, 'go': Nav(k), 'current': page == k, 'other': page != k} for k, l in [('work', 'Work'), ('about', 'About'), ('contact', 'Contact')]],
+        'navLinks': [{'label': l, 'href': '#' + k, 'go': Nav(k), 'current': page == k, 'other': page != k} for k, l in [('work', 'Work'), ('store', 'Store'), ('about', 'About'), ('contact', 'Contact')]],
         'cFlux': with_open(BY['flux']), 'cEtreinte': with_open(BY['etreinte']), 'cJecoute': with_open(BY['jecoute']),
         'stripWorks': [with_open(BY[i]) for i in ['flux', 'regard-brouille', 'brumeuse', 'resonance', 'still-life', 'pigeon', 'gloutonne', 'inspiration']],
         'stripPrev': Act('stripPrev'), 'stripNext': Act('stripNext'),
@@ -209,6 +220,11 @@ def context(page):
         'cats': [{'label': l, 'count': count(k), 'active': Dyn('cat:' + k), 'inactive': Dyn('cat-off:' + k), 'select': Act('filter', k)} for k, l in CATS],
         'filtered': [dict(with_open(w), __if='work:' + w['id']) for w in WORKS],
         'experience': EXPERIENCE,
+        'storeCats': [{'label': l, 'count': store_count(k), 'active': Dyn('scat:' + k), 'inactive': Dyn('scat-off:' + k), 'select': Act('storeFilter', k)} for k, l in STORE_CATS],
+        'storeItems': [dict(with_open(w), priceLabel=price_label(PRICES[w['id']]), inCart=Dyn('cart:' + w['id']), notInCart=Dyn('cart-off:' + w['id']),
+                            toggle=Act('toggle', w['id']), __if='sitem:' + w['id']) for w in FOR_SALE],
+        'cartOpen': Dyn('cartbar'), 'cartSummary': Bind('cartSummary'), 'cartTitles': Bind('cartTitles'), 'cartMailto': Bind('cartMailto'),
+        'clearCart': Act('clearCart'),
         'aboutPair': [with_open(BY[i]) for i in ['regard-brouille', 'pigeon']],
         'reasons': [{'label': r, 'active': Dyn('reason:' + r), 'inactive': Dyn('reason-off:' + r), 'select': Act('reason', r)} for r in REASONS],
         'notSent': Dyn('notsent'), 'sent': Dyn('sent'),
@@ -234,6 +250,7 @@ META = {
     'work': ('Work — Esmée Peets', 'work/'),
     'about': ('About — Esmée Peets', 'about/'),
     'contact': ('Contact — Esmée Peets', 'contact/'),
+    'store': ('Store — Esmée Peets', 'store/'),
 }
 DESC = ('Esmée Peets is a visual artist and arts educator in Ottawa/Montréal working in painting, graphite drawing, '
         'and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.')
@@ -292,7 +309,8 @@ def css():
         '',
     ])
 
-DATA = json.dumps({'works': [{k: w[k] for k in ('id', 'title', 'cat', 'src', 'medium', 'dimsLine', 'yearLine', 'noteLine')} for w in WORKS],
+DATA = json.dumps({'works': [{k: w[k] for k in ('id', 'title', 'cat', 'src', 'medium', 'meta', 'dimsLine', 'yearLine', 'noteLine')} for w in WORKS],
+                   'prices': {w['id']: PRICES[w['id']] for w in FOR_SALE}, 'storeCats': [k for k, _ in STORE_CATS],
                    'cats': [k for k, _ in CATS], 'reasons': REASONS}, ensure_ascii=False, separators=(',', ':'))
 pages = {pg: page_html(pg) for pg in META}
 for pg, h in pages.items():

@@ -186,6 +186,63 @@ input,textarea,button{font:inherit;color:inherit}
     </main>
   </sc-if>
 
+  <!-- ============ STORE ============ -->
+  <sc-if value="{{ isStore }}">
+    <main data-screen-label="Store" style="padding:var(--page-head-top) var(--gutter) var(--section-y)">
+      <div style="max-width:var(--max-w); margin:0 auto">
+        <div data-reveal="1" style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-xl)">
+          <div>
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Store</div>
+            <h1 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-h1); line-height:var(--lh-heading)">Original <em>works</em> for sale</h1>
+            <p style="margin:var(--space-md) 0 0; max-width:48ch; color:var(--ink-dim)">Each piece is a one-of-a-kind original. Add works to your selection and send a purchase request — Esmée will confirm availability, shipping and payment by email.</p>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs)">
+            <sc-for list="{{ storeCats }}" as="c" hint-placeholder-count="4">
+              <sc-if value="{{ c.active }}">
+                <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:var(--ink); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+              </sc-if>
+              <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+        <div style="margin-top:var(--space-4xl); display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:var(--space-3xl) var(--grid-gap)">
+          <sc-for list="{{ storeItems }}" as="w" hint-placeholder-count="9">
+            <article data-reveal="1" style="display:flex; flex-direction:column">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img src="{{ w.src }}" alt="{{ w.title }}" onClick="{{ w.open }}" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)" style-hover="transform:scale(1.04)">
+              </div>
+              <div style="margin-top:var(--space-sm); display:flex; justify-content:space-between; align-items:baseline; gap:var(--space-md)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)">{{ w.title }}</div>
+                <div style="font-size:var(--fs-small); color:var(--gold); white-space:nowrap; font-variant-numeric:tabular-nums">{{ w.priceLabel }}</div>
+              </div>
+              <div style="font-size:var(--fs-meta); color:var(--ink-dim); margin-top:2px">{{ w.meta }}</div>
+              <sc-if value="{{ w.inCart }}">
+                <button onClick="{{ w.toggle }}" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--rose); background:var(--rose); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase">In selection ✓</button>
+              </sc-if>
+              <sc-if value="{{ w.notInCart }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ w.toggle }}" data-cursor="Add" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:transparent; font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)" style-hover="background:var(--ink); color:var(--bg)">Add to selection +</button>
+              </sc-if>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ cartOpen }}">
+        <div style="position:fixed; left:50%; bottom:1.4rem; transform:translateX(-50%); z-index:var(--z-header); width:min(calc(100% - 2 * var(--gutter)), 760px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--space-md); padding:var(--space-md) var(--space-md) var(--space-md) var(--space-xl); background:var(--surface-glass); border:1px solid var(--line); border-radius:var(--radius-pill); backdrop-filter:blur(14px); box-shadow:0 20px 60px rgba(0,0,0,.45)">
+          <div style="min-width:0">
+            <div style="font-size:var(--fs-small)">{{ cartSummary }}</div>
+            <div style="font-size:var(--fs-meta); color:var(--ink-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cartTitles }}</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-sm)">
+            <button onClick="{{ clearCart }}" style="background:transparent; border:0; padding:0 0 3px; border-bottom:1px solid var(--line); font-size:var(--fs-meta); color:var(--ink-dim)">Clear</button>
+            <a href="{{ cartMailto }}" data-cursor="Send" style="display:inline-flex; gap:.6rem; padding:.9rem 1.4rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; white-space:nowrap" style-hover="background:var(--gold); color:var(--bg)">Request to buy →</a>
+          </div>
+        </div>
+      </sc-if>
+    </main>
+  </sc-if>
+
   <!-- ============ ABOUT ============ -->
   <sc-if value="{{ isAbout }}">
     <main data-screen-label="About" style="padding:var(--page-head-top) var(--gutter) 0">
@@ -388,11 +445,14 @@ const EXPERIENCE = [
   { dates:'Aug 2022 – Jun 2024', role:'Instructor, Private Drawing Lessons', org:'Ottawa', detail:'Individualized lesson plans aligned with each student\u2019s goals and skill level, with one-on-one feedback and progress guidance.' },
 ];
 const CREDS = ['Ottawa Art Gallery — Learning & Engagement','Concordia University — Art History & Studio Arts',"Centre d'Excellence Artistique de l'Ontario",'Private drawing instruction since 2022','Bilingue — English / Français'];
+// Store: works offered for sale. Set a number (CAD) to show a price; null shows "Price on request".
+const PRICES = { flux:null, jecoute:null, 'regard-brouille':null, etreinte:null, pigeon:null, resonance:null, 'still-life':null,
+  'la-vie-en-rose':null, inspiration:null, 'portrait-decoupe':null, epanouissement:null, 'grand-papa':null, 'chien-etude':null };
 const REASONS = ['Drawing lessons','Workshops','Collaboration','Something else'];
 
 class Component extends DCLogic {
   state = { page: (() => { try { return localStorage.getItem('ep-page') || 'home'; } catch (e) { return 'home'; } })(),
-    filter:'all', lb:null, curtain:'idle', sent:false, reason:'Drawing lessons' };
+    filter:'all', storeFilter:'all', cart:[], lb:null, curtain:'idle', sent:false, reason:'Drawing lessons' };
   rootRef = React.createRef(); stripRef = React.createRef(); collageRef = React.createRef(); videoRef = React.createRef();
   dotRef = React.createRef(); ringRef = React.createRef(); labelRef = React.createRef();
   mx = -100; my = -100; rx = -100; ry = -100;
@@ -499,6 +559,26 @@ class Component extends DCLogic {
         React.createElement('span', { ref:this.labelRef, style:{ fontSize:'var(--fs-cursor)', letterSpacing:'var(--tr-cursor)', textTransform:'uppercase', color:'#140f1c', opacity:0, transition:'opacity .25s', fontWeight:600 } })));
   }
 
+  storeVals() {
+    const s = this.state, forSale = WORKS.filter(w => w.id in PRICES);
+    const fmt = n => n == null ? 'Price on request' : '$' + n.toLocaleString('en-CA') + ' CAD';
+    const cnt = k => k === 'all' ? forSale.length : forSale.filter(w => w.cat === k).length;
+    const cats = [['all','All'],['painting','Painting'],['drawing','Drawing'],['mixed','Mixed media']].filter(([k]) => cnt(k));
+    const list = s.storeFilter === 'all' ? forSale : forSale.filter(w => w.cat === s.storeFilter);
+    const cart = s.cart.map(id => BY[id]);
+    const total = cart.reduce((t, w) => t + (PRICES[w.id] || 0), 0), anyTbc = cart.some(w => PRICES[w.id] == null);
+    const body = 'Hello Esmée,\n\nI would like to purchase:\n' + cart.map(w => `- ${w.title} (${w.meta}) — ${fmt(PRICES[w.id])}`).join('\n') + '\n\nName:\nShipping city / pickup:\n';
+    return {
+      storeCats:cats.map(([k, l]) => ({ label:l, count:cnt(k), active:s.storeFilter === k, inactive:s.storeFilter !== k, select:() => this.setState({ storeFilter:k }) })),
+      storeItems:list.map(w => { const inCart = s.cart.includes(w.id); return { ...this.withOpen(w), priceLabel:fmt(PRICES[w.id]), inCart, notInCart:!inCart,
+        toggle:() => this.setState(st => ({ cart: st.cart.includes(w.id) ? st.cart.filter(x => x !== w.id) : [...st.cart, w.id] })) }; }),
+      cartOpen:s.page === 'store' && cart.length > 0,
+      cartSummary:`${cart.length} ${cart.length === 1 ? 'work' : 'works'} selected` + (total ? ` · $${total.toLocaleString('en-CA')} CAD${anyTbc ? ' + price on request' : ''}` : ''),
+      cartTitles:cart.map(w => w.title).join(', '),
+      cartMailto:'mailto:esmeepeets@gmail.com?subject=' + encodeURIComponent('Purchase request — ' + cart.map(w => w.title).join(', ')) + '&body=' + encodeURIComponent(body),
+      clearCart:() => this.setState({ cart:[] }),
+    };
+  }
   renderVals() {
     const s = this.state, p = s.page;
     const filtered = this.list().map(w => this.withOpen(w));
@@ -507,9 +587,10 @@ class Component extends DCLogic {
     const count = k => k === 'all' ? WORKS.length : WORKS.filter(w => w.cat === k).length;
     return {
       rootRef:this.rootRef, stripRef:this.stripRef, collageRef:this.collageRef, videoRef:this.videoRef,
-      isHome:p === 'home', isWork:p === 'work', isAbout:p === 'about', isContact:p === 'contact', notContact:p !== 'contact',
+      isHome:p === 'home', isWork:p === 'work', isAbout:p === 'about', isContact:p === 'contact', isStore:p === 'store', notContact:p !== 'contact',
       goHome:this.nav('home'), goWork:this.nav('work'), goAbout:this.nav('about'), goContact:this.nav('contact'),
-      navLinks:[['work','Work'],['about','About'],['contact','Contact']].map(([k, l]) => ({ label:l, href:'#' + k, go:this.nav(k), current:p === k, other:p !== k })),
+      ...this.storeVals(),
+      navLinks:[['work','Work'],['store','Store'],['about','About'],['contact','Contact']].map(([k, l]) => ({ label:l, href:'#' + k, go:this.nav(k), current:p === k, other:p !== k })),
       cFlux:this.withOpen(BY.flux), cEtreinte:this.withOpen(BY.etreinte), cJecoute:this.withOpen(BY.jecoute),
       stripWorks:['flux','regard-brouille','brumeuse','resonance','still-life','pigeon','gloutonne','inspiration'].map(id => this.withOpen(BY[id])),
       stripPrev:() => this.stripRef.current && this.stripRef.current.scrollBy({ left:-this.stripRef.current.clientWidth * .6, behavior:'smooth' }),
