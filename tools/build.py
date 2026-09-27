@@ -36,9 +36,16 @@ CATS = js_lit('CATS')
 EXPERIENCE = js_lit('EXPERIENCE')
 CREDS = js_lit('CREDS')
 REASONS = js_lit('REASONS')
-# Store: PRICES (id -> CAD or null) and the store's category list, both from the dc script.
-PRICES = ast.literal_eval(re.sub(r'([{,]\s*)([A-Za-z_]\w*)\s*:', r"\1'\2':",
-                          re.search(r'const PRICES = (\{.*?\});', script, re.S).group(1)).replace('null', 'None'))
+# Store: prices + availability are edited in design-source/store-data.json (Design's handoff data file):
+#   "priceCAD": number or null ("Price on request"), "status": "available" | "reserved" | "sold".
+STORE_DATA = {d['id']: d for d in json.load(open(os.path.join(SRC, 'store-data.json'), encoding='utf-8'))}
+STATUS_LABEL = {'available': None, 'reserved': 'Reserved', 'sold': 'Sold'}
+for d in STORE_DATA.values():
+    assert d['id'] in {w['id'] for w in WORKS}, 'unknown artwork id in store-data.json: ' + d['id']
+    assert d['status'] in STATUS_LABEL, 'bad status for %s: %r' % (d['id'], d['status'])
+    assert d['priceCAD'] is None or isinstance(d['priceCAD'], (int, float)), 'bad priceCAD for ' + d['id']
+PRICES = {k: d['priceCAD'] for k, d in STORE_DATA.items()}
+STATUS = {k: d['status'] for k, d in STORE_DATA.items()}
 STORE_CATS_ALL = ast.literal_eval(re.search(r'const cats = (\[\[.*?\]\])\.filter', script).group(1))
 FOR_SALE = [w for w in WORKS if w['id'] in PRICES]
 def price_label(n): return 'Price on request' if n is None else '$' + format(n, ',') + ' CAD'
@@ -47,6 +54,15 @@ STORE_CATS = [(k, l) for k, l in STORE_CATS_ALL if store_count(k)]
 
 # ---------------- template tree ----------------
 tpl = re.search(r'</helmet>(.*)</x-dc>', src, re.S).group(1)
+# Sold / reserved state for store cards (not in Design's prototype; spec'd in the store handoff README).
+_ADD_BTN = re.search(r'(<sc-if value="\{\{ w\.notInCart \}\}".*?</sc-if>)', tpl, re.S)
+tpl = tpl.replace(_ADD_BTN.group(1), _ADD_BTN.group(1) + """
+              <sc-if value="{{ w.unavailable }}">
+                <button disabled="{{ true }}" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-faint); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase">{{ w.statusLabel }}</button>
+              </sc-if>""", 1)
+_ART = '<article data-reveal="1" style="display:flex; flex-direction:column">'
+assert tpl.count(_ART) == 1
+tpl = tpl.replace(_ART, '<article data-reveal="1" data-status="{{ w.status }}" style="display:flex; flex-direction:column">')
 helmet_css = re.search(r'<helmet>.*?<style>(.*?)</style>', src, re.S).group(1)
 VOID = {'br', 'img', 'input', 'meta', 'link', 'hr', 'source'}
 
@@ -205,7 +221,7 @@ def context(page):
     for r in REASONS: initial['reason:' + r] = (r == 'Drawing lessons'); initial['reason-off:' + r] = (r != 'Drawing lessons')
     for w in WORKS: initial['work:' + w['id']] = True
     for k, _ in STORE_CATS: initial['scat:' + k] = (k == 'all'); initial['scat-off:' + k] = (k != 'all')
-    for w in FOR_SALE: initial['sitem:' + w['id']] = True; initial['cart:' + w['id']] = False; initial['cart-off:' + w['id']] = True
+    for w in FOR_SALE: initial['sitem:' + w['id']] = True; initial['cart:' + w['id']] = False; initial['cart-off:' + w['id']] = STATUS[w['id']] == 'available'
     initial['cartbar'] = False
     return {
         '__initial': lambda k: initial[k],
@@ -221,7 +237,11 @@ def context(page):
         'filtered': [dict(with_open(w), __if='work:' + w['id']) for w in WORKS],
         'experience': EXPERIENCE,
         'storeCats': [{'label': l, 'count': store_count(k), 'active': Dyn('scat:' + k), 'inactive': Dyn('scat-off:' + k), 'select': Act('storeFilter', k)} for k, l in STORE_CATS],
-        'storeItems': [dict(with_open(w), priceLabel=price_label(PRICES[w['id']]), inCart=Dyn('cart:' + w['id']), notInCart=Dyn('cart-off:' + w['id']),
+        'storeItems': [dict(with_open(w), status=STATUS[w['id']],
+                            priceLabel=STATUS_LABEL[STATUS[w['id']]] or price_label(PRICES[w['id']]),
+                            inCart=Dyn('cart:' + w['id']) if STATUS[w['id']] == 'available' else False,
+                            notInCart=Dyn('cart-off:' + w['id']) if STATUS[w['id']] == 'available' else False,
+                            unavailable=STATUS[w['id']] != 'available', statusLabel=STATUS_LABEL[STATUS[w['id']]] or '',
                             toggle=Act('toggle', w['id']), __if='sitem:' + w['id']) for w in FOR_SALE],
         'cartOpen': Dyn('cartbar'), 'cartSummary': Bind('cartSummary'), 'cartTitles': Bind('cartTitles'), 'cartMailto': Bind('cartMailto'),
         'clearCart': Act('clearCart'),
@@ -304,13 +324,19 @@ def css():
         '@media print{@page{margin:.5cm}figure,table{break-inside:avoid}#dc-root,#dc-root>.sc-host{height:auto}'
         '*,::before,::after{print-color-adjust:exact;backdrop-filter:none!important;animation-delay:-99s!important;animation-duration:.001s!important;animation-iteration-count:1!important;animation-fill-mode:both!important;animation-play-state:running!important;transition-duration:0s!important}}',
         hovers,
+        '/* store: sold / reserved cards (handoff spec) — muted status label; sold artwork at 60% */',
+        'article[data-status="sold"] img{opacity:.6}',
+        'article[data-status="sold"]>div:nth-child(2)>div:last-child,article[data-status="reserved"]>div:nth-child(2)>div:last-child{color:var(--ink-faint)!important}',
+        '/* narrow phones: 4 nav links + wordmark on one row; nav wraps below rather than overflowing */',
+        '@media (max-width:520px){header{flex-wrap:wrap!important;row-gap:.5rem!important;column-gap:.75rem!important}'
+        'header>a{white-space:nowrap;font-size:1.1rem!important}header>nav{gap:.7rem!important;font-size:.7rem!important;letter-spacing:.04em!important}}',
         '/* arriving from an internal link: curtain starts closed (no flash before site.js runs) */',
         'html.ep-arrive [data-curtain]>span{transform:scaleY(1)!important}',
         '',
     ])
 
 DATA = json.dumps({'works': [{k: w[k] for k in ('id', 'title', 'cat', 'src', 'medium', 'meta', 'dimsLine', 'yearLine', 'noteLine')} for w in WORKS],
-                   'prices': {w['id']: PRICES[w['id']] for w in FOR_SALE}, 'storeCats': [k for k, _ in STORE_CATS],
+                   'prices': {w['id']: PRICES[w['id']] for w in FOR_SALE}, 'status': {w['id']: STATUS[w['id']] for w in FOR_SALE}, 'storeCats': [k for k, _ in STORE_CATS],
                    'cats': [k for k, _ in CATS], 'reasons': REASONS}, ensure_ascii=False, separators=(',', ':'))
 pages = {pg: page_html(pg) for pg in META}
 for pg, h in pages.items():

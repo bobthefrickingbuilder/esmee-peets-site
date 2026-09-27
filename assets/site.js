@@ -15,7 +15,8 @@
 
   // Store selection persists across pages/visits (the prototype was one page, so it never lost it).
   function loadCart() { try { var c = JSON.parse(localStorage.getItem('ep-cart') || '[]');
-    return Array.isArray(c) ? c.filter(function (id, i) { return id in DATA.prices && c.indexOf(id) === i; }) : []; } catch (e) { return []; } }
+    // Drop anything no longer purchasable (sold / reserved since it was selected).
+    return Array.isArray(c) ? c.filter(function (id, i) { return DATA.status[id] === 'available' && c.indexOf(id) === i; }) : []; } catch (e) { return []; } }
   function saveCart() { try { localStorage.setItem('ep-cart', JSON.stringify(state.cart)); } catch (e) {} }
   var busy = false, fine = false, mx = -100, my = -100, rx = -100, ry = -100;
   var dot, ring, label;
