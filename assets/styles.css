@@ -4,7 +4,13 @@
    scroll reveals, cursor interaction, page-transition curtain.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+/* self-hosted, exact font files from the Claude Design export (not Google Fonts CDN) */
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:300 600;font-display:swap;src:url('fonts/Fraunces-italic-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:300 600;font-display:swap;src:url('fonts/Fraunces-italic-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/Fraunces-normal-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/Fraunces-normal-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/Inter-normal-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url('fonts/Inter-normal-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
 
 :root{
   /* ---- palette: exact tokens from the approved Claude Design export ---- */
@@ -158,13 +164,15 @@ h1,h2,h3,h4{
   pointer-events: none;
 }
 .curtain span{
-  background: var(--berry);
+  background-image: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618);
+  background-size: 400% 100%;
   transform: scaleY(0);
   transform-origin: bottom;
 }
-.curtain span:nth-child(2){ background: var(--rose); }
-.curtain span:nth-child(3){ background: var(--violet); }
-.curtain span:nth-child(4){ background: var(--gold); }
+.curtain span:nth-child(1){ background-position: 0% 0; }
+.curtain span:nth-child(2){ background-position: 33.333% 0; }
+.curtain span:nth-child(3){ background-position: 66.666% 0; }
+.curtain span:nth-child(4){ background-position: 100% 0; }
 
 .curtain.leaving span{
   animation: curtain-in .55s var(--ease) forwards;
@@ -353,12 +361,13 @@ body.is-loading{ overflow: hidden; }
 /* ---------------- section spacing / statement ---------------- */
 section{ position: relative; padding: 7rem 0; }
 .statement{
-  max-width: 18ch;
+  max-width: 24ch;
   font-size: clamp(1.6rem, 3.4vw, 2.6rem);
-  font-family: var(--serif); font-weight: 400; font-style: italic;
+  font-family: var(--serif); font-weight: var(--fw-light);
+  line-height: 1.25;
   color: var(--ink);
 }
-.statement .accent{ color: var(--rose); font-style: normal; }
+.statement .accent{ color: var(--rose); font-style: italic; }
 .footer-cta h2 .accent{ color: var(--rose-dust); font-style: italic; }
 .section-head{
   display: flex; justify-content: space-between; align-items: flex-end;
