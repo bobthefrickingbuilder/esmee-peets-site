@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Esmée Peets — Artist &amp; arts educator</title>
+<link rel="stylesheet" href="tokens/fonts.css">
+<link rel="stylesheet" href="tokens/colors.css">
+<link rel="stylesheet" href="tokens/typography.css">
+<link rel="stylesheet" href="tokens/spacing.css">
+<link rel="stylesheet" href="tokens/motion.css">
+<style>
+html,body{margin:0;background:#140f1c;color:#f6efe4;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+::selection{background:var(--coral);color:var(--bg)}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--gold)}
+body.ep-cursor,body.ep-cursor *{cursor:none!important}
+input,textarea,button{font:inherit;color:inherit}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:var(--fs-body); line-height:var(--lh-body); position:relative; overflow-x:clip">
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:var(--z-header); display:flex; align-items:center; justify-content:space-between; gap:var(--space-lg); padding:var(--header-y) var(--gutter); background:linear-gradient(to bottom, rgba(20,15,28,.88), rgba(20,15,28,0))">
+    <a href="#home" onClick="{{ goHome }}" data-cursor="Home" style="font-family:var(--serif); font-size:var(--fs-wordmark); letter-spacing:var(--tr-wordmark); font-weight:var(--fw-regular); color:var(--ink)">Esmée Peets</a>
+    <nav style="display:flex; gap:clamp(1rem,3vw,2.4rem); font-size:var(--fs-nav); letter-spacing:var(--tr-nav); text-transform:uppercase">
+      <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="3">
+        <sc-if value="{{ n.current }}">
+          <a href="{{ n.href }}" onClick="{{ n.go }}" style="color:var(--ink); padding-bottom:4px; border-bottom:1px solid var(--gold)">{{ n.label }}</a>
+        </sc-if>
+        <sc-if value="{{ n.other }}" hint-placeholder-val="{{ true }}">
+          <a href="{{ n.href }}" onClick="{{ n.go }}" style="color:var(--ink-dim); padding-bottom:4px; border-bottom:1px solid transparent; transition:color var(--dur-hover) var(--ease)" style-hover="color:var(--ink)">{{ n.label }}</a>
+        </sc-if>
+      </sc-for>
+    </nav>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main data-screen-label="Home">
+      <section style="position:relative; min-height:100vh; overflow:hidden; display:flex; align-items:center; padding:8rem var(--gutter) 5rem">
+        {{ meshEl }}
+        <div style="position:relative; width:100%; max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:var(--split-gap); align-items:center">
+          <div data-reveal="1">
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Artist &amp; arts educator · Ottawa / Montréal</div>
+            <h1 style="margin:var(--space-lg) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-hero); line-height:.92; letter-spacing:-0.02em">Esmée<br><em style="font-weight:var(--fw-light); color:var(--rose-dust)">Peets</em></h1>
+            <p style="margin:var(--space-xl) 0 0; max-width:36ch; font-size:var(--fs-lead); color:var(--ink-dim); text-wrap:pretty">Painting, graphite drawing and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.</p>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-xl); margin-top:var(--space-2xl)">
+              <a href="#work" onClick="{{ goWork }}" data-cursor="Browse" style="display:inline-flex; align-items:center; gap:.7rem; padding:1rem 1.6rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease)" style-hover="background:var(--gold); color:var(--bg)">See the work <span>→</span></a>
+              <a href="#about" onClick="{{ goAbout }}" data-cursor="Read" style="font-size:var(--fs-small); color:var(--ink); padding-bottom:3px; border-bottom:1px solid var(--gold)">About Esmée</a>
+            </div>
+          </div>
+          <div ref="{{ collageRef }}" style="position:relative; width:100%; aspect-ratio:1/1.08; max-width:560px; justify-self:center">
+            <div data-reveal="1" data-delay=".15" style="position:absolute; left:28%; top:0; width:56%">
+              <div data-depth="0.6" style="transition:transform .6s var(--ease)">
+                <img src="uploads/esmee-peets-complete-package/artwork/flux.jpg" alt="Flux" onClick="{{ cFlux.open }}" data-cursor="View" style="display:block; width:100%; transform:rotate(2deg); box-shadow:0 40px 80px rgba(0,0,0,.55)">
+              </div>
+            </div>
+            <div data-reveal="1" data-delay=".3" style="position:absolute; left:0; top:36%; width:42%">
+              <div data-depth="1.3" style="transition:transform .6s var(--ease)">
+                <img src="uploads/esmee-peets-complete-package/artwork/etreinte.jpg" alt="Étreinte" onClick="{{ cEtreinte.open }}" data-cursor="View" style="display:block; width:100%; transform:rotate(-5deg); box-shadow:0 40px 80px rgba(0,0,0,.55)">
+              </div>
+            </div>
+            <div data-reveal="1" data-delay=".45" style="position:absolute; left:56%; top:55%; width:38%">
+              <div data-depth="2" style="transition:transform .6s var(--ease)">
+                <img src="uploads/esmee-peets-complete-package/artwork/jecoute.jpg" alt="J'écoute" onClick="{{ cJecoute.open }}" data-cursor="View" style="display:block; width:100%; transform:rotate(4deg); box-shadow:0 40px 80px rgba(0,0,0,.6)">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; left:var(--gutter); bottom:2rem; display:flex; align-items:center; gap:.8rem; font-size:var(--fs-eyebrow); letter-spacing:var(--tr-cue); text-transform:uppercase; color:var(--ink-faint)">
+          <span style="width:40px; height:1px; background:var(--ink-faint)"></span>Scroll
+        </div>
+      </section>
+
+      <section style="padding:var(--section-y) var(--gutter)">
+        <p data-reveal="1" style="max-width:var(--max-w); margin:0 auto; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-statement); line-height:1.25; max-width:24ch; margin-left:max(0px, calc((100% - var(--max-w)) / 2)); text-wrap:pretty">Hands, necks, the side of a face — painted up close, <em style="color:var(--rose)">in colour that doesn't hold back.</em></p>
+      </section>
+
+      <section style="padding:0 0 var(--section-y)">
+        <div data-reveal="1" style="max-width:var(--max-w); margin:0 auto; padding:0 var(--gutter); display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-lg)">
+          <div>
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Selected work</div>
+            <h2 style="margin:var(--space-xs) 0 0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-h2); line-height:var(--lh-heading)">From the studio, 2023–2025</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-sm)">
+            <button onClick="{{ stripPrev }}" aria-label="Previous" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; transition:background var(--dur-hover) var(--ease)" style-hover="background:var(--surface-2)">←</button>
+            <button onClick="{{ stripNext }}" aria-label="Next" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; transition:background var(--dur-hover) var(--ease)" style-hover="background:var(--surface-2)">→</button>
+            <a href="#work" onClick="{{ goWork }}" data-cursor="Browse" style="margin-left:var(--space-sm); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; padding-bottom:3px; border-bottom:1px solid var(--gold)">All 16 pieces →</a>
+          </div>
+        </div>
+        <div ref="{{ stripRef }}" style="display:flex; gap:var(--strip-gap); overflow-x:auto; scroll-snap-type:x mandatory; padding:var(--space-3xl) var(--gutter) var(--space-md); scrollbar-width:none">
+          <sc-for list="{{ stripWorks }}" as="w" hint-placeholder-count="5">
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img src="{{ w.src }}" alt="{{ w.title }}" onClick="{{ w.open }}" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)" style-hover="transform:scale(1.05)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)">{{ w.title }}</div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px">{{ w.meta }}</div>
+              </figcaption>
+            </figure>
+          </sc-for>
+          <div style="flex:0 0 1px"></div>
+        </div>
+      </section>
+
+      <section style="padding:var(--section-y) var(--gutter); background:var(--bg-soft)">
+        <div style="max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:var(--split-gap); align-items:center">
+          <div data-reveal="1" style="aspect-ratio:var(--ratio-portrait); overflow:hidden; background:var(--surface); max-height:78vh">
+            <video ref="{{ videoRef }}" src="uploads/esmee-peets-complete-package/artwork/asthenie-process.mp4" style="display:block; width:100%; height:100%; object-fit:cover"></video>
+          </div>
+          <div data-reveal="1" data-delay=".1" style="max-width:44ch">
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">In the studio</div>
+            <h2 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-split-h2); line-height:1.15"><em>Asthénie</em>, in progress.</h2>
+            <p style="margin:var(--space-lg) 0 0; color:var(--ink-dim); text-wrap:pretty">A process recording of a graphite drawing in progress. The finished piece will join the portfolio once it's complete.</p>
+            <a href="#about" onClick="{{ goAbout }}" data-cursor="Read" style="display:inline-block; margin-top:var(--space-xl); font-size:var(--fs-small); padding-bottom:3px; border-bottom:1px solid var(--gold)">More about Esmée</a>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:var(--space-3xl) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden">{{ marqueeEl }}</section>
+
+      <section style="padding:var(--section-y) var(--gutter)">
+        <div style="max-width:var(--max-w); margin:0 auto">
+          <h2 data-reveal="1" style="margin:0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-h2); line-height:var(--lh-heading)">Browse by medium</h2>
+          <div style="margin-top:var(--space-3xl); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:var(--grid-gap)">
+            <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="3">
+              <a href="#work" onClick="{{ t.go }}" data-cursor="Open" data-reveal="1" style="position:relative; display:block; aspect-ratio:4/5; overflow:hidden; background:var(--surface); color:var(--ink)">
+                <img src="{{ t.src }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease), filter var(--dur-hover) var(--ease); filter:saturate(.9) brightness(.8)" style-hover="transform:scale(1.06); filter:saturate(1.1) brightness(.95)">
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:var(--space-lg); background:linear-gradient(to top, rgba(12,9,17,.9), rgba(12,9,17,0)); display:flex; align-items:baseline; justify-content:space-between; pointer-events:none">
+                  <span style="font-family:var(--serif); font-size:1.7rem">{{ t.label }}</span>
+                  <span style="font-size:var(--fs-meta); color:var(--ink-dim)">{{ t.count }}</span>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ============ WORK ============ -->
+  <sc-if value="{{ isWork }}">
+    <main data-screen-label="Work" style="padding:var(--page-head-top) var(--gutter) var(--section-y)">
+      <div style="max-width:var(--max-w); margin:0 auto">
+        <div data-reveal="1" style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-xl)">
+          <div>
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Portfolio</div>
+            <h1 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-h1); line-height:var(--lh-heading)">Selected <em>work</em></h1>
+            <p style="margin:var(--space-md) 0 0; max-width:48ch; color:var(--ink-dim)">Paintings, drawings and collaborative pieces, 2023–2025. Select any work for materials and details.</p>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs)">
+            <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+              <sc-if value="{{ c.active }}">
+                <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:var(--ink); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+              </sc-if>
+              <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap; transition:border-color var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+        <div style="margin-top:var(--space-4xl); columns:3 300px; column-gap:var(--grid-gap)">
+          <sc-for list="{{ filtered }}" as="w" hint-placeholder-count="9">
+            <figure data-reveal="1" style="break-inside:avoid; margin:0 0 var(--space-3xl)">
+              <div style="overflow:hidden; background:var(--surface)">
+                <img src="{{ w.src }}" alt="{{ w.title }}" onClick="{{ w.open }}" data-cursor="View" style="display:block; width:100%; transition:transform 1.2s var(--ease)" style-hover="transform:scale(1.04)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm); display:flex; justify-content:space-between; gap:var(--space-md)">
+                <div>
+                  <div style="font-family:var(--serif); font-size:var(--fs-work-title)">{{ w.title }}</div>
+                  <div style="font-size:var(--fs-meta); color:var(--ink-dim); margin-top:2px">{{ w.meta }}</div>
+                </div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); text-align:right; max-width:16ch">{{ w.noteLine }}</div>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ ABOUT ============ -->
+  <sc-if value="{{ isAbout }}">
+    <main data-screen-label="About" style="padding:var(--page-head-top) var(--gutter) 0">
+      <div style="max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:var(--split-gap); align-items:end">
+        <div data-reveal="1" style="position:relative; aspect-ratio:var(--ratio-portrait); background:var(--ph-portrait); max-width:460px">
+          <span style="position:absolute; left:var(--space-md); bottom:var(--space-md); font-size:var(--fs-ph-label); letter-spacing:var(--tr-ph-label); text-transform:uppercase; color:var(--ink); background:rgba(12,9,17,.55); padding:.35rem .6rem">Placeholder — portrait of Esmée</span>
+        </div>
+        <div data-reveal="1" data-delay=".1">
+          <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">About</div>
+          <h1 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-hero); line-height:.95">Esmée <em style="color:var(--rose-dust)">Peets</em></h1>
+          <p style="margin:var(--space-lg) 0 0; max-width:40ch; font-family:var(--serif); font-size:var(--fs-bio-lead); line-height:1.45; color:var(--ink); text-wrap:pretty">Artist and arts educator from Ottawa, studying Art History and Studio Arts at Concordia University in Montréal.</p>
+        </div>
+      </div>
+
+      <section style="max-width:var(--max-w); margin:0 auto; padding:var(--section-y) 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:var(--split-gap)">
+        <div data-reveal="1" style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--ink-faint)">Practice &amp; teaching</div>
+        <div style="grid-column:span 2; max-width:62ch; display:flex; flex-direction:column; gap:var(--space-lg); color:var(--ink-dim); font-size:1.08rem; text-wrap:pretty">
+          <p data-reveal="1" style="margin:0">Esmée works in acrylic, graphite and mixed media. Her paintings stay close to the body — hands, a neck, the side of a face — set in saturated berry and violet over hand-drawn patterned grounds. Her graphite drawings work in monochrome and fine detail: layered faces, a flock of pigeons, a small dog wrapped in a blanket.</p>
+          <p data-reveal="1" style="margin:0">She completed the Visual Arts concentration at École secondaire publique De La Salle in Ottawa (2019–2025), and has made wearable sculpture and staged photography in collaboration with Charlotte Burnett Vachon and Claire Lacroix.</p>
+          <p data-reveal="1" style="margin:0">Alongside her own work, she teaches. She has given private drawing lessons since 2022, taught weekly children's classes with Mon Samedi Dans Les Arts, and in summer 2026 joined the Ottawa Art Gallery's Learning and Engagement department — programming camp activities, leading gallery tours, and running workshops for children and adults with disabilities.</p>
+          <p data-reveal="1" style="margin:0">She works in English and French, and has sung soprano with Ottawa choirs since 2015.</p>
+        </div>
+      </section>
+
+      <section style="max-width:var(--max-w); margin:0 auto; padding-bottom:var(--section-y)">
+        <div data-reveal="1" style="display:flex; justify-content:space-between; align-items:end; gap:var(--space-lg); flex-wrap:wrap; padding-bottom:var(--space-lg); border-bottom:1px solid var(--line)">
+          <h2 style="margin:0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-h2); line-height:var(--lh-heading)">Experience</h2>
+          <span style="font-size:var(--fs-meta); color:var(--text-meta)">Gallery, teaching &amp; outreach</span>
+        </div>
+        <sc-for list="{{ experience }}" as="x" hint-placeholder-count="5">
+          <div data-reveal="1" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:var(--space-md) var(--space-3xl); padding:var(--space-xl) 0; border-bottom:1px solid var(--line)">
+            <div style="font-size:var(--fs-cv); color:var(--gold); font-variant-numeric:tabular-nums">{{ x.dates }}</div>
+            <div style="grid-column:span 2">
+              <div style="font-family:var(--serif); font-size:1.35rem; line-height:1.25">{{ x.role }}</div>
+              <div style="font-size:var(--fs-cv); color:var(--ink-dim); margin-top:4px">{{ x.org }}</div>
+              <p style="margin:var(--space-sm) 0 0; font-size:var(--fs-cv); color:var(--text-meta); max-width:60ch">{{ x.detail }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+
+      <section style="max-width:var(--max-w); margin:0 auto; padding-bottom:var(--section-y); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:var(--split-gap)">
+        <div data-reveal="1">
+          <h3 style="margin:0; padding-bottom:var(--space-md); border-bottom:1px solid var(--line); font-family:var(--serif); font-weight:var(--fw-heading); font-size:1.5rem">Education</h3>
+          <div style="display:flex; flex-direction:column; gap:var(--space-lg); margin-top:var(--space-lg); font-size:var(--fs-cv)">
+            <div><div style="color:var(--gold)">2025 – present</div><div style="margin-top:2px">Concordia University, Montréal</div><div style="color:var(--ink-dim)">Major, Art History and Studio Arts</div></div>
+            <div><div style="color:var(--gold)">2019 – 2025</div><div style="margin-top:2px">École secondaire publique De La Salle, Ottawa</div><div style="color:var(--ink-dim)">Visual Arts concentration</div></div>
+          </div>
+        </div>
+        <div data-reveal="1" data-delay=".1">
+          <h3 style="margin:0; padding-bottom:var(--space-md); border-bottom:1px solid var(--line); font-family:var(--serif); font-weight:var(--fw-heading); font-size:1.5rem">Also</h3>
+          <div style="display:flex; flex-direction:column; gap:var(--space-lg); margin-top:var(--space-lg); font-size:var(--fs-cv)">
+            <div><div style="color:var(--gold)">Languages</div><div style="margin-top:2px">English and French — bilingual</div></div>
+            <div><div style="color:var(--gold)">Music</div><div style="margin-top:2px">Soprano, various choirs, Ottawa · 2015 – present</div></div>
+            <div><div style="color:var(--gold)">Certifications</div><div style="margin-top:2px">First Aid (Red Cross) · HIGH FIVE Training</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin:0 calc(-1 * var(--gutter)); padding:var(--section-y) var(--gutter); background:var(--bg-soft)">
+        <div style="max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:var(--grid-gap); align-items:start">
+          <sc-for list="{{ aboutPair }}" as="w" hint-placeholder-count="2">
+            <figure data-reveal="1" style="margin:0">
+              <img src="{{ w.src }}" alt="{{ w.title }}" onClick="{{ w.open }}" data-cursor="View" style="display:block; width:100%">
+              <figcaption style="margin-top:var(--space-sm); font-size:var(--fs-meta); color:var(--text-meta)"><span style="font-family:var(--serif); font-size:var(--fs-work-title); color:var(--ink)">{{ w.title }}</span> · {{ w.meta }}</figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ============ CONTACT ============ -->
+  <sc-if value="{{ isContact }}">
+    <main data-screen-label="Contact" style="position:relative; overflow:hidden; padding:var(--contact-head-top) var(--gutter) var(--section-y)">
+      <div style="position:absolute; inset:0; opacity:.55; pointer-events:none">{{ meshEl }}</div>
+      <div style="position:relative; max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:var(--split-gap)">
+        <div data-reveal="1">
+          <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Contact</div>
+          <h1 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-contact); line-height:.95">Écrivez-<em style="color:var(--rose-dust)">moi.</em></h1>
+          <p style="margin:var(--space-xl) 0 0; max-width:38ch; color:var(--ink-dim); font-size:var(--fs-lead); text-wrap:pretty">Drawing lessons, workshops, collaborations, or a question about a piece — in English or French.</p>
+          <a href="mailto:esmeepeets@gmail.com" data-cursor="Email" style="display:inline-block; margin-top:var(--space-2xl); font-family:var(--serif); font-size:var(--fs-email); color:var(--accent-email); padding-bottom:4px; border-bottom:1px solid var(--accent-email)">esmeepeets@gmail.com</a>
+          <div style="margin-top:var(--space-3xl); display:flex; gap:var(--space-3xl); flex-wrap:wrap; font-size:var(--fs-small)">
+            <div><div style="color:var(--ink-faint); font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase">Based in</div><div style="margin-top:4px">Montréal &amp; Ottawa</div></div>
+            <div><div style="color:var(--ink-faint); font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase">Languages</div><div style="margin-top:4px">English · Français</div></div>
+          </div>
+        </div>
+        <div data-reveal="1" data-delay=".15" style="background:var(--surface-glass); border:1px solid var(--line); border-radius:var(--radius-md); padding:clamp(1.4rem, 4vw, 2.6rem); backdrop-filter:blur(14px)">
+          <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ submit }}" style="display:flex; flex-direction:column; gap:var(--space-xl)">
+              <div>
+                <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--ink-faint)">About</div>
+                <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs); margin-top:var(--space-sm)">
+                  <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
+                    <sc-if value="{{ r.active }}">
+                      <button type="button" onClick="{{ r.select }}" style="padding:.55rem 1rem; border-radius:var(--radius-pill); border:1px solid var(--rose); background:var(--rose); color:var(--bg); font-size:var(--fs-pill)">{{ r.label }}</button>
+                    </sc-if>
+                    <sc-if value="{{ r.inactive }}" hint-placeholder-val="{{ true }}">
+                      <button type="button" onClick="{{ r.select }}" style="padding:.55rem 1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill)" style-hover="color:var(--ink); border-color:var(--ink-faint)">{{ r.label }}</button>
+                    </sc-if>
+                  </sc-for>
+                </div>
+              </div>
+              <label style="display:flex; flex-direction:column; gap:.4rem"><span style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--ink-faint)">Name</span><input required="{{ true }}" style="background:transparent; border:0; border-bottom:1px solid var(--line); padding:.6rem 0; font-size:1.1rem; outline:none" style-focus="border-bottom-color:var(--gold)"></label>
+              <label style="display:flex; flex-direction:column; gap:.4rem"><span style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--ink-faint)">Email</span><input type="email" required="{{ true }}" style="background:transparent; border:0; border-bottom:1px solid var(--line); padding:.6rem 0; font-size:1.1rem; outline:none" style-focus="border-bottom-color:var(--gold)"></label>
+              <label style="display:flex; flex-direction:column; gap:.4rem"><span style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--ink-faint)">Message</span><textarea rows="4" required="{{ true }}" style="background:transparent; border:0; border-bottom:1px solid var(--line); padding:.6rem 0; font-size:1.1rem; outline:none; resize:vertical" style-focus="border-bottom-color:var(--gold)"></textarea></label>
+              <button type="submit" data-cursor="Send" style="align-self:flex-start; display:inline-flex; gap:.7rem; padding:1rem 1.6rem; border-radius:var(--radius-pill); border:0; background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease)" style-hover="background:var(--gold)">Send message <span>→</span></button>
+            </form>
+          </sc-if>
+          <sc-if value="{{ sent }}">
+            <div style="min-height:320px; display:flex; flex-direction:column; justify-content:center; gap:var(--space-md)">
+              <div style="font-family:var(--serif); font-size:var(--fs-h2); line-height:1.1">Merci — <em>message sent.</em></div>
+              <p style="margin:0; color:var(--ink-dim)">Esmée will reply from esmeepeets@gmail.com.</p>
+              <button onClick="{{ resetForm }}" style="align-self:flex-start; margin-top:var(--space-md); background:transparent; border:0; padding:0 0 3px; border-bottom:1px solid var(--gold); font-size:var(--fs-small)">Write another</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer style="padding:var(--section-y) var(--gutter) var(--space-xl); border-top:1px solid var(--line); background:var(--bg-deep)">
+    <div style="max-width:var(--max-w); margin:0 auto">
+      <sc-if value="{{ notContact }}" hint-placeholder-val="{{ true }}">
+        <div data-reveal="1" style="padding-bottom:var(--section-y)">
+          <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Get in touch</div>
+          <h2 style="margin:var(--space-sm) 0 0; max-width:22ch; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-footer-cta); line-height:1.1; text-wrap:pretty">Drawing lessons, workshops and collaborations — <em style="color:var(--rose-dust)">in English or French.</em></h2>
+          <a href="#contact" onClick="{{ goContact }}" data-cursor="Say hi" style="display:inline-flex; gap:.7rem; margin-top:var(--space-xl); padding:1rem 1.6rem; border-radius:var(--radius-pill); border:1px solid var(--ink); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)" style-hover="background:var(--ink); color:var(--bg)">Contact <span>→</span></a>
+        </div>
+      </sc-if>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--space-md); font-size:var(--fs-footer); color:var(--ink-faint)">
+        <span>© 2026 Esmée Peets</span>
+        <a href="mailto:esmeepeets@gmail.com" style="color:var(--ink-dim)">esmeepeets@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ lbOpen }}">
+    <div onClick="{{ closeLb }}" style="position:fixed; inset:0; z-index:var(--z-lightbox); background:var(--surface-scrim); display:flex; align-items:center; justify-content:center; padding:5vh 5vw; backdrop-filter:blur(6px)">
+      <div onClick="{{ stop }}" style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:var(--space-3xl); width:100%; max-width:var(--max-w-lightbox)">
+        <div style="flex:1 1 420px; min-width:0; display:flex; justify-content:center">
+          <img src="{{ lb.src }}" alt="{{ lb.title }}" style="display:block; max-width:100%; max-height:82vh; object-fit:contain; box-shadow:0 40px 90px rgba(0,0,0,.6)">
+        </div>
+        <div style="flex:0 1 260px">
+          <div style="font-size:var(--fs-meta); color:var(--gold); font-variant-numeric:tabular-nums; letter-spacing:.1em">{{ lbCounter }}</div>
+          <div style="margin-top:var(--space-sm); font-family:var(--serif); font-size:var(--fs-lightbox-title); line-height:1.1">{{ lb.title }}</div>
+          <div style="margin-top:var(--space-md); display:flex; flex-direction:column; gap:.3rem; font-size:var(--fs-lightbox-meta); color:var(--ink-dim)">
+            <span>{{ lb.medium }}</span>
+            <span>{{ lb.dimsLine }}</span>
+            <span>{{ lb.yearLine }}</span>
+            <span style="color:var(--text-meta)">{{ lb.noteLine }}</span>
+          </div>
+          <div style="display:flex; gap:var(--space-sm); margin-top:var(--space-xl)">
+            <button onClick="{{ lbPrev }}" aria-label="Previous" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent" style-hover="background:var(--surface-2)">←</button>
+            <button onClick="{{ lbNext }}" aria-label="Next" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent" style-hover="background:var(--surface-2)">→</button>
+          </div>
+        </div>
+      </div>
+      <button onClick="{{ closeLb }}" aria-label="Close" style="position:absolute; top:1.4rem; right:var(--gutter); width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; font-size:1.1rem" style-hover="background:var(--surface-2)">✕</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed; inset:0; z-index:var(--z-grain); pointer-events:none; opacity:.09; mix-blend-mode:overlay; background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>&quot;)"></div>
+  </sc-if>
+  {{ curtainEl }}
+  {{ cursorEl }}
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;mesh&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;signature&quot;,&quot;jewel&quot;],&quot;default&quot;:&quot;signature&quot;,&quot;tsType&quot;:&quot;'signature'|'jewel'&quot;},&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const A = 'uploads/esmee-peets-complete-package/artwork/';
+const WORKS = [
+  { id:'flux', title:'Flux', medium:'Acrylic on canvas', dims:'36 x 48 in', note:'Grade 12 series', cat:'painting' },
+  { id:'jecoute', title:"J'écoute", medium:'Acrylic on canvas', dims:'16 x 20 in', note:'Grade 12 series', cat:'painting' },
+  { id:'regard-brouille', title:'Regard brouillé', medium:'Graphite', note:'Grade 10 studio work', cat:'drawing' },
+  { id:'etreinte', title:'Étreinte', medium:'Acrylic on canvas', dims:'30 x 40 in', note:'Grade 12 series', cat:'painting' },
+  { id:'brumeuse', title:'Brumeuse', year:'2024', medium:'Mixed media', note:'Collaboration', collab:'Charlotte Burnett Vachon', cat:'collab' },
+  { id:'pigeon', title:'Pigeon', year:'2025', medium:'Graphite', cat:'drawing' },
+  { id:'resonance', title:'Résonance', medium:'Acrylic on canvas', dims:'30 x 40 in', note:'Grade 12 series', cat:'painting' },
+  { id:'still-life', title:'Still Life', year:'2025', medium:'Mixed media', cat:'mixed' },
+  { id:'la-vie-en-rose', title:'La vie en rose', year:'2023', medium:'Acrylic', cat:'painting' },
+  { id:'inspiration', title:'Inspiration', medium:'Acrylic on canvas', dims:'30 x 40 in', note:'Grade 12 series', cat:'painting' },
+  { id:'gloutonne', title:'Gloutonne', year:'2024', medium:'Photography', note:'Collaboration', collab:'Claire Lacroix', cat:'collab' },
+  { id:'portrait-decoupe', title:'Portrait découpé', medium:'Graphite', note:'Grade 9 studio work', cat:'drawing' },
+  { id:'epanouissement', title:'Épanouissement', year:'2025', medium:'Acrylic on canvas', dims:'16 x 24 in', cat:'painting' },
+  { id:'smokin-cocotte', title:"Smokin' Cocotte", year:'2023', medium:'Mixed media', note:'Collaboration', collab:'Charlotte Burnett Vachon', cat:'collab' },
+  { id:'grand-papa', title:'Grand-papa', medium:'Acrylic on canvas', note:'Grade 10 studio work', cat:'painting' },
+  { id:'chien-etude', title:'Untitled (Dog Study)', medium:'Graphite', cat:'drawing' },
+].map(w => ({ ...w, src: A + w.id + '.jpg',
+  meta: [w.medium, w.dims, w.year].filter(Boolean).join(' · '),
+  noteLine: w.collab ? 'With ' + w.collab : (w.note || ''),
+  dimsLine: w.dims || 'Dimensions to confirm', yearLine: w.year || '' }));
+const BY = Object.fromEntries(WORKS.map(w => [w.id, w]));
+const CATS = [['all','All'],['painting','Painting'],['drawing','Drawing'],['collab','Collaborations'],['mixed','Mixed media']];
+const EXPERIENCE = [
+  { dates:'Jun – Aug 2026', role:'Community Programs Assistant', org:'Ottawa Art Gallery — Learning and Engagement', detail:'Programmed artistic activities for summer camp sessions, coordinated guest-artist workshops and visits, led gallery tours, ran art workshops for children and adults with disabilities, and managed a team of camp assistants.' },
+  { dates:'Apr – Jun 2026', role:'Visual Arts Assistant', org:"Centre d'Excellence Artistique de l'Ontario, EPS De La Salle", detail:'Created material kits for guest-artist workshops, supported students with the technical application of materials, hung and framed artworks, and mounted large-scale exhibitions.' },
+  { dates:'Jan 2026 – present', role:'Student Ambassador', org:'Concordia University — Advancement Engagement Centre', detail:'Alumni and community outreach on current university projects, and fundraising to support students and university initiatives.' },
+  { dates:'Oct – Dec 2023', role:'Art Instructor', org:"Mon Samedi Dans Les Arts, Centre d'Excellence des Arts de l'Ontario", detail:'Planned and delivered weekly art lessons for a group of 15–20 children, adapting activities to varied learning needs.' },
+  { dates:'Aug 2022 – Jun 2024', role:'Instructor, Private Drawing Lessons', org:'Ottawa', detail:'Individualized lesson plans aligned with each student\u2019s goals and skill level, with one-on-one feedback and progress guidance.' },
+];
+const CREDS = ['Ottawa Art Gallery — Learning & Engagement','Concordia University — Art History & Studio Arts',"Centre d'Excellence Artistique de l'Ontario",'Private drawing instruction since 2022','Bilingue — English / Français'];
+const REASONS = ['Drawing lessons','Workshops','Collaboration','Something else'];
+
+class Component extends DCLogic {
+  state = { page: (() => { try { return localStorage.getItem('ep-page') || 'home'; } catch (e) { return 'home'; } })(),
+    filter:'all', lb:null, curtain:'idle', sent:false, reason:'Drawing lessons' };
+  rootRef = React.createRef(); stripRef = React.createRef(); collageRef = React.createRef(); videoRef = React.createRef();
+  dotRef = React.createRef(); ringRef = React.createRef(); labelRef = React.createRef();
+  mx = -100; my = -100; rx = -100; ry = -100;
+
+  componentDidMount() {
+    this.fine = window.matchMedia && window.matchMedia('(pointer:fine)').matches;
+    this.syncCursorClass();
+    this.onMove = e => {
+      this.mx = e.clientX; this.my = e.clientY;
+      if (this.dotRef.current) this.dotRef.current.style.transform = `translate(${this.mx}px,${this.my}px)`;
+      const t = e.target.closest && e.target.closest('[data-cursor],a,button,input,textarea');
+      const label = t && t.dataset ? (t.dataset.cursor || '') : '';
+      const ring = this.ringRef.current;
+      if (ring) { const s = label ? 78 : t ? 46 : 30; ring.style.width = ring.style.height = s + 'px';
+        ring.style.background = label ? 'var(--ink)' : 'transparent'; ring.style.borderColor = label ? 'var(--ink)' : 'rgba(246,239,228,.5)'; }
+      if (this.labelRef.current) { this.labelRef.current.textContent = label; this.labelRef.current.style.opacity = label ? 1 : 0; }
+      const c = this.collageRef.current;
+      if (c) { const dx = (this.mx / window.innerWidth - .5), dy = (this.my / window.innerHeight - .5);
+        c.querySelectorAll('[data-depth]').forEach(el => { const d = +el.dataset.depth; el.style.transform = `translate(${-dx * d * 22}px,${-dy * d * 22}px)`; }); }
+    };
+    window.addEventListener('mousemove', this.onMove);
+    const loop = () => { this.rx += (this.mx - this.rx) * .16; this.ry += (this.my - this.ry) * .16;
+      if (this.ringRef.current) this.ringRef.current.style.transform = `translate(${this.rx}px,${this.ry}px) translate(-50%,-50%)`;
+      this.raf = requestAnimationFrame(loop); };
+    this.raf = requestAnimationFrame(loop);
+    this.onKey = e => { if (this.state.lb == null) return;
+      if (e.key === 'Escape') this.setState({ lb:null }); if (e.key === 'ArrowRight') this.step(1); if (e.key === 'ArrowLeft') this.step(-1); };
+    window.addEventListener('keydown', this.onKey);
+    this.playVideo(); setTimeout(() => this.setupReveal(), 30);
+  }
+  componentWillUnmount() { window.removeEventListener('mousemove', this.onMove); window.removeEventListener('keydown', this.onKey);
+    cancelAnimationFrame(this.raf); window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onScroll); document.removeEventListener('visibilitychange', this.onVis); document.body.classList.remove('ep-cursor'); }
+  componentDidUpdate(pp, ps) {
+    this.syncCursorClass();
+    if (ps.page !== this.state.page || ps.filter !== this.state.filter) { setTimeout(() => this.setupReveal(), 40); this.playVideo(); }
+  }
+  cursorOn() { return (this.props.customCursor ?? true) && this.fine; }
+  syncCursorClass() { document.body.classList.toggle('ep-cursor', !!this.cursorOn()); }
+  playVideo() { setTimeout(() => { const v = this.videoRef.current; if (v) { v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); try { const r = v.play && v.play(); r && r.catch && r.catch(() => {}); } catch (e) {} } }, 60); }
+  setupReveal() {
+    const root = this.rootRef.current || document;
+    if (!root.querySelector('[data-reveal]')) { if ((this.revealTries = (this.revealTries || 0) + 1) < 40) setTimeout(() => this.setupReveal(), 100); return; }
+    this.revealTries = 0;
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; el.removeAttribute('data-pending'); };
+    const vh = window.innerHeight || 800;
+    root.querySelectorAll('[data-reveal]:not([data-revealed])').forEach(el => {
+      el.setAttribute('data-revealed', '1');
+      if (document.visibilityState !== 'visible' || el.getBoundingClientRect().top < vh * .96) return; // in view or hidden tab: leave visible
+      const d = el.dataset.delay || 0;
+      el.style.transition = `opacity .9s cubic-bezier(.22,1,.36,1) ${d}s, transform .9s cubic-bezier(.22,1,.36,1) ${d}s`;
+      el.style.opacity = '0'; el.style.transform = 'translateY(28px)'; el.setAttribute('data-pending', '1'); });
+    if (!this.onScroll) {
+      this.onScroll = () => { const h = window.innerHeight || 800;
+        document.querySelectorAll('[data-pending]').forEach(el => { if (el.getBoundingClientRect().top < h * .92) show(el); }); };
+      window.addEventListener('scroll', this.onScroll, { passive:true }); window.addEventListener('resize', this.onScroll);
+      this.onVis = () => { if (document.visibilityState !== 'visible') document.querySelectorAll('[data-pending]').forEach(show); };
+      document.addEventListener('visibilitychange', this.onVis);
+      window.addEventListener('beforeprint', () => document.querySelectorAll('[data-pending]').forEach(show));
+    }
+    this.onScroll();
+  }
+  go(p, f) {
+    if (this.busy) return;
+    if (p === this.state.page) { if (f) this.setState({ filter:f }); window.scrollTo({ top:0, behavior:'smooth' }); return; }
+    this.busy = true; this.setState({ curtain:'in', lb:null });
+    setTimeout(() => {
+      this.setState({ page:p, filter:f || 'all', curtain:'out' }); window.scrollTo(0, 0);
+      try { localStorage.setItem('ep-page', p); } catch (e) {}
+      setTimeout(() => { this.setState({ curtain:'idle' }); this.busy = false; }, 860);
+    }, 760);
+  }
+  nav(p, f) { return e => { e && e.preventDefault && e.preventDefault(); this.go(p, f); }; }
+  list() { return this.state.page === 'work' && this.state.filter !== 'all' ? WORKS.filter(w => w.cat === this.state.filter) : WORKS; }
+  step(d) { const l = this.list(); let i = l.findIndex(w => w.id === this.state.lb); if (i < 0) i = 0;
+    this.setState({ lb: l[(i + d + l.length) % l.length].id }); }
+  withOpen(w) { return { ...w, open: () => this.setState({ lb: w.id }) }; }
+
+  meshEl() {
+    const sig = (this.props.mesh ?? 'signature') === 'signature';
+    const g = sig ? 'var(--grad-sig-1),var(--grad-sig-2),var(--grad-sig-3),var(--grad-sig-4)' : 'var(--grad-1),var(--grad-2),var(--grad-3),var(--grad-4)';
+    const layer = (k, extra) => React.createElement('div', { key:k, style:{ position:'absolute', inset:'-15%', background:g, filter:'blur(30px)',
+      animation:`ep-mesh-drift var(--dur-mesh) ease-in-out infinite alternate${extra || ''}` } });
+    return React.createElement('div', { style:{ position:'absolute', inset:0, overflow:'hidden', pointerEvents:'none' } },
+      layer('a'), React.createElement('div', { key:'b', style:{ position:'absolute', inset:'-15%', background:g, opacity:.5, transform:'rotate(180deg)', filter:'blur(40px)', animation:'ep-mesh-drift calc(var(--dur-mesh) * 1.4) ease-in-out infinite alternate-reverse' } }),
+      React.createElement('div', { key:'c', style:{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(20,15,28,.1), rgba(20,15,28,.2) 60%, var(--bg))' } }));
+  }
+  marqueeEl() {
+    const items = [...CREDS, ...CREDS].map((c, i) => React.createElement('span', { key:i, style:{ display:'inline-flex', alignItems:'center', gap:'2.4rem', paddingRight:'2.4rem' } },
+      c, React.createElement('span', { style:{ width:6, height:6, borderRadius:'50%', background:'var(--gold)', display:'inline-block' } })));
+    return React.createElement('div', { style:{ display:'flex', width:'max-content', whiteSpace:'nowrap', fontFamily:'var(--serif)', fontStyle:'italic', fontSize:'var(--fs-marquee)', color:'var(--ink-dim)', animation:'ep-marquee calc(var(--dur-marquee) * 1.4) linear infinite' } }, items);
+  }
+  curtainEl() {
+    const c = this.state.curtain, bgs = ['var(--berry)', 'var(--rose)', 'var(--violet)', 'var(--gold)'];
+    return React.createElement('div', { style:{ position:'fixed', inset:0, zIndex:'var(--z-curtain)', pointerEvents: c === 'idle' ? 'none' : 'auto', display:'flex' } },
+      bgs.map((b, i) => React.createElement('span', { key:i, style:{ flex:1, background:b,
+        transform: c === 'in' ? 'scaleY(1)' : 'scaleY(0)', transformOrigin: c === 'out' ? 'top' : 'bottom',
+        transition: c === 'idle' ? 'none' : `transform ${c === 'in' ? '.55s' : '.6s'} cubic-bezier(.76,0,.24,1) ${i * .07}s` } })));
+  }
+  cursorEl() {
+    if (!this.cursorOn()) return null;
+    return React.createElement(React.Fragment, null,
+      React.createElement('div', { ref:this.dotRef, style:{ position:'fixed', left:-3, top:-3, transform:'translate(-100px,-100px)', width:6, height:6, borderRadius:'50%', background:'var(--cursor-dot)', zIndex:'var(--z-cursor)', pointerEvents:'none' } }),
+      React.createElement('div', { ref:this.ringRef, style:{ position:'fixed', left:0, top:0, transform:'translate(-100px,-100px)', width:30, height:30, borderRadius:'50%', border:'1px solid rgba(246,239,228,.5)', zIndex:'var(--z-cursor)', pointerEvents:'none', display:'flex', alignItems:'center', justifyContent:'center', mixBlendMode:'difference', transition:'width .35s cubic-bezier(.22,1,.36,1), height .35s cubic-bezier(.22,1,.36,1), background .35s' } },
+        React.createElement('span', { ref:this.labelRef, style:{ fontSize:'var(--fs-cursor)', letterSpacing:'var(--tr-cursor)', textTransform:'uppercase', color:'#140f1c', opacity:0, transition:'opacity .25s', fontWeight:600 } })));
+  }
+
+  renderVals() {
+    const s = this.state, p = s.page;
+    const filtered = this.list().map(w => this.withOpen(w));
+    const lbl = this.list(); const lbi = lbl.findIndex(w => w.id === s.lb);
+    const pad = n => String(n).padStart(2, '0');
+    const count = k => k === 'all' ? WORKS.length : WORKS.filter(w => w.cat === k).length;
+    return {
+      rootRef:this.rootRef, stripRef:this.stripRef, collageRef:this.collageRef, videoRef:this.videoRef,
+      isHome:p === 'home', isWork:p === 'work', isAbout:p === 'about', isContact:p === 'contact', notContact:p !== 'contact',
+      goHome:this.nav('home'), goWork:this.nav('work'), goAbout:this.nav('about'), goContact:this.nav('contact'),
+      navLinks:[['work','Work'],['about','About'],['contact','Contact']].map(([k, l]) => ({ label:l, href:'#' + k, go:this.nav(k), current:p === k, other:p !== k })),
+      cFlux:this.withOpen(BY.flux), cEtreinte:this.withOpen(BY.etreinte), cJecoute:this.withOpen(BY.jecoute),
+      stripWorks:['flux','regard-brouille','brumeuse','resonance','still-life','pigeon','gloutonne','inspiration'].map(id => this.withOpen(BY[id])),
+      stripPrev:() => this.stripRef.current && this.stripRef.current.scrollBy({ left:-this.stripRef.current.clientWidth * .6, behavior:'smooth' }),
+      stripNext:() => this.stripRef.current && this.stripRef.current.scrollBy({ left:this.stripRef.current.clientWidth * .6, behavior:'smooth' }),
+      tiles:[['painting','Painting','etreinte'],['drawing','Drawing','pigeon'],['collab','Collaborations','smokin-cocotte']].map(([k, l, id]) => ({ label:l, count:pad(count(k)), src:BY[id].src, go:this.nav('work', k) })),
+      cats:CATS.map(([k, l]) => ({ label:l, count:count(k), active:s.filter === k, inactive:s.filter !== k, select:() => this.setState({ filter:k }) })),
+      filtered,
+      experience:EXPERIENCE,
+      aboutPair:['regard-brouille','pigeon'].map(id => this.withOpen(BY[id])),
+      reasons:REASONS.map(r => ({ label:r, active:s.reason === r, inactive:s.reason !== r, select:() => this.setState({ reason:r }) })),
+      notSent:!s.sent, sent:s.sent,
+      submit:e => { e.preventDefault(); this.setState({ sent:true }); }, resetForm:() => this.setState({ sent:false }),
+      lbOpen:s.lb != null, lb:s.lb != null ? BY[s.lb] : {}, lbCounter:lbi >= 0 ? `${pad(lbi + 1)} / ${pad(lbl.length)}` : '',
+      closeLb:() => this.setState({ lb:null }), stop:e => e.stopPropagation(),
+      lbPrev:() => this.step(-1), lbNext:() => this.step(1),
+      showGrain:this.props.grain ?? true,
+      meshEl:this.meshEl(), marqueeEl:this.marqueeEl(), curtainEl:this.curtainEl(), cursorEl:this.cursorEl(),
+    };
+  }
+}
+</script>
+</body>
+</html>

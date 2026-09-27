@@ -1,0 +1,74 @@
+/* Esmée Peets — colour. Deep aubergine canvas + saturated pigment accents. Source: esmee-peets-site/assets/styles.css + design-tokens.json */
+:root{
+  /* canvas */
+  --bg:#140f1c;
+  --bg-soft:#1c1527;
+  --surface:#241b34;
+  --surface-2:#2c2140;
+  --bg-deep:#0c0911;
+  --line:rgba(246,239,228,0.12);
+  /* ink */
+  --ink:#f6efe4;
+  --ink-dim:#c8bcd6;
+  --ink-faint:#8d80a1;
+  /* pigment accents (v1) */
+  --coral:#ff6b52;
+  --gold:#f2b544;
+  --violet:#9b7bff;
+  --teal:#34d7b9;
+  --rose:#ff8fb1;
+  /* signature accent — re-weighted from Esmée's grade 12 acrylic series (design-tokens.json) */
+  --berry:#a8477a;
+  --rose-dust:#e1acb1;
+  --mauve:#c08594;
+
+  /* semantic */
+  --surface-page:var(--bg);
+  --surface-soft:var(--bg-soft);
+  --surface-card:var(--surface);
+  --surface-hover:var(--surface-2);
+  --surface-header:rgba(20,15,28,0.72);
+  --surface-scrim:rgba(12,9,17,0.92);
+  --surface-glass:rgba(246,239,228,0.08);
+  --border-subtle:var(--line);
+  --text-heading:var(--ink);
+  --text-body:var(--ink-dim);
+  --text-meta:var(--ink-faint);
+  --text-on-light:var(--bg);
+  --text-ph-label:rgba(20,15,28,0.75);
+  --accent-primary:var(--coral);
+  --accent-signature:var(--berry);
+  --accent-underline:var(--gold);
+  --accent-email:var(--gold);
+  --accent-separator:var(--gold);
+  --cursor-dot:var(--gold);
+  --selection-bg:var(--coral);
+
+  /* hero mesh — four drifting radial washes */
+  --grad-1:radial-gradient(circle at 20% 20%, rgba(255,107,82,0.55), transparent 55%); /* @kind color */
+  --grad-2:radial-gradient(circle at 80% 30%, rgba(155,123,255,0.5), transparent 55%); /* @kind color */
+  --grad-3:radial-gradient(circle at 50% 80%, rgba(52,215,185,0.4), transparent 55%); /* @kind color */
+  --grad-4:radial-gradient(circle at 85% 85%, rgba(242,181,68,0.4), transparent 55%); /* @kind color */
+  /* signature mesh — berry / rose / violet, closer to the real paintings */
+  --grad-sig-1:radial-gradient(circle at 20% 25%, rgba(168,71,122,0.7), transparent 55%); /* @kind color */
+  --grad-sig-2:radial-gradient(circle at 80% 30%, rgba(255,143,177,0.45), transparent 55%); /* @kind color */
+  --grad-sig-3:radial-gradient(circle at 45% 85%, rgba(155,123,255,0.4), transparent 55%); /* @kind color */
+  --grad-sig-4:radial-gradient(circle at 88% 85%, rgba(255,107,82,0.35), transparent 55%); /* @kind color */
+
+  /* artwork placeholders (135°) */
+  --ph-1:linear-gradient(135deg, #ff6b52, #f2b544); /* @kind color */
+  --ph-2:linear-gradient(135deg, #9b7bff, #34d7b9); /* @kind color */
+  --ph-3:linear-gradient(135deg, #f2b544, #ff8fb1); /* @kind color */
+  --ph-4:linear-gradient(135deg, #34d7b9, #9b7bff); /* @kind color */
+  --ph-5:linear-gradient(135deg, #ff8fb1, #ff6b52); /* @kind color */
+  --ph-6:linear-gradient(135deg, #f2b544, #34d7b9); /* @kind color */
+  --ph-7:linear-gradient(135deg, #ff6b52, #9b7bff); /* @kind color */
+  --ph-8:linear-gradient(135deg, #34d7b9, #f2b544); /* @kind color */
+  --ph-portrait:linear-gradient(160deg, #2c2140, #ff6b52 140%); /* @kind color */
+
+  /* page-transition curtain panels (160°) */
+  --curtain-1:linear-gradient(160deg, var(--coral), var(--violet)); /* @kind color */
+  --curtain-2:linear-gradient(160deg, var(--gold), var(--coral)); /* @kind color */
+  --curtain-3:linear-gradient(160deg, var(--teal), var(--violet)); /* @kind color */
+  --curtain-4:linear-gradient(160deg, var(--rose), var(--gold)); /* @kind color */
+}

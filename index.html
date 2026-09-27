@@ -1,186 +1,291 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Esmée Peets — Artist &amp; Arts Educator</title>
+<title>Esmée Peets — Artist &amp; arts educator</title>
 <meta name="description" content="Esmée Peets is a visual artist and arts educator in Ottawa/Montréal working in painting, graphite drawing, and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/styles.css">
+<link rel="preload" href="/assets/fonts/Fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Inter-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>try{if(sessionStorage.getItem('ep-curtain'))document.documentElement.classList.add('ep-arrive')}catch(e){}</script>
+<script defer src="/assets/site.js" data-page="home"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+<div id="dc-root"><div class="sc-host"><div data-ref="root" style="min-height:100vh; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:var(--fs-body); line-height:var(--lh-body); position:relative; overflow-x:clip">
 
-<div class="curtain"><span></span><span></span><span></span><span></span></div>
-<div class="grain"></div>
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
+  <header style="position:fixed; top:0; left:0; right:0; z-index:var(--z-header); display:flex; align-items:center; justify-content:space-between; gap:var(--space-lg); padding:var(--header-y) var(--gutter); background:linear-gradient(to bottom, rgba(20,15,28,.88), rgba(20,15,28,0))">
+    <a href="/" data-go="home" data-cursor="Home" style="font-family:var(--serif); font-size:var(--fs-wordmark); letter-spacing:var(--tr-wordmark); font-weight:var(--fw-regular); color:var(--ink)">Esmée Peets</a>
+    <nav style="display:flex; gap:clamp(1rem,3vw,2.4rem); font-size:var(--fs-nav); letter-spacing:var(--tr-nav); text-transform:uppercase">
+      
+        
+        
+          <a class="scp0" href="/work/" data-go="work" style="color:var(--ink-dim); padding-bottom:4px; border-bottom:1px solid transparent; transition:color var(--dur-hover) var(--ease)"><span class="sc-interp">Work</span></a>
+        
+      
+        
+        
+          <a class="scp0" href="/about/" data-go="about" style="color:var(--ink-dim); padding-bottom:4px; border-bottom:1px solid transparent; transition:color var(--dur-hover) var(--ease)"><span class="sc-interp">About</span></a>
+        
+      
+        
+        
+          <a class="scp0" href="/contact/" data-go="contact" style="color:var(--ink-dim); padding-bottom:4px; border-bottom:1px solid transparent; transition:color var(--dur-hover) var(--ease)"><span class="sc-interp">Contact</span></a>
+        
+      
+    </nav>
+  </header>
 
-<header class="site-header">
-  <a href="/" class="wordmark">Esm<em>é</em>e Peets</a>
-  <nav class="main-nav">
-    <a href="/work/">Work</a>
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
-  </nav>
-  <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-</header>
-
-<main>
-
-  <section class="hero-grid">
-    <div class="hero-content" style="padding:0;">
-      <span class="eyebrow hero-eyebrow">Artist &amp; arts educator &middot; Ottawa / Montr&eacute;al</span>
-      <h1 class="hero-title" style="margin-top:1rem;">
-        <span class="line"><span>Esm&eacute;e</span></span>
-        <span class="line"><span><em>Peets</em></span></span>
-      </h1>
-      <p class="hero-lede">Painting, graphite drawing, and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.</p>
-      <div class="hero-actions">
-        <a href="/work/" class="btn" data-cursor="Browse">See the work <span class="btn-arrow">&rarr;</span></a>
-        <a href="/about/" class="text-link" data-cursor="Read">About Esm&eacute;e</a>
-      </div>
-    </div>
-    <div class="hero-art">
-      <div class="polaroid p1"><img src="/assets/img/flux.jpg" alt="Flux, acrylic on canvas"></div>
-      <div class="polaroid p2"><img src="/assets/img/etreinte.jpg" alt="Étreinte, acrylic on canvas"></div>
-      <div class="polaroid p3"><img src="/assets/img/jecoute.jpg" alt="J'écoute, acrylic on canvas"></div>
-    </div>
-  </section>
-
-  <div class="scroll-cue" style="position:static; margin: 0 6vw 4rem;"><span class="line-anim"></span> Scroll</div>
-
-  <section class="wrap">
-    <p class="statement" data-reveal>
-      Filler quote
-    </p>
-  </section>
-
-  <section>
-    <div class="wrap section-head" data-reveal>
-      <div>
-        <span class="eyebrow">Selected work</span>
-        <h2 style="margin-top:.6rem;">From the studio, 2023&ndash;2025</h2>
-      </div>
-      <div style="display:flex; align-items:center; gap:1.4rem;">
-        <div class="carousel-controls">
-          <button class="carousel-arrow" id="stripPrev" aria-label="Scroll left">&larr;</button>
-          <button class="carousel-arrow" id="stripNext" aria-label="Scroll right">&rarr;</button>
+  
+  
+    <main data-screen-label="Home">
+      <section style="position:relative; min-height:100vh; overflow:hidden; display:flex; align-items:center; padding:8rem var(--gutter) 5rem">
+        <div style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none;"><div style="position: absolute; inset: -15%; background: var(--grad-sig-1),var(--grad-sig-2),var(--grad-sig-3),var(--grad-sig-4); filter: blur(30px); animation: ep-mesh-drift var(--dur-mesh) ease-in-out infinite alternate;"></div><div style="position: absolute; inset: -15%; background: var(--grad-sig-1),var(--grad-sig-2),var(--grad-sig-3),var(--grad-sig-4); opacity: 0.5; transform: rotate(180deg); filter: blur(40px); animation: ep-mesh-drift calc(var(--dur-mesh) * 1.4) ease-in-out infinite alternate-reverse;"></div><div style="position: absolute; inset: 0px; background: linear-gradient(to bottom, rgba(20,15,28,.1), rgba(20,15,28,.2) 60%, var(--bg));"></div></div>
+        <div style="position:relative; width:100%; max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:var(--split-gap); align-items:center">
+          <div data-reveal="1">
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Artist &amp; arts educator · Ottawa / Montréal</div>
+            <h1 style="margin:var(--space-lg) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-hero); line-height:.92; letter-spacing:-0.02em">Esmée<br><em style="font-weight:var(--fw-light); color:var(--rose-dust)">Peets</em></h1>
+            <p style="margin:var(--space-xl) 0 0; max-width:36ch; font-size:var(--fs-lead); color:var(--ink-dim); text-wrap:pretty">Painting, graphite drawing and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.</p>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-xl); margin-top:var(--space-2xl)">
+              <a class="scp1" href="/work/" data-go="work" data-cursor="Browse" style="display:inline-flex; align-items:center; gap:.7rem; padding:1rem 1.6rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease)">See the work <span>→</span></a>
+              <a href="/about/" data-go="about" data-cursor="Read" style="font-size:var(--fs-small); color:var(--ink); padding-bottom:3px; border-bottom:1px solid var(--gold)">About Esmée</a>
+            </div>
+          </div>
+          <div data-ref="collage" style="position:relative; width:100%; aspect-ratio:1/1.08; max-width:560px; justify-self:center">
+            <div data-reveal="1" data-delay=".15" style="position:absolute; left:28%; top:0; width:56%">
+              <div data-depth="0.6" style="transition:transform .6s var(--ease)">
+                <img src="/assets/img/flux.jpg" alt="Flux" data-action="open" data-value="flux" data-cursor="View" style="display:block; width:100%; transform:rotate(2deg); box-shadow:0 40px 80px rgba(0,0,0,.55)">
+              </div>
+            </div>
+            <div data-reveal="1" data-delay=".3" style="position:absolute; left:0; top:36%; width:42%">
+              <div data-depth="1.3" style="transition:transform .6s var(--ease)">
+                <img src="/assets/img/etreinte.jpg" alt="Étreinte" data-action="open" data-value="etreinte" data-cursor="View" style="display:block; width:100%; transform:rotate(-5deg); box-shadow:0 40px 80px rgba(0,0,0,.55)">
+              </div>
+            </div>
+            <div data-reveal="1" data-delay=".45" style="position:absolute; left:56%; top:55%; width:38%">
+              <div data-depth="2" style="transition:transform .6s var(--ease)">
+                <img src="/assets/img/jecoute.jpg" alt="J&#x27;écoute" data-action="open" data-value="jecoute" data-cursor="View" style="display:block; width:100%; transform:rotate(4deg); box-shadow:0 40px 80px rgba(0,0,0,.6)">
+              </div>
+            </div>
+          </div>
         </div>
-        <a href="/work/" class="btn" data-cursor="Browse">All 16 pieces <span class="btn-arrow">&rarr;</span></a>
-      </div>
-    </div>
-    <div class="strip" id="workStrip" data-reveal-stagger>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/flux.jpg" alt="Flux"></div>
-          <figcaption><div class="work-title">Flux</div><div class="work-meta">Acrylic on canvas &middot; 36 x 48 in</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/regard-brouille.jpg" alt="Regard brouillé"></div>
-          <figcaption><div class="work-title">Regard brouill&eacute;</div><div class="work-meta">Graphite</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/brumeuse.jpg" alt="Brumeuse"></div>
-          <figcaption><div class="work-title">Brumeuse</div><div class="work-meta">Mixed media &middot; 2024</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/resonance.jpg" alt="Résonance"></div>
-          <figcaption><div class="work-title">R&eacute;sonance</div><div class="work-meta">Acrylic on canvas &middot; 30 x 40 in</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/still-life.jpg" alt="Still Life"></div>
-          <figcaption><div class="work-title">Still Life</div><div class="work-meta">Mixed media &middot; 2025</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/pigeon.jpg" alt="Pigeon"></div>
-          <figcaption><div class="work-title">Pigeon</div><div class="work-meta">Graphite &middot; 2025</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/gloutonne.jpg" alt="Gloutonne"></div>
-          <figcaption><div class="work-title">Gloutonne</div><div class="work-meta">Photography &middot; 2024</div></figcaption>
-        </figure>
-      </div>
-      <div class="strip-item" data-cursor="View">
-        <figure><div class="art-photo"><img src="/assets/img/inspiration.jpg" alt="Inspiration"></div>
-          <figcaption><div class="work-title">Inspiration</div><div class="work-meta">Acrylic on canvas &middot; 30 x 40 in</div></figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+        <div style="position:absolute; left:var(--gutter); bottom:2rem; display:flex; align-items:center; gap:.8rem; font-size:var(--fs-eyebrow); letter-spacing:var(--tr-cue); text-transform:uppercase; color:var(--ink-faint)">
+          <span style="width:40px; height:1px; background:var(--ink-faint)"></span>Scroll
+        </div>
+      </section>
 
-  <section class="wrap split">
-    <div class="studio-media" data-reveal>
-      <video src="/assets/asthenie-process.mp4" muted loop playsinline autoplay poster="/assets/img/pigeon.jpg"></video>
-    </div>
-    <div class="split-text" data-reveal>
-      <span class="eyebrow">In the studio</span>
-      <h2><em>Asth&eacute;nie</em>, in progress.</h2>
-      <p>A process recording of a graphite drawing in progress. The finished piece will join the portfolio once it's complete.</p>
-      <a href="/about/" class="text-link" data-cursor="Read">More about Esm&eacute;e</a>
-    </div>
-  </section>
+      <section style="padding:var(--section-y) var(--gutter)">
+        <p data-reveal="1" style="max-width:var(--max-w); margin:0 auto; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-statement); line-height:1.25; max-width:24ch; margin-left:max(0px, calc((100% - var(--max-w)) / 2)); text-wrap:pretty">Filler quote</p>
+      </section>
 
-  <section class="marquee" data-reveal="fade">
-    <div class="marquee-track">
-      <span>Ottawa Art Gallery &mdash; Learning &amp; Engagement</span><span>Concordia University &mdash; Art History &amp; Studio Arts</span><span>Centre d'Excellence Artistique de l'Ontario</span><span>Private drawing instruction since 2022</span><span>Bilingue &mdash; English / Fran&ccedil;ais</span>
-      <span>Ottawa Art Gallery &mdash; Learning &amp; Engagement</span><span>Concordia University &mdash; Art History &amp; Studio Arts</span><span>Centre d'Excellence Artistique de l'Ontario</span><span>Private drawing instruction since 2022</span><span>Bilingue &mdash; English / Fran&ccedil;ais</span>
-    </div>
-  </section>
+      <section style="padding:0 0 var(--section-y)">
+        <div data-reveal="1" style="max-width:var(--max-w); margin:0 auto; padding:0 var(--gutter); display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-lg)">
+          <div>
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Selected work</div>
+            <h2 style="margin:var(--space-xs) 0 0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-h2); line-height:var(--lh-heading)">From the studio, 2023–2025</h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-sm)">
+            <button class="scp2" data-action="stripPrev" aria-label="Previous" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; transition:background var(--dur-hover) var(--ease)">←</button>
+            <button class="scp2" data-action="stripNext" aria-label="Next" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; transition:background var(--dur-hover) var(--ease)">→</button>
+            <a href="/work/" data-go="work" data-cursor="Browse" style="margin-left:var(--space-sm); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; padding-bottom:3px; border-bottom:1px solid var(--gold)">All 16 pieces →</a>
+          </div>
+        </div>
+        <div data-ref="strip" style="display:flex; gap:var(--strip-gap); overflow-x:auto; scroll-snap-type:x mandatory; padding:var(--space-3xl) var(--gutter) var(--space-md); scrollbar-width:none">
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/flux.jpg" alt="Flux" data-action="open" data-value="flux" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Flux</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Acrylic on canvas · 36 x 48 in</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/regard-brouille.jpg" alt="Regard brouillé" data-action="open" data-value="regard-brouille" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Regard brouillé</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Graphite</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/brumeuse.jpg" alt="Brumeuse" data-action="open" data-value="brumeuse" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Brumeuse</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Mixed media · 2024</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/resonance.jpg" alt="Résonance" data-action="open" data-value="resonance" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Résonance</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Acrylic on canvas · 30 x 40 in</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/still-life.jpg" alt="Still Life" data-action="open" data-value="still-life" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Still Life</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Mixed media · 2025</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/pigeon.jpg" alt="Pigeon" data-action="open" data-value="pigeon" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Pigeon</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Graphite · 2025</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/gloutonne.jpg" alt="Gloutonne" data-action="open" data-value="gloutonne" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Gloutonne</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Photography · 2024</span></div>
+              </figcaption>
+            </figure>
+          
+            <figure data-reveal="1" style="flex:0 0 clamp(240px, 26vw, 340px); margin:0; scroll-snap-align:start">
+              <div style="aspect-ratio:var(--ratio-art); overflow:hidden; background:var(--surface)">
+                <img class="scp3" src="/assets/img/inspiration.jpg" alt="Inspiration" data-action="open" data-value="inspiration" data-cursor="View" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)">
+              </div>
+              <figcaption style="margin-top:var(--space-sm)">
+                <div style="font-family:var(--serif); font-size:var(--fs-work-title)"><span class="sc-interp">Inspiration</span></div>
+                <div style="font-size:var(--fs-meta); color:var(--text-meta); margin-top:2px"><span class="sc-interp">Acrylic on canvas · 30 x 40 in</span></div>
+              </figcaption>
+            </figure>
+          
+          <div style="flex:0 0 1px"></div>
+        </div>
+      </section>
 
-  <section class="wrap">
-    <div class="section-head" data-reveal>
-      <h2>Browse by medium</h2>
-    </div>
-    <div class="medium-grid" data-reveal-stagger>
-      <a href="/work/#painting" class="medium-card" data-cursor="View">
-        <img src="/assets/img/etreinte.jpg" alt="Painting">
-        <div class="medium-label"><h3>Painting</h3><span>08</span></div>
-      </a>
-      <a href="/work/#drawing" class="medium-card" data-cursor="View">
-        <img src="/assets/img/pigeon.jpg" alt="Drawing">
-        <div class="medium-label"><h3>Drawing</h3><span>04</span></div>
-      </a>
-      <a href="/work/#collaborations" class="medium-card" data-cursor="View">
-        <img src="/assets/img/smokin-cocotte.jpg" alt="Collaborations">
-        <div class="medium-label"><h3>Collaborations</h3><span>03</span></div>
-      </a>
-    </div>
-  </section>
+      <section style="padding:var(--section-y) var(--gutter); background:var(--bg-soft)">
+        <div style="max-width:var(--max-w); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:var(--split-gap); align-items:center">
+          <div data-reveal="1" style="aspect-ratio:var(--ratio-portrait); overflow:hidden; background:var(--surface); max-height:78vh">
+            <video data-ref="video" src="/assets/asthenie-process.mp4" style="display:block; width:100%; height:100%; object-fit:cover"></video>
+          </div>
+          <div data-reveal="1" data-delay=".1" style="max-width:44ch">
+            <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">In the studio</div>
+            <h2 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-split-h2); line-height:1.15"><em>Asthénie</em>, in progress.</h2>
+            <p style="margin:var(--space-lg) 0 0; color:var(--ink-dim); text-wrap:pretty">A process recording of a graphite drawing in progress. The finished piece will join the portfolio once it's complete.</p>
+            <a href="/about/" data-go="about" data-cursor="Read" style="display:inline-block; margin-top:var(--space-xl); font-size:var(--fs-small); padding-bottom:3px; border-bottom:1px solid var(--gold)">More about Esmée</a>
+          </div>
+        </div>
+      </section>
 
-</main>
+      <section style="padding:var(--space-3xl) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden"><div style="display: flex; width: max-content; white-space: nowrap; font-family: var(--serif); font-style: italic; font-size: var(--fs-marquee); color: var(--ink-dim); animation: ep-marquee calc(var(--dur-marquee) * 1.4) linear infinite;"><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Ottawa Art Gallery — Learning &amp; Engagement<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Concordia University — Art History &amp; Studio Arts<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Centre d'Excellence Artistique de l'Ontario<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Private drawing instruction since 2022<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Bilingue — English / Français<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Ottawa Art Gallery — Learning &amp; Engagement<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Concordia University — Art History &amp; Studio Arts<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Centre d'Excellence Artistique de l'Ontario<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Private drawing instruction since 2022<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span><span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">Bilingue — English / Français<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: inline-block;"></span></span></div></section>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-cta" data-reveal>
-      <span class="eyebrow">Get in touch</span>
-      <h2>Drawing lessons, workshops and collaborations &mdash; <em class="accent">in English or French.</em></h2>
-      <a href="/contact/" class="btn" data-cursor="Say hi" style="margin-top:2rem;">Contact <span class="btn-arrow">&rarr;</span></a>
-    </div>
-    <div class="footer-grid">
-      <span>&copy; 2026 Esm&eacute;e Peets</span>
-      <a href="mailto:esmeepeets@gmail.com">esmeepeets@gmail.com</a>
-    </div>
-  </div>
-</footer>
+      <section style="padding:var(--section-y) var(--gutter)">
+        <div style="max-width:var(--max-w); margin:0 auto">
+          <h2 data-reveal="1" style="margin:0; font-family:var(--serif); font-weight:var(--fw-heading); font-size:var(--fs-h2); line-height:var(--lh-heading)">Browse by medium</h2>
+          <div style="margin-top:var(--space-3xl); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:var(--grid-gap)">
+            
+              <a href="/work/#painting" data-go="work" data-filter="painting" data-cursor="Open" data-reveal="1" style="position:relative; display:block; aspect-ratio:4/5; overflow:hidden; background:var(--surface); color:var(--ink)">
+                <img class="scp4" src="/assets/img/etreinte.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease), filter var(--dur-hover) var(--ease); filter:saturate(.9) brightness(.8)">
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:var(--space-lg); background:linear-gradient(to top, rgba(12,9,17,.9), rgba(12,9,17,0)); display:flex; align-items:baseline; justify-content:space-between; pointer-events:none">
+                  <span style="font-family:var(--serif); font-size:1.7rem"><span class="sc-interp">Painting</span></span>
+                  <span style="font-size:var(--fs-meta); color:var(--ink-dim)"><span class="sc-interp">08</span></span>
+                </div>
+              </a>
+            
+              <a href="/work/#drawing" data-go="work" data-filter="drawing" data-cursor="Open" data-reveal="1" style="position:relative; display:block; aspect-ratio:4/5; overflow:hidden; background:var(--surface); color:var(--ink)">
+                <img class="scp4" src="/assets/img/pigeon.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease), filter var(--dur-hover) var(--ease); filter:saturate(.9) brightness(.8)">
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:var(--space-lg); background:linear-gradient(to top, rgba(12,9,17,.9), rgba(12,9,17,0)); display:flex; align-items:baseline; justify-content:space-between; pointer-events:none">
+                  <span style="font-family:var(--serif); font-size:1.7rem"><span class="sc-interp">Drawing</span></span>
+                  <span style="font-size:var(--fs-meta); color:var(--ink-dim)"><span class="sc-interp">04</span></span>
+                </div>
+              </a>
+            
+              <a href="/work/#collab" data-go="work" data-filter="collab" data-cursor="Open" data-reveal="1" style="position:relative; display:block; aspect-ratio:4/5; overflow:hidden; background:var(--surface); color:var(--ink)">
+                <img class="scp4" src="/assets/img/smokin-cocotte.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease), filter var(--dur-hover) var(--ease); filter:saturate(.9) brightness(.8)">
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:var(--space-lg); background:linear-gradient(to top, rgba(12,9,17,.9), rgba(12,9,17,0)); display:flex; align-items:baseline; justify-content:space-between; pointer-events:none">
+                  <span style="font-family:var(--serif); font-size:1.7rem"><span class="sc-interp">Collaborations</span></span>
+                  <span style="font-size:var(--fs-meta); color:var(--ink-dim)"><span class="sc-interp">03</span></span>
+                </div>
+              </a>
+            
+          </div>
+        </div>
+      </section>
+    </main>
+  
 
-<script src="/assets/site.js"></script>
-<script>
-  var strip = document.getElementById('workStrip');
-  var prev = document.getElementById('stripPrev');
-  var next = document.getElementById('stripNext');
-  if (strip && prev && next){
-    prev.addEventListener('click', function(){ strip.scrollBy({left: -360, behavior: 'smooth'}); });
-    next.addEventListener('click', function(){ strip.scrollBy({left: 360, behavior: 'smooth'}); });
-  }
-</script>
+  
+  
+
+  
+  
+
+  
+  
+
+  <footer style="padding:var(--section-y) var(--gutter) var(--space-xl); border-top:1px solid var(--line); background:var(--bg-deep)">
+    <div style="max-width:var(--max-w); margin:0 auto">
+      
+        <div data-reveal="1" style="padding-bottom:var(--section-y)">
+          <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Get in touch</div>
+          <h2 style="margin:var(--space-sm) 0 0; max-width:22ch; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-footer-cta); line-height:1.1; text-wrap:pretty">Drawing lessons, workshops and collaborations — <em style="color:var(--rose-dust)">in English or French.</em></h2>
+          <a class="scp5" href="/contact/" data-go="contact" data-cursor="Say hi" style="display:inline-flex; gap:.7rem; margin-top:var(--space-xl); padding:1rem 1.6rem; border-radius:var(--radius-pill); border:1px solid var(--ink); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)">Contact <span>→</span></a>
+        </div>
+      
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--space-md); font-size:var(--fs-footer); color:var(--ink-faint)">
+        <span>© 2026 Esmée Peets</span>
+        <a href="mailto:esmeepeets@gmail.com" style="color:var(--ink-dim)">esmeepeets@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <template data-if="lb"><div data-action="closeLb" style="position:fixed; inset:0; z-index:var(--z-lightbox); background:var(--surface-scrim); display:flex; align-items:center; justify-content:center; padding:5vh 5vw; backdrop-filter:blur(6px)">
+      <div data-action="stop" style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:var(--space-3xl); width:100%; max-width:var(--max-w-lightbox)">
+        <div style="flex:1 1 420px; min-width:0; display:flex; justify-content:center">
+          <img data-bind-src="lb.src" data-bind-alt="lb.title" style="display:block; max-width:100%; max-height:82vh; object-fit:contain; box-shadow:0 40px 90px rgba(0,0,0,.6)">
+        </div>
+        <div style="flex:0 1 260px">
+          <div style="font-size:var(--fs-meta); color:var(--gold); font-variant-numeric:tabular-nums; letter-spacing:.1em"><span class="sc-interp" data-bind="lbCounter"></span></div>
+          <div style="margin-top:var(--space-sm); font-family:var(--serif); font-size:var(--fs-lightbox-title); line-height:1.1"><span class="sc-interp" data-bind="lb.title"></span></div>
+          <div style="margin-top:var(--space-md); display:flex; flex-direction:column; gap:.3rem; font-size:var(--fs-lightbox-meta); color:var(--ink-dim)">
+            <span><span class="sc-interp" data-bind="lb.medium"></span></span>
+            <span><span class="sc-interp" data-bind="lb.dimsLine"></span></span>
+            <span><span class="sc-interp" data-bind="lb.yearLine"></span></span>
+            <span style="color:var(--text-meta)"><span class="sc-interp" data-bind="lb.noteLine"></span></span>
+          </div>
+          <div style="display:flex; gap:var(--space-sm); margin-top:var(--space-xl)">
+            <button class="scp2" data-action="lbPrev" aria-label="Previous" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent">←</button>
+            <button class="scp2" data-action="lbNext" aria-label="Next" style="width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent">→</button>
+          </div>
+        </div>
+      </div>
+      <button class="scp2" data-action="closeLb" aria-label="Close" style="position:absolute; top:1.4rem; right:var(--gutter); width:var(--hit-round); height:var(--hit-round); border-radius:50%; border:1px solid var(--line); background:transparent; font-size:1.1rem">✕</button>
+    </div></template>
+
+  
+    <div style="position:fixed; inset:0; z-index:var(--z-grain); pointer-events:none; opacity:.09; mix-blend-mode:overlay"></div>
+  
+  <div data-curtain style="position: fixed; inset: 0px; z-index: var(--z-curtain); pointer-events: none; display: flex;"><span style="flex: 1 1 0%; background: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618) 0% 0 / 400% 100%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span><span style="flex: 1 1 0%; background: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618) 33.333% 0 / 400% 100%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span><span style="flex: 1 1 0%; background: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618) 66.667% 0 / 400% 100%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span><span style="flex: 1 1 0%; background: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618) 100% 0 / 400% 100%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span></div>
+  
+</div></div></div>
+<script id="ep-data" type="application/json">{"works":[{"id":"flux","title":"Flux","cat":"painting","src":"/assets/img/flux.jpg","medium":"Acrylic on canvas","dimsLine":"36 x 48 in","yearLine":"","noteLine":"Grade 12 series"},{"id":"jecoute","title":"J'écoute","cat":"painting","src":"/assets/img/jecoute.jpg","medium":"Acrylic on canvas","dimsLine":"16 x 20 in","yearLine":"","noteLine":"Grade 12 series"},{"id":"regard-brouille","title":"Regard brouillé","cat":"drawing","src":"/assets/img/regard-brouille.jpg","medium":"Graphite","dimsLine":"Dimensions to confirm","yearLine":"","noteLine":"Grade 10 studio work"},{"id":"etreinte","title":"Étreinte","cat":"painting","src":"/assets/img/etreinte.jpg","medium":"Acrylic on canvas","dimsLine":"30 x 40 in","yearLine":"","noteLine":"Grade 12 series"},{"id":"brumeuse","title":"Brumeuse","cat":"collab","src":"/assets/img/brumeuse.jpg","medium":"Mixed media","dimsLine":"Dimensions to confirm","yearLine":"2024","noteLine":"With Charlotte Burnett Vachon"},{"id":"pigeon","title":"Pigeon","cat":"drawing","src":"/assets/img/pigeon.jpg","medium":"Graphite","dimsLine":"Dimensions to confirm","yearLine":"2025","noteLine":""},{"id":"resonance","title":"Résonance","cat":"painting","src":"/assets/img/resonance.jpg","medium":"Acrylic on canvas","dimsLine":"30 x 40 in","yearLine":"","noteLine":"Grade 12 series"},{"id":"still-life","title":"Still Life","cat":"mixed","src":"/assets/img/still-life.jpg","medium":"Mixed media","dimsLine":"Dimensions to confirm","yearLine":"2025","noteLine":""},{"id":"la-vie-en-rose","title":"La vie en rose","cat":"painting","src":"/assets/img/la-vie-en-rose.jpg","medium":"Acrylic","dimsLine":"Dimensions to confirm","yearLine":"2023","noteLine":""},{"id":"inspiration","title":"Inspiration","cat":"painting","src":"/assets/img/inspiration.jpg","medium":"Acrylic on canvas","dimsLine":"30 x 40 in","yearLine":"","noteLine":"Grade 12 series"},{"id":"gloutonne","title":"Gloutonne","cat":"collab","src":"/assets/img/gloutonne.jpg","medium":"Photography","dimsLine":"Dimensions to confirm","yearLine":"2024","noteLine":"With Claire Lacroix"},{"id":"portrait-decoupe","title":"Portrait découpé","cat":"drawing","src":"/assets/img/portrait-decoupe.jpg","medium":"Graphite","dimsLine":"Dimensions to confirm","yearLine":"","noteLine":"Grade 9 studio work"},{"id":"epanouissement","title":"Épanouissement","cat":"painting","src":"/assets/img/epanouissement.jpg","medium":"Acrylic on canvas","dimsLine":"16 x 24 in","yearLine":"2025","noteLine":""},{"id":"smokin-cocotte","title":"Smokin' Cocotte","cat":"collab","src":"/assets/img/smokin-cocotte.jpg","medium":"Mixed media","dimsLine":"Dimensions to confirm","yearLine":"2023","noteLine":"With Charlotte Burnett Vachon"},{"id":"grand-papa","title":"Grand-papa","cat":"painting","src":"/assets/img/grand-papa.jpg","medium":"Acrylic on canvas","dimsLine":"Dimensions to confirm","yearLine":"","noteLine":"Grade 10 studio work"},{"id":"chien-etude","title":"Untitled (Dog Study)","cat":"drawing","src":"/assets/img/chien-etude.jpg","medium":"Graphite","dimsLine":"Dimensions to confirm","yearLine":"","noteLine":""}],"cats":["all","painting","drawing","collab","mixed"],"reasons":["Drawing lessons","Workshops","Collaboration","Something else"]}</script>
 </body>
 </html>

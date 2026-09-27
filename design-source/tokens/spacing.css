@@ -1,0 +1,43 @@
+/* Layout + spacing — exact values from the v1 site (rem-based, vw gutters) */
+:root{
+  --gutter:6vw; /* @kind spacing */
+  --gutter-mobile-nav:8vw; /* @kind spacing */
+  --max-w:1240px; /* @kind spacing */
+  --max-w-lightbox:1100px; /* @kind spacing */
+  --max-w-contact:780px; /* @kind spacing */
+
+  --section-y:7rem; /* @kind spacing */
+  --page-head-top:9rem; /* @kind spacing */
+  --contact-head-top:10rem; /* @kind spacing */
+  --header-y:1.6rem; /* @kind spacing */
+  --header-y-scrolled:1rem; /* @kind spacing */
+
+  --space-3xs:.2rem;
+  --space-2xs:.5rem;
+  --space-xs:.6rem;
+  --space-sm:.9rem;
+  --space-md:1.1rem;
+  --space-lg:1.6rem;
+  --space-xl:2rem;
+  --space-2xl:2.4rem;
+  --space-3xl:3rem;
+  --space-4xl:4rem;
+
+  --grid-gap:1.8rem; /* @kind spacing */
+  --strip-gap:1.6rem; /* @kind spacing */
+  --split-gap:4rem; /* @kind spacing */
+
+  --radius-sm:6px;
+  --radius-md:10px;
+  --radius-pill:999px;
+
+  --ratio-art:4/5; /* @kind other */
+  --ratio-portrait:3/4; /* @kind other */
+
+  --hit-round:44px; /* @kind spacing */
+  --z-header:500; /* @kind other */
+  --z-lightbox:800; /* @kind other */
+  --z-grain:998; /* @kind other */
+  --z-cursor:999; /* @kind other */
+  --z-curtain:1000; /* @kind other */
+}
