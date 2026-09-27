@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="120" viewBox="0 0 520 120">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&amp;display=swap');
+      .word { font-family: 'Fraunces', Georgia, serif; font-weight: 500; }
+    </style>
+  </defs>
+  <rect width="520" height="120" fill="#140f1c"/>
+  <text x="32" y="76" class="word" font-size="52" fill="#f6efe4">Esm<tspan font-style="italic" fill="#ff6b52">é</tspan>e Peets</text>
+</svg>
