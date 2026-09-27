@@ -125,13 +125,21 @@
   if (lightbox && galleryItems.length){
     var lbArt = lightbox.querySelector('.art-placeholder, .art-photo');
     var lbImg = lbArt ? lbArt.querySelector('img') : null;
+    var lbCounter = lightbox.querySelector('.lightbox-counter');
     var lbTitle = lightbox.querySelector('.lightbox-info h3');
     var lbMeta = lightbox.querySelector('.work-meta');
     var lbDesc = lightbox.querySelector('.lightbox-info p');
-    var items = Array.prototype.slice.call(galleryItems);
+    var allItems = Array.prototype.slice.call(galleryItems);
     var current = 0;
 
+    function visibleItems(){
+      return allItems.filter(function(item){ return !item.classList.contains('is-hidden'); });
+    }
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
     function paint(i){
+      var items = visibleItems();
+      if (!items.length) return;
       current = (i + items.length) % items.length;
       var item = items[current];
       var art = item.querySelector('.art-placeholder, .art-photo');
@@ -146,13 +154,20 @@
       }
       lbTitle.textContent = item.getAttribute('data-title') || '';
       lbMeta.textContent = item.getAttribute('data-meta') || '';
-      lbDesc.textContent = item.getAttribute('data-desc') || '';
+      lbDesc.textContent = item.getAttribute('data-note') || item.getAttribute('data-desc') || '';
+      if (lbCounter) lbCounter.textContent = pad(current + 1) + ' / ' + pad(items.length);
     }
-    function open(i){ paint(i); lightbox.classList.add('is-open'); document.body.style.overflow='hidden'; }
+    function open(item){
+      var items = visibleItems();
+      var i = items.indexOf(item);
+      paint(i < 0 ? 0 : i);
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
     function close(){ lightbox.classList.remove('is-open'); document.body.style.overflow=''; }
 
-    items.forEach(function(item, i){
-      item.addEventListener('click', function(){ open(i); });
+    allItems.forEach(function(item){
+      item.addEventListener('click', function(){ open(item); });
     });
     lightbox.querySelector('.lightbox-close').addEventListener('click', close);
     lightbox.addEventListener('click', function(e){ if (e.target === lightbox) close(); });
@@ -163,6 +178,32 @@
       if (e.key === 'Escape') close();
       if (e.key === 'ArrowLeft') paint(current-1);
       if (e.key === 'ArrowRight') paint(current+1);
+    });
+  }
+
+  /* ---------- contact form (reason pills + no-backend "sent" confirmation) ---------- */
+  var contactForm = document.querySelector('.contact-form');
+  if (contactForm){
+    var pills = contactForm.querySelectorAll('.reason-pill');
+    pills.forEach(function(p){
+      p.addEventListener('click', function(){
+        pills.forEach(function(o){ o.classList.remove('is-active'); });
+        p.classList.add('is-active');
+      });
+    });
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var panel = contactForm.closest('.contact-panel');
+      if (!panel) return;
+      panel.innerHTML =
+        '<div class="contact-sent">' +
+          '<div class="contact-sent-title">Merci &mdash; <em>message sent.</em></div>' +
+          '<p>Esm&eacute;e will reply from esmeepeets@gmail.com.</p>' +
+          '<button type="button" class="text-link contact-reset">Write another</button>' +
+        '</div>';
+      panel.querySelector('.contact-reset').addEventListener('click', function(){
+        window.location.reload();
+      });
     });
   }
 
