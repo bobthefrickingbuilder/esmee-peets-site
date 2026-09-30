@@ -265,6 +265,18 @@ def fix_grain(s):
 # Client-approved placeholder statement (do not replace with drafted copy).
 STATEMENT_RE = re.compile(r'(font-size:var\(--fs-statement\)[^>]*>).*?(</p>)', re.S)
 
+# Real portrait photo, cropped/centered by the client (replaces Design's placeholder box).
+PORTRAIT_RE = re.compile(
+    r'<div data-reveal="1" style="position:relative; aspect-ratio:var\(--ratio-portrait\); '
+    r'background:var\(--ph-portrait\); max-width:460px">\s*'
+    r'<span[^>]*>Placeholder — portrait of Esmée</span>\s*</div>'
+)
+PORTRAIT_IMG = (
+    '<div data-reveal="1" style="position:relative; max-width:460px">'
+    '<img src="/assets/img/esmee-portrait.jpg" alt="Portrait of Esmée Peets" '
+    'style="width:100%; height:auto; display:block; border-radius:6px"></div>'
+)
+
 META = {
     'home': ('Esmée Peets — Artist &amp; arts educator', ''),
     'work': ('Work — Esmée Peets', 'work/'),
@@ -283,6 +295,8 @@ def page_html(page):
     assert 'uploads/' not in body
     if page == 'home':
         body, n = STATEMENT_RE.subn(r'\1Filler quote\2', body); assert n == 1
+    if page == 'about':
+        body, n = PORTRAIT_RE.subn(PORTRAIT_IMG, body); assert n == 1
     title, _ = META[page]
     return f'''<!DOCTYPE html>
 <html lang="en">
