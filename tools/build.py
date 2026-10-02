@@ -297,6 +297,9 @@ META = {
 DESC = ('Esmée Peets is a visual artist in Ottawa/Montréal working in painting, graphite drawing, '
         'and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.')
 
+SITE = 'https://esmeepeets.com'
+OG_IMAGE = SITE + '/assets/img/esmee-portrait.jpg'
+
 def page_html(page):
     body = render(ROOT.kids, [context(page)]).strip()
     body = fix_grain(body)
@@ -309,7 +312,8 @@ def page_html(page):
         body, n = PORTRAIT_RE.subn(PORTRAIT_IMG, body); assert n == 1
     if page == 'home':
         body, n = HOME_FOOTER_RE.subn(HOME_FOOTER_TEXT, body); assert n == 1
-    title, _ = META[page]
+    title, path = META[page]
+    url = SITE + '/' + path
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -317,6 +321,17 @@ def page_html(page):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{esc_a(DESC)}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Esmée Peets">
+<meta property="og:title" content="{esc_a(title)}">
+<meta property="og:description" content="{esc_a(DESC)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc_a(title)}">
+<meta name="twitter:description" content="{esc_a(DESC)}">
+<meta name="twitter:image" content="{OG_IMAGE}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
