@@ -266,12 +266,14 @@ def fix_grain(s):
 STATEMENT_RE = re.compile(r'(font-size:var\(--fs-statement\)[^>]*>).*?(</p>)', re.S)
 
 # Home-only footer CTA: client wants a neutral sign-off on the homepage specifically,
-# not the services-list version Design uses on about/work/store.
+# not the services-list version Design uses on about/work/store. No language mention,
+# no "workshops", "collaborations" -> "commissions", no em dash.
 HOME_FOOTER_RE = re.compile(
     r'Drawing lessons, workshops and collaborations, '
-    r'(<em style="color:var\(--rose-dust\)">in English or French\.</em>)'
+    r'<em style="color:var\(--rose-dust\)">in English or French\.</em>'
 )
-HOME_FOOTER_TEXT = r'Questions about a piece, or just to say hello, \1'
+HOME_FOOTER_TEXT = ('Drawing lessons and commissions. '
+                     '<em style="color:var(--rose-dust)">Get in contact with me.</em>')
 
 # Real portrait photo, cropped/centered by the client (replaces Design's placeholder box).
 PORTRAIT_RE = re.compile(
