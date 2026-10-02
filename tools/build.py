@@ -6,7 +6,7 @@ as <template data-if="key"> + live copy, driven by assets/site.js.
 
 Usage (from the repo root):  python tools/build.py design-source .
 Regenerates index.html, work/, about/, contact/ and assets/site.css. assets/site.js is hand-ported, not generated.
-Intentional deviations from Design live here: the green curtain (CURTAIN) and the "Filler quote" statement (STATEMENT_RE).
+Intentional deviations from Design live here: the green curtain (CURTAIN) and the client-approved statement text (STATEMENT_RE).
 """
 import ast, html, json, os, re, sys
 from html.parser import HTMLParser
@@ -262,7 +262,7 @@ def fix_grain(s):
     assert n == 1, n
     return s
 
-# Client-approved placeholder statement (do not replace with drafted copy).
+# Client-approved statement text (replaces Design's original line; see STATEMENT_RE above).
 STATEMENT_RE = re.compile(r'(font-size:var\(--fs-statement\)[^>]*>).*?(</p>)', re.S)
 
 # Home-only footer CTA: client wants a neutral sign-off on the homepage specifically,
@@ -304,7 +304,7 @@ def page_html(page):
     body = body.replace('src="uploads/esmee-peets-complete-package/artwork/', 'src="/assets/img/')
     assert 'uploads/' not in body
     if page == 'home':
-        body, n = STATEMENT_RE.subn(r'\1Filler quote\2', body); assert n == 1
+        body, n = STATEMENT_RE.subn(r'\1Paintings built in bold colour, drawings built in fine graphite detail.\2', body); assert n == 1
     if page == 'about':
         body, n = PORTRAIT_RE.subn(PORTRAIT_IMG, body); assert n == 1
     if page == 'home':
