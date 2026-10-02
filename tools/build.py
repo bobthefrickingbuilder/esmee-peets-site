@@ -272,7 +272,7 @@ HOME_FOOTER_RE = re.compile(
     r'Drawing lessons, workshops and collaborations, '
     r'<em style="color:var\(--rose-dust\)">in English or French\.</em>'
 )
-HOME_FOOTER_TEXT = ('Drawing lessons and commissions. '
+HOME_FOOTER_TEXT = ('Drawing lessons, commissions or questions? '
                      '<em style="color:var(--rose-dust)">Get in contact with me.</em>')
 
 # Real portrait photo, cropped/centered by the client (replaces Design's placeholder box).
