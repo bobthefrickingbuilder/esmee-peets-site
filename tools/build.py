@@ -265,11 +265,19 @@ def fix_grain(s):
 # Client-approved placeholder statement (do not replace with drafted copy).
 STATEMENT_RE = re.compile(r'(font-size:var\(--fs-statement\)[^>]*>).*?(</p>)', re.S)
 
+# Home-only footer CTA: client wants a neutral sign-off on the homepage specifically,
+# not the services-list version Design uses on about/work/store.
+HOME_FOOTER_RE = re.compile(
+    r'Drawing lessons, workshops and collaborations, '
+    r'(<em style="color:var\(--rose-dust\)">in English or French\.</em>)'
+)
+HOME_FOOTER_TEXT = r'Questions about a piece, or just to say hello, \1'
+
 # Real portrait photo, cropped/centered by the client (replaces Design's placeholder box).
 PORTRAIT_RE = re.compile(
     r'<div data-reveal="1" style="position:relative; aspect-ratio:var\(--ratio-portrait\); '
     r'background:var\(--ph-portrait\); max-width:460px">\s*'
-    r'<span[^>]*>Placeholder — portrait of Esmée</span>\s*</div>'
+    r'<span[^>]*>Placeholder: portrait of Esmée</span>\s*</div>'
 )
 PORTRAIT_IMG = (
     '<div data-reveal="1" style="position:relative; max-width:460px">'
@@ -278,11 +286,11 @@ PORTRAIT_IMG = (
 )
 
 META = {
-    'home': ('Esmée Peets — Artist', ''),
-    'work': ('Work — Esmée Peets', 'work/'),
-    'about': ('About — Esmée Peets', 'about/'),
-    'contact': ('Contact — Esmée Peets', 'contact/'),
-    'store': ('Store — Esmée Peets', 'store/'),
+    'home': ('Esmée Peets · Artist', ''),
+    'work': ('Work · Esmée Peets', 'work/'),
+    'about': ('About · Esmée Peets', 'about/'),
+    'contact': ('Contact · Esmée Peets', 'contact/'),
+    'store': ('Store · Esmée Peets', 'store/'),
 }
 DESC = ('Esmée Peets is a visual artist in Ottawa/Montréal working in painting, graphite drawing, '
         'and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.')
@@ -297,6 +305,8 @@ def page_html(page):
         body, n = STATEMENT_RE.subn(r'\1Filler quote\2', body); assert n == 1
     if page == 'about':
         body, n = PORTRAIT_RE.subn(PORTRAIT_IMG, body); assert n == 1
+    if page == 'home':
+        body, n = HOME_FOOTER_RE.subn(HOME_FOOTER_TEXT, body); assert n == 1
     title, _ = META[page]
     return f'''<!DOCTYPE html>
 <html lang="en">
