@@ -278,13 +278,13 @@ PORTRAIT_IMG = (
 )
 
 META = {
-    'home': ('Esmée Peets — Artist &amp; arts educator', ''),
+    'home': ('Esmée Peets — Artist', ''),
     'work': ('Work — Esmée Peets', 'work/'),
     'about': ('About — Esmée Peets', 'about/'),
     'contact': ('Contact — Esmée Peets', 'contact/'),
     'store': ('Store — Esmée Peets', 'store/'),
 }
-DESC = ('Esmée Peets is a visual artist and arts educator in Ottawa/Montréal working in painting, graphite drawing, '
+DESC = ('Esmée Peets is a visual artist in Ottawa/Montréal working in painting, graphite drawing, '
         'and collaborative wearable sculpture. Studying Art History and Studio Arts at Concordia University.')
 
 def page_html(page):
