@@ -25,11 +25,13 @@ def js_lit(name):
     return ast.literal_eval(body)
 
 WORKS = js_lit('WORKS')
+NO_DIMENSIONS = {'brumeuse', 'smokin-cocotte'}
 for w in WORKS:
     w['src'] = '/assets/img/' + w['id'] + '.jpg'
     w['meta'] = ' · '.join(x for x in [w.get('medium'), w.get('dims'), w.get('year')] if x)
     w['noteLine'] = ('With ' + w['collab']) if w.get('collab') else (w.get('note') or '')
-    w['dimsLine'] = w.get('dims') or 'Dimensions to confirm'
+    # Wearable sculptures have no defined dimensions, so show nothing instead of the placeholder (client ask).
+    w['dimsLine'] = '' if w['id'] in NO_DIMENSIONS else (w.get('dims') or 'Dimensions to confirm')
     w['yearLine'] = w.get('year') or ''
 BY = {w['id']: w for w in WORKS}
 CATS = js_lit('CATS')
