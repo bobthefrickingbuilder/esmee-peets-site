@@ -205,10 +205,12 @@ MESH = ('<div style="position: absolute; inset: 0px; overflow: hidden; pointer-e
 MARQUEE = ('<div style="display: flex; width: max-content; white-space: nowrap; font-family: var(--serif); font-style: italic; font-size: var(--fs-marquee); color: var(--ink-dim); animation: ep-marquee calc(var(--dur-marquee) * 1.4) linear infinite;">'
  + ''.join('<span style="display: inline-flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem;">%s<span style="width: 6px; height: 6px; border-radius: 50%%; background: var(--gold); display: inline-block;"></span></span>' % esc_t(c) for c in CREDS + CREDS)
  + '</div>')
-# Curtain: Design's structure/timing; panels recoloured to one continuous dark→light→dark green sweep (client ask).
+# Curtain: Design's structure/timing; panels recoloured to one continuous violet→pink sweep (client ask,
+# replacing the earlier dark→light→dark green sweep with the client-supplied Violet-Pink Gradient scheme).
+CURTAIN_STOPS = '#360167, #6B0772, #AF1281, #CF268A, #E65C9C, #FB8CAB'
 # Panels overlap by 1px: quarter-width edges land on fractional pixels and anti-aliasing leaves hairline seams.
 CURTAIN = ('<div data-curtain style="position: fixed; inset: 0px; z-index: var(--z-curtain); pointer-events: none; display: flex;">'
- + ''.join('<span style="flex: 1 1 0%%; %sbackground: linear-gradient(to right, #0e2618, #6fcf8f, #0e2618) %s 0 / 400%% 100%%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span>'
+ + ''.join(('<span style="flex: 1 1 0%%; %sbackground: linear-gradient(to right, ' + CURTAIN_STOPS + ') %s 0 / 400%% 100%%; transform: scaleY(0); transform-origin: center bottom; transition: none;"></span>')
            % ('margin-right: -1px; ' if i < 3 else '', pos)
            for i, pos in enumerate(('0%', '33.333%', '66.667%', '100%')))
  + '</div>')
