@@ -1,0 +1,216 @@
+{
+ "catalog": {
+  "flux": {
+   "title": "Flux",
+   "priceCAD": 600,
+   "status": "available",
+   "shipTier": "large",
+   "description": "Acrylic on canvas, 36 x 48 in",
+   "image": "https://esmeepeets.com/assets/img/flux.jpg"
+  },
+  "jecoute": {
+   "title": "J'écoute",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Acrylic on canvas, 16 x 20 in",
+   "image": "https://esmeepeets.com/assets/img/jecoute.jpg"
+  },
+  "regard-brouille": {
+   "title": "Regard brouillé",
+   "priceCAD": 250,
+   "status": "available",
+   "shipTier": "small",
+   "description": "Graphite",
+   "image": "https://esmeepeets.com/assets/img/regard-brouille.jpg"
+  },
+  "etreinte": {
+   "title": "Étreinte",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Acrylic on canvas, 30 x 40 in",
+   "image": "https://esmeepeets.com/assets/img/etreinte.jpg"
+  },
+  "pigeon": {
+   "title": "Pigeon",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Graphite",
+   "image": "https://esmeepeets.com/assets/img/pigeon.jpg"
+  },
+  "still-life": {
+   "title": "Still Life",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Mixed media",
+   "image": "https://esmeepeets.com/assets/img/still-life.jpg"
+  },
+  "la-vie-en-rose": {
+   "title": "La vie en rose",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Acrylic",
+   "image": "https://esmeepeets.com/assets/img/la-vie-en-rose.jpg"
+  },
+  "inspiration": {
+   "title": "Inspiration",
+   "priceCAD": 500,
+   "status": "available",
+   "shipTier": "medium",
+   "description": "Acrylic on canvas, 30 x 40 in",
+   "image": "https://esmeepeets.com/assets/img/inspiration.jpg"
+  },
+  "grand-papa": {
+   "title": "Grand-papa",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Acrylic on canvas",
+   "image": "https://esmeepeets.com/assets/img/grand-papa.jpg"
+  },
+  "chien-etude": {
+   "title": "Untitled (Dog Study)",
+   "priceCAD": null,
+   "status": "sold",
+   "shipTier": null,
+   "description": "Graphite",
+   "image": "https://esmeepeets.com/assets/img/chien-etude.jpg"
+  }
+ },
+ "shipping": {
+  "_readme": "Flat shipping rates in CAD, by work size and destination. Researched estimates (Oct 2026), not carrier quotes: Canada Post out-of-spec items (length + girth over 118 in, any side over 2 m) cost $300 extra ($400 Nov 2 to Jan 10), and anything with a side over 1 m (39.4 in) adds a $21 handling fee ($30 peak). A 36 x 48 in canvas boxed flat is out-of-spec for Canada Post, so the large rates assume a courier or crate. Replace with real quotes before relying on them. Each work in store-data.json has a shipTier (small, medium or large).",
+  "pickupCities": [
+   "Ottawa",
+   "Montréal"
+  ],
+  "extraWorkFactor": 0.5,
+  "tiers": {
+   "small": "up to about 16 x 20 in, and works on paper",
+   "medium": "up to about 30 x 40 in",
+   "large": "larger than 30 x 40 in"
+  },
+  "rates": {
+   "small": {
+    "CA": 35,
+    "US": 55,
+    "INTL": 85
+   },
+   "medium": {
+    "CA": 95,
+    "US": 150,
+    "INTL": 230
+   },
+   "large": {
+    "CA": 200,
+    "US": 300,
+    "INTL": 450
+   }
+  },
+  "zoneNames": {
+   "CA": "Canada",
+   "US": "United States",
+   "INTL": "Elsewhere"
+  },
+  "countries": [
+   {
+    "code": "CA",
+    "name": "Canada",
+    "zone": "CA"
+   },
+   {
+    "code": "US",
+    "name": "United States",
+    "zone": "US"
+   },
+   {
+    "code": "GB",
+    "name": "United Kingdom",
+    "zone": "INTL"
+   },
+   {
+    "code": "FR",
+    "name": "France",
+    "zone": "INTL"
+   },
+   {
+    "code": "DE",
+    "name": "Germany",
+    "zone": "INTL"
+   },
+   {
+    "code": "BE",
+    "name": "Belgium",
+    "zone": "INTL"
+   },
+   {
+    "code": "NL",
+    "name": "Netherlands",
+    "zone": "INTL"
+   },
+   {
+    "code": "CH",
+    "name": "Switzerland",
+    "zone": "INTL"
+   },
+   {
+    "code": "IT",
+    "name": "Italy",
+    "zone": "INTL"
+   },
+   {
+    "code": "ES",
+    "name": "Spain",
+    "zone": "INTL"
+   },
+   {
+    "code": "PT",
+    "name": "Portugal",
+    "zone": "INTL"
+   },
+   {
+    "code": "IE",
+    "name": "Ireland",
+    "zone": "INTL"
+   },
+   {
+    "code": "SE",
+    "name": "Sweden",
+    "zone": "INTL"
+   },
+   {
+    "code": "NO",
+    "name": "Norway",
+    "zone": "INTL"
+   },
+   {
+    "code": "DK",
+    "name": "Denmark",
+    "zone": "INTL"
+   },
+   {
+    "code": "FI",
+    "name": "Finland",
+    "zone": "INTL"
+   },
+   {
+    "code": "AU",
+    "name": "Australia",
+    "zone": "INTL"
+   },
+   {
+    "code": "NZ",
+    "name": "New Zealand",
+    "zone": "INTL"
+   },
+   {
+    "code": "JP",
+    "name": "Japan",
+    "zone": "INTL"
+   }
+  ]
+ }
+}

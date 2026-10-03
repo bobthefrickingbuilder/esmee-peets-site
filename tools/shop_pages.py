@@ -4,6 +4,7 @@ These are generated from the compiled Contact page (same header, footer, curtain
 stay in step with the rest of the site. build.py calls build(contact_html) and writes the results.
 """
 import html as _html
+import json
 import re
 
 SITE = 'https://esmeepeets.com'
@@ -92,6 +93,12 @@ textarea.ep-input{resize:vertical;min-height:5.5rem}
 .ep-prose li{margin-top:.5rem}
 .ep-prose a{color:var(--ink);border-bottom:1px solid var(--gold)}
 .ep-draft{margin-top:var(--space-xl);padding:.9rem 1.1rem;border:1px dashed var(--gold);border-radius:var(--radius-sm);font-size:var(--fs-small);color:var(--ink-dim);line-height:1.5}
+.ep-table-wrap{margin-top:var(--space-lg);overflow-x:auto}
+.ep-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);min-width:420px}
+.ep-table th,.ep-table td{padding:.8rem .9rem;border-bottom:1px solid var(--line);text-align:right;font-weight:var(--fw-regular);color:var(--ink)}
+.ep-table th:first-child{text-align:left}
+.ep-table thead th{font-size:var(--fs-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--ink-faint)}
+.ep-table small{display:block;margin-top:.2rem;font-size:var(--fs-meta);color:var(--ink-faint)}
 .ep-foot-links{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 .ep-foot-links a{color:var(--ink-faint)}
 .ep-foot-links a:hover{color:var(--gold)}
@@ -147,9 +154,9 @@ def page_404():
 
 def page_cart():
     return '''<div data-reveal="1">
-<div class="ep-eyebrow">Your selection</div>
+<div class="ep-eyebrow">Your cart</div>
 <h1 class="ep-h1">Your <em>cart.</em></h1>
-<p class="ep-lead">Every work is one of a kind, so there are no quantities. Nothing is charged on this site: you send a request, and Esmée confirms the work and the shipping with you before any payment.</p>
+<p class="ep-lead">Every work is one of a kind, so there are no quantities. Shipping is worked out at checkout from where the work is going.</p>
 </div>
 <div class="ep-grid" data-ep="cart-grid">
 <div class="ep-card" id="ep-cart-list" aria-live="polite">
@@ -162,57 +169,42 @@ def page_cart():
 def page_checkout():
     return '''<div data-reveal="1">
 <div class="ep-eyebrow">Checkout</div>
-<h1 class="ep-h1">Request to <em>purchase.</em></h1>
-<p class="ep-lead">Tell Esmée where the work is going. She will reply by email to confirm availability and shipping, then send a secure online invoice. Your card is never charged on this page.</p>
+<h1 class="ep-h1">Secure <em>checkout.</em></h1>
+<p class="ep-lead">Choose how the work reaches you. You pay on Stripe's secure page, so Esmée never sees your card details.</p>
 </div>
 <div class="ep-grid" data-ep="checkout-grid">
 <div class="ep-card" id="ep-checkout-main">
-<noscript><p style="margin:0;color:var(--ink-dim)">Checkout needs JavaScript. Please email <a href="mailto:esmeepeets@gmail.com" style="border-bottom:1px solid var(--gold)">esmeepeets@gmail.com</a> with the work you would like and your delivery details.</p></noscript>
+<noscript><p style="margin:0;color:var(--ink-dim)">Checkout needs JavaScript. Please email <a href="mailto:esmeepeets@gmail.com" style="border-bottom:1px solid var(--gold)">esmeepeets@gmail.com</a> to buy a work.</p></noscript>
 <form class="ep-form" id="ep-form" novalidate hidden>
 <fieldset class="ep-fieldset">
-<div class="ep-cap" style="color:var(--gold)">1. About you</div>
-<div class="ep-two">
-<label class="ep-label"><span>Name</span><input class="ep-input" name="name" autocomplete="name" required></label>
-<label class="ep-label"><span>Email</span><input class="ep-input" name="email" type="email" autocomplete="email" required></label>
-</div>
-<label class="ep-label"><span>Phone (optional)</span><input class="ep-input" name="phone" type="tel" autocomplete="tel"></label>
+<div class="ep-cap" style="color:var(--gold)">1. Your email</div>
+<label class="ep-label"><span>Email for your receipt and delivery updates</span><input class="ep-input" name="email" type="email" autocomplete="email" required></label>
 </fieldset>
 <fieldset class="ep-fieldset">
 <div class="ep-cap" style="color:var(--gold)">2. Delivery</div>
-<div class="ep-choice" role="radiogroup" aria-label="Delivery method">
+<label class="ep-label"><span>Country</span><select class="ep-input" name="country" id="ep-country" autocomplete="country"></select></label>
+<div class="ep-choice" role="radiogroup" aria-label="Delivery method" id="ep-method">
 <label><input type="radio" name="delivery" value="ship" checked><span>Ship to me</span></label>
-<label><input type="radio" name="delivery" value="pickup"><span>Local pickup</span></label>
-</div>
-<div class="ep-fieldset" id="ep-ship">
-<label class="ep-label"><span>Street address</span><input class="ep-input" name="address1" autocomplete="address-line1"></label>
-<label class="ep-label"><span>Apartment, unit (optional)</span><input class="ep-input" name="address2" autocomplete="address-line2"></label>
-<div class="ep-two">
-<label class="ep-label"><span>City</span><input class="ep-input" name="city" autocomplete="address-level2"></label>
-<label class="ep-label"><span>Province / State</span><input class="ep-input" name="region" autocomplete="address-level1"></label>
-</div>
-<div class="ep-two">
-<label class="ep-label"><span>Postal / ZIP code</span><input class="ep-input" name="postal" autocomplete="postal-code"></label>
-<label class="ep-label"><span>Country</span><input class="ep-input" name="country" value="Canada" autocomplete="country-name"></label>
-</div>
+<label id="ep-pickup-opt"><input type="radio" name="delivery" value="pickup"><span>Local pickup</span></label>
 </div>
 <div class="ep-fieldset" id="ep-pickup" hidden>
-<label class="ep-label"><span>Pickup city</span>
-<select class="ep-input" name="pickupCity"><option>Ottawa</option><option>Montréal</option></select></label>
-<p class="ep-note" style="margin:0">Pickup is free. Esmée will confirm a time and place with you by email.</p>
+<label class="ep-label"><span>Pickup city</span><select class="ep-input" name="pickupCity" id="ep-pickup-city"></select></label>
+<p class="ep-note" style="margin:0">Pickup is free. Esmée will email you to arrange a time and place.</p>
 </div>
+<p class="ep-note" style="margin:0" id="ep-ship-note">You will enter your street address on the next page.</p>
 </fieldset>
 <fieldset class="ep-fieldset">
 <div class="ep-cap" style="color:var(--gold)">3. Anything else</div>
-<label class="ep-label"><span>Notes (optional)</span><textarea class="ep-input" name="notes" rows="3"></textarea></label>
+<label class="ep-label"><span>Notes for Esmée (optional)</span><textarea class="ep-input" name="notes" rows="3" maxlength="400"></textarea></label>
 </fieldset>
-<div class="ep-hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
-<label class="ep-check"><input type="checkbox" name="consent" required><span>I understand that sending this form is a request, not a purchase. Nothing is charged until Esmée confirms the work and the delivery with me. I have read the <a href="/shipping-returns/" data-go="shipping" style="border-bottom:1px solid var(--gold)">shipping &amp; returns</a> and <a href="/terms/" data-go="terms" style="border-bottom:1px solid var(--gold)">terms</a>.</span></label>
+<label class="ep-check"><input type="checkbox" name="consent" required><span>I have read the <a href="/shipping-returns/" data-go="shipping" style="border-bottom:1px solid var(--gold)">shipping &amp; returns</a> and <a href="/terms/" data-go="terms" style="border-bottom:1px solid var(--gold)">terms of sale</a>.</span></label>
 <p class="ep-status is-error" id="ep-form-error" role="alert" hidden></p>
 <p class="ep-status" id="ep-form-status" role="status" hidden></p>
 <div class="ep-actions">
-<button class="ep-btn" type="submit" id="ep-submit" data-cursor="Send">Send purchase request <span>→</span></button>
+<button class="ep-btn" type="submit" id="ep-submit" data-cursor="Pay">Continue to secure payment <span>→</span></button>
 <a class="ep-link ep-link-dim" href="/cart/" data-go="cart">Back to cart</a>
 </div>
+<p class="ep-note" style="margin:0">Payments are processed by Stripe. Card, Apple Pay and Google Pay are accepted.</p>
 </form>
 </div>
 <aside class="ep-card ep-sticky" id="ep-checkout-summary" hidden></aside>
@@ -221,20 +213,20 @@ def page_checkout():
 
 def page_thanks():
     return '''<div data-reveal="1">
-<div class="ep-eyebrow">Request received</div>
+<div class="ep-eyebrow" id="ep-thanks-eyebrow">Thank you</div>
 <h1 class="ep-h1 ep-h1-xl">Merci, <em>à bientôt.</em></h1>
-<p class="ep-lead">Your request is with Esmée. She will reply from esmeepeets@gmail.com to confirm the work and arrange shipping or pickup.</p>
+<p class="ep-lead" id="ep-thanks-lead">Thank you for visiting. If you have just made a purchase, a receipt is on its way to your inbox.</p>
 </div>
 <div class="ep-grid" style="margin-top:var(--space-2xl)">
 <div class="ep-card" id="ep-order" hidden></div>
 <div class="ep-card">
 <div class="ep-cap" style="color:var(--gold)">What happens next</div>
 <ol class="ep-steps">
-<li><span><b>Esmée confirms</b>She checks the work is still available and replies with a shipping quote, or a pickup time.</span></li>
-<li><span><b>You get an invoice</b>Once everything is agreed, you receive a secure online invoice by email.</span></li>
+<li><span><b>Your receipt</b>Stripe emails a receipt to the address you gave.</span></li>
+<li><span><b>Esmée gets in touch</b>She will email you to confirm delivery, or to arrange a pickup time.</span></li>
 <li><span><b>The work is packed and sent</b>Tracked and insured, with a tracking number sent to you.</span></li>
 </ol>
-<p class="ep-note">Nothing has been charged. If you do not hear back, write to <a href="mailto:esmeepeets@gmail.com" style="border-bottom:1px solid var(--gold)">esmeepeets@gmail.com</a>.</p>
+<p class="ep-note">Questions about your order? Write to <a href="mailto:esmeepeets@gmail.com" style="border-bottom:1px solid var(--gold)">esmeepeets@gmail.com</a>.</p>
 </div>
 </div>
 <div class="ep-actions" style="margin-top:var(--space-2xl)">
@@ -259,17 +251,29 @@ def prose(eyebrow, h1, lead, body):
 </div>'''
 
 
-def page_shipping():
+def rates_table(sh):
+    zones = ['CA', 'US', 'INTL']
+    head = ''.join(f'<th>{esc_a(sh["zoneNames"][z])}</th>' for z in zones)
+    rows = ''
+    for tier, desc in sh['tiers'].items():
+        cells = ''.join(f'<td>${sh["rates"][tier][z]}</td>' for z in zones)
+        rows += f'<tr><th scope="row">{tier.capitalize()}<small>{esc_a(desc)}</small></th>{cells}</tr>'
+    return f'<div class="ep-table-wrap"><table class="ep-table"><thead><tr><th></th>{head}</tr></thead><tbody>{rows}</tbody></table></div>'
+
+
+def page_shipping(sh):
     return prose('Shipping &amp; returns', 'Shipping &amp; <em>returns.</em>',
-                 'Every work is one of a kind and travels carefully. Here is how delivery and returns work.', '''
+                 'Every work is one of a kind and travels carefully. Here is how delivery and returns work.', f'''
 <h2>How shipping works</h2>
-<p>Originals are packed flat or crated, protected against moisture and impact, and sent tracked and insured. Because each piece differs in size, weight and value, shipping is quoted for your order after you send a request, and it is added to your invoice. There is no shipping charge on this site.</p>
+<p>Originals are packed flat or crated, protected against moisture and impact, and sent tracked and insured. Shipping is a flat rate based on the size of the work and where it is going. You see the exact amount at checkout before you pay.</p>
+{rates_table(sh)}
+<p>Rates are in Canadian dollars. If you buy more than one work, the dearest one pays its full rate and each additional work pays half.</p>
 <h2>Local pickup</h2>
-<p>Pickup is free in Ottawa and Montréal. Choose it at checkout and Esmée will arrange a time and place with you by email.</p>
+<p>Pickup is free in Ottawa and Montréal. Choose it at checkout and Esmée will email you to arrange a time and place.</p>
 <h2>Delivery times</h2>
-<p>Esmée gives you an estimate with your shipping quote. Times depend on the destination and on the carrier.</p>
+<p>Esmée will email you with an estimate once your order is packed. Times depend on the destination and on the carrier.</p>
 <h2>International orders</h2>
-<p>Duties, import taxes and customs fees are set by the destination country and are the buyer's responsibility.</p>
+<p>Duties, import taxes and customs fees are set by the destination country and are the buyer's responsibility. If your country is not on the list at checkout, email <a href="mailto:esmeepeets@gmail.com">esmeepeets@gmail.com</a> and Esmée will arrange it with you.</p>
 <h2>If something arrives damaged</h2>
 <p>Please write to <a href="mailto:esmeepeets@gmail.com">esmeepeets@gmail.com</a> within 48 hours of delivery with photos of the work and the packaging, and keep the packaging. Esmée will sort out the carrier claim and the next steps with you.</p>
 <h2>Returns</h2>
@@ -281,11 +285,11 @@ def page_privacy():
     return prose('Privacy', 'Your <em>privacy.</em>',
                  'What this site collects, why, and how to ask for it to be removed.', '''
 <h2>What is collected</h2>
-<p>When you send a purchase request or a message, the site collects the details you type: your name, email, delivery address, phone number if you add one, and your notes. The works in your cart are saved in your own browser so they are still there when you come back. No account is created.</p>
+<p>When you buy a work or send a message, the site collects the details you type: your email and your notes. Stripe collects your name, delivery address, phone number and payment details on its own page and passes the delivery details to Esmée so she can ship your order. The works in your cart are saved in your own browser so they are still there when you come back. No account is created.</p>
 <h2>How it is used</h2>
-<p>Only to answer you, confirm a purchase, arrange delivery and issue an invoice. It is not sold or shared for advertising.</p>
+<p>Only to answer you, process your order and arrange delivery. It is not sold or shared for advertising.</p>
 <h2>Payments</h2>
-<p>Card payments are handled by the payment provider on its own secure page. Esmée never sees or stores your card number.</p>
+<p>Payments are handled by Stripe on its own secure page. Esmée never sees or stores your card number. Stripe's use of your data is covered by its own privacy policy.</p>
 <h2>Analytics</h2>
 <p>The site uses privacy-friendly visitor statistics that count page views without tracking you across other sites.</p>
 <h2>Keeping and deleting your information</h2>
@@ -298,10 +302,10 @@ def page_terms():
                  'The short, plain version of how buying an original work from Esmée works.', '''
 <h2>Original works</h2>
 <p>Each work listed in the store is a one-of-a-kind original. Colours on a screen can differ slightly from the work in person.</p>
-<h2>Requests and availability</h2>
-<p>Sending a purchase request does not complete a sale. A sale is made once Esmée confirms in writing that the work is available and you have paid the invoice. Esmée may decline a request, for example if the work has already been sold.</p>
+<h2>Availability</h2>
+<p>Each work is sold once. A purchase is complete when your payment goes through. If two people try to buy the same work at the same moment, the first completed payment gets it, and Esmée will refund the other in full.</p>
 <h2>Prices and payment</h2>
-<p>Prices are in Canadian dollars. Where a price is shown as "Price on request", Esmée will send it with her reply. Shipping is added to your invoice, and you see the full amount before you pay. No GST/HST is added to the price.</p>
+<p>Prices are in Canadian dollars and are paid by card, Apple Pay or Google Pay on Stripe's secure payment page. Shipping is calculated at checkout, and you see the full amount before you pay. No GST/HST is added to the price.</p>
 <h2>Copyright</h2>
 <p>Buying a work gives you the physical piece. Copyright stays with Esmée, so images of the work may not be reproduced, sold or published without her written permission.</p>
 <h2>Shipping and returns</h2>
@@ -323,7 +327,7 @@ PAGES = {
 }
 
 
-def build(contact_html):
+def build(contact_html, shipping):
     """Return {output path: html} for every shop page, derived from the compiled Contact page."""
     mesh = next(l for l in contact_html.split('\n') if l.lstrip().startswith('<div style="position:absolute; inset:0; opacity:.55; pointer-events:none">'))
     tail_at = contact_html.index('<link rel="icon" href="/favicon.ico"')
@@ -331,7 +335,10 @@ def build(contact_html):
     assert MAIN_RE.search(tail) and NAV_ACTIVE_RE.search(tail)
     out = {}
     for key, (path, title, desc, noindex, pid, label, fn, js) in PAGES.items():
-        t, n = MAIN_RE.subn(lambda m: main(label, fn(), mesh), tail); assert n == 1
+        inner = fn(shipping) if key == 'shipping-returns' else fn()
+        if key == 'checkout':   # checkout reads the same rates the server uses (design-source/shipping.json)
+            inner += '\n<script id="ep-ship" type="application/json">' + json.dumps(shipping, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>'
+        t, n = MAIN_RE.subn(lambda m: main(label, inner, mesh), tail); assert n == 1
         t, n = NAV_ACTIVE_RE.subn(NAV_INACTIVE, t); assert n == 1
         t, n = re.subn(r'data-page="contact"', f'data-page="{pid}"', t); assert n == 1
         shop_tag = f'<script defer src="/assets/shop.js" data-shop="{js}"></script>\n' if js else ''

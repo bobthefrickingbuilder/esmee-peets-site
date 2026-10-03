@@ -195,7 +195,7 @@ input,textarea,button{font:inherit;color:inherit}
             <div>
               <div style="font-size:var(--fs-eyebrow); letter-spacing:var(--tr-eyebrow); text-transform:uppercase; color:var(--gold)">Store</div>
               <h1 style="margin:var(--space-sm) 0 0; font-family:var(--serif); font-weight:var(--fw-light); font-size:var(--fs-h1); line-height:var(--lh-heading)">Original <em>works</em> for sale</h1>
-              <p style="margin:var(--space-md) 0 0; max-width:48ch; color:var(--ink-dim)">Each piece is a one-of-a-kind original. Add works to your selection and send a purchase request. Esmée will confirm availability, shipping and payment by email.</p>
+              <p style="margin:var(--space-md) 0 0; max-width:48ch; color:var(--ink-dim)">Each piece is a one-of-a-kind original. Add works to your cart and check out securely. Shipping is calculated at checkout, and local pickup in Ottawa and Montréal is free.</p>
             </div>
           </sc-if>
           <sc-if value="{{ storeViewSold }}" hint-placeholder-val="{{ true }}">
@@ -242,10 +242,10 @@ input,textarea,button{font:inherit;color:inherit}
               </div>
               <div style="font-size:var(--fs-meta); color:var(--ink-dim); margin-top:2px">{{ w.meta }}</div>
               <sc-if value="{{ w.inCart }}">
-                <button onClick="{{ w.toggle }}" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--rose); background:var(--rose); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase">In selection ✓</button>
+                <button onClick="{{ w.toggle }}" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--rose); background:var(--rose); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase">In cart ✓</button>
               </sc-if>
               <sc-if value="{{ w.notInCart }}" hint-placeholder-val="{{ true }}">
-                <button onClick="{{ w.toggle }}" data-cursor="Add" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:transparent; font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)" style-hover="background:var(--ink); color:var(--bg)">Add to selection +</button>
+                <button onClick="{{ w.toggle }}" data-cursor="Add" style="margin-top:var(--space-md); align-self:flex-start; display:inline-flex; gap:.6rem; padding:.7rem 1.2rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:transparent; font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; transition:background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease)" style-hover="background:var(--ink); color:var(--bg)">Add to cart +</button>
               </sc-if>
             </article>
           </sc-for>

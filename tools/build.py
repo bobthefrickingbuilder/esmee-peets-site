@@ -51,6 +51,11 @@ for d in STORE_DATA.values():
     assert d['priceCAD'] is None or isinstance(d['priceCAD'], (int, float)), 'bad priceCAD for ' + d['id']
 PRICES = {k: d['priceCAD'] for k, d in STORE_DATA.items()}
 STATUS = {k: d['status'] for k, d in STORE_DATA.items()}
+# Shipping: flat rates by size tier + destination zone (design-source/shipping.json); each work carries a shipTier.
+SHIPPING = json.load(open(os.path.join(SRC, 'shipping.json'), encoding='utf-8'))
+for d in STORE_DATA.values():
+    if d['status'] == 'available' and d['priceCAD'] is not None:
+        assert d.get('shipTier') in SHIPPING['rates'], 'missing/bad shipTier for ' + d['id']
 STORE_CATS_ALL = ast.literal_eval(re.search(r'const cats = (\[\[.*?\]\])\.filter', script).group(1))
 FOR_SALE = [w for w in WORKS if w['id'] in PRICES]
 # Two mutually-exclusive store galleries: pieces currently for sale, and an archive of past sold
@@ -419,7 +424,16 @@ pages = {pg: page_html(pg) for pg in META}
 for pg, h in pages.items():
     d = os.path.join(OUT, META[pg][1]); os.makedirs(d, exist_ok=True)
     open(os.path.join(d, 'index.html'), 'w', encoding='utf-8', newline='\n').write(h)
-for rel, h in shop_pages.build(pages['contact']).items():
+# Data for the checkout serverless functions (api/*.js). Server-side prices are the source of truth: the browser
+# only sends work ids, never amounts.
+CATALOG = {w['id']: {'title': w['title'], 'priceCAD': PRICES[w['id']], 'status': STATUS[w['id']],
+                     'shipTier': STORE_DATA[w['id']].get('shipTier'),
+                     'description': ', '.join(x for x in (STORE_DATA[w['id']].get('medium'), STORE_DATA[w['id']].get('dimensions')) if x),
+                     'image': SITE + w['src']} for w in FOR_SALE}
+os.makedirs(os.path.join(OUT, 'api'), exist_ok=True)
+open(os.path.join(OUT, 'api', '_data.json'), 'w', encoding='utf-8', newline='\n').write(
+    json.dumps({'catalog': CATALOG, 'shipping': SHIPPING}, ensure_ascii=False, indent=1) + '\n')
+for rel, h in shop_pages.build(pages['contact'], dict(SHIPPING, workTiers={k: v['shipTier'] for k, v in CATALOG.items() if v['shipTier']})).items():
     d = os.path.dirname(os.path.join(OUT, rel))
     if d: os.makedirs(d, exist_ok=True)
     open(os.path.join(OUT, rel), 'w', encoding='utf-8', newline='\n').write(h)
