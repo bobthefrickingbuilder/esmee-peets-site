@@ -18,7 +18,7 @@
     "year": null,
     "category": "painting",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/jecoute.jpg"
   },
   {
@@ -40,7 +40,7 @@
     "year": null,
     "category": "painting",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/etreinte.jpg"
   },
   {
@@ -51,19 +51,8 @@
     "year": "2025",
     "category": "drawing",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/pigeon.jpg"
-  },
-  {
-    "id": "resonance",
-    "title": "Résonance",
-    "medium": "Acrylic on canvas",
-    "dimensions": "30 x 40 in",
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/resonance.jpg"
   },
   {
     "id": "still-life",
@@ -73,7 +62,7 @@
     "year": "2025",
     "category": "mixed",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/still-life.jpg"
   },
   {
@@ -84,7 +73,7 @@
     "year": "2023",
     "category": "painting",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/la-vie-en-rose.jpg"
   },
   {
@@ -99,28 +88,6 @@
     "image": "artwork/inspiration.jpg"
   },
   {
-    "id": "portrait-decoupe",
-    "title": "Portrait découpé",
-    "medium": "Graphite",
-    "dimensions": null,
-    "year": null,
-    "category": "drawing",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/portrait-decoupe.jpg"
-  },
-  {
-    "id": "epanouissement",
-    "title": "Épanouissement",
-    "medium": "Acrylic on canvas",
-    "dimensions": "16 x 24 in",
-    "year": "2025",
-    "category": "painting",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/epanouissement.jpg"
-  },
-  {
     "id": "grand-papa",
     "title": "Grand-papa",
     "medium": "Acrylic on canvas",
@@ -128,7 +95,7 @@
     "year": null,
     "category": "painting",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/grand-papa.jpg"
   },
   {
@@ -139,7 +106,7 @@
     "year": null,
     "category": "drawing",
     "priceCAD": null,
-    "status": "available",
+    "status": "sold",
     "image": "artwork/chien-etude.jpg"
   }
 ]

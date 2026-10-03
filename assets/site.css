@@ -223,8 +223,8 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
 .scp8:hover{color:var(--ink) !important;border-color:var(--ink-faint) !important}
 .scp9:focus{border-bottom-color:var(--gold) !important}
 .scpa:hover{background:var(--gold) !important}
-/* store: sold / reserved cards (handoff spec) — muted status label; sold artwork at 60% */
-article[data-status="sold"] img{opacity:.6}
+/* store: sold / reserved cards (handoff spec) - muted status label; sold artwork dimmed + desaturated */
+article[data-status="sold"] img{opacity:.55;filter:grayscale(.6)}
 article[data-status="sold"]>div:nth-child(2)>div:last-child,article[data-status="reserved"]>div:nth-child(2)>div:last-child{color:var(--ink-faint)!important}
 /* narrow phones: 4 nav links + wordmark on one row; nav wraps below rather than overflowing */
 @media (max-width:520px){header{flex-wrap:wrap!important;row-gap:.5rem!important;column-gap:.75rem!important}header>a{white-space:nowrap;font-size:1.1rem!important}header>nav{gap:.7rem!important;font-size:.7rem!important;letter-spacing:.04em!important}}

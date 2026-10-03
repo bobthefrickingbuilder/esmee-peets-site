@@ -48,9 +48,15 @@ PRICES = {k: d['priceCAD'] for k, d in STORE_DATA.items()}
 STATUS = {k: d['status'] for k, d in STORE_DATA.items()}
 STORE_CATS_ALL = ast.literal_eval(re.search(r'const cats = (\[\[.*?\]\])\.filter', script).group(1))
 FOR_SALE = [w for w in WORKS if w['id'] in PRICES]
+# Two mutually-exclusive store galleries: pieces currently for sale, and an archive of past sold
+# pieces (added for the client's sold-works review; not in Design's original prototype).
+AVAILABLE_FOR_SALE = [w for w in FOR_SALE if STATUS[w['id']] == 'available']
+SOLD_WORKS = [w for w in FOR_SALE if STATUS[w['id']] == 'sold']
 def price_label(n): return 'Price on request' if n is None else '$' + format(n, ',') + ' CAD'
-def store_count(k): return len(FOR_SALE) if k == 'all' else sum(1 for w in FOR_SALE if w['cat'] == k)
+# Category pills belong to the For Sale gallery only, so their counts/visibility are scoped to it.
+def store_count(k): return len(AVAILABLE_FOR_SALE) if k == 'all' else sum(1 for w in AVAILABLE_FOR_SALE if w['cat'] == k)
 STORE_CATS = [(k, l) for k, l in STORE_CATS_ALL if store_count(k)]
+STORE_VIEWS = [(k, l, lst) for k, l, lst in [('forsale', 'For Sale', AVAILABLE_FOR_SALE), ('sold', 'Sold', SOLD_WORKS)] if lst]
 
 # ---------------- template tree ----------------
 tpl = re.search(r'</helmet>(.*)</x-dc>', src, re.S).group(1)
@@ -221,7 +227,8 @@ def context(page):
     for r in REASONS: initial['reason:' + r] = (r == 'Drawing lessons'); initial['reason-off:' + r] = (r != 'Drawing lessons')
     for w in WORKS: initial['work:' + w['id']] = True
     for k, _ in STORE_CATS: initial['scat:' + k] = (k == 'all'); initial['scat-off:' + k] = (k != 'all')
-    for w in FOR_SALE: initial['sitem:' + w['id']] = True; initial['cart:' + w['id']] = False; initial['cart-off:' + w['id']] = STATUS[w['id']] == 'available'
+    for k, _, _ in STORE_VIEWS: initial['sview:' + k] = (k == 'forsale'); initial['sview-off:' + k] = (k != 'forsale')
+    for w in FOR_SALE: initial['sitem:' + w['id']] = STATUS[w['id']] == 'available'; initial['cart:' + w['id']] = False; initial['cart-off:' + w['id']] = STATUS[w['id']] == 'available'
     initial['cartbar'] = False
     return {
         '__initial': lambda k: initial[k],
@@ -237,6 +244,8 @@ def context(page):
         'filtered': [dict(with_open(w), __if='work:' + w['id']) for w in WORKS],
         'experience': EXPERIENCE,
         'storeCats': [{'label': l, 'count': store_count(k), 'active': Dyn('scat:' + k), 'inactive': Dyn('scat-off:' + k), 'select': Act('storeFilter', k)} for k, l in STORE_CATS],
+        'storeViews': [{'label': l, 'count': len(lst), 'active': Dyn('sview:' + k), 'inactive': Dyn('sview-off:' + k), 'select': Act('storeView', k)} for k, l, lst in STORE_VIEWS],
+        'storeViewForSale': Dyn('sview:forsale'), 'storeViewSold': Dyn('sview:sold'),
         'storeItems': [dict(with_open(w), status=STATUS[w['id']],
                             priceLabel=STATUS_LABEL[STATUS[w['id']]] or price_label(PRICES[w['id']]),
                             inCart=Dyn('cart:' + w['id']) if STATUS[w['id']] == 'available' else False,
@@ -379,8 +388,8 @@ def css():
         '@media print{@page{margin:.5cm}figure,table{break-inside:avoid}#dc-root,#dc-root>.sc-host{height:auto}'
         '*,::before,::after{print-color-adjust:exact;backdrop-filter:none!important;animation-delay:-99s!important;animation-duration:.001s!important;animation-iteration-count:1!important;animation-fill-mode:both!important;animation-play-state:running!important;transition-duration:0s!important}}',
         hovers,
-        '/* store: sold / reserved cards (handoff spec) — muted status label; sold artwork at 60% */',
-        'article[data-status="sold"] img{opacity:.6}',
+        '/* store: sold / reserved cards (handoff spec) - muted status label; sold artwork dimmed + desaturated */',
+        'article[data-status="sold"] img{opacity:.55;filter:grayscale(.6)}',
         'article[data-status="sold"]>div:nth-child(2)>div:last-child,article[data-status="reserved"]>div:nth-child(2)>div:last-child{color:var(--ink-faint)!important}',
         '/* narrow phones: 4 nav links + wordmark on one row; nav wraps below rather than overflowing */',
         '@media (max-width:520px){header{flex-wrap:wrap!important;row-gap:.5rem!important;column-gap:.75rem!important}'
@@ -392,6 +401,7 @@ def css():
 
 DATA = json.dumps({'works': [{k: w[k] for k in ('id', 'title', 'cat', 'src', 'medium', 'meta', 'dimsLine', 'yearLine', 'noteLine')} for w in WORKS],
                    'prices': {w['id']: PRICES[w['id']] for w in FOR_SALE}, 'status': {w['id']: STATUS[w['id']] for w in FOR_SALE}, 'storeCats': [k for k, _ in STORE_CATS],
+                   'storeViews': [k for k, _, _ in STORE_VIEWS],
                    'cats': [k for k, _ in CATS], 'reasons': REASONS}, ensure_ascii=False, separators=(',', ':'))
 pages = {pg: page_html(pg) for pg in META}
 for pg, h in pages.items():

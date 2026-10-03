@@ -11,7 +11,7 @@
   var URLS = { home: '/', work: '/work/', store: '/store/', about: '/about/', contact: '/contact/' };
   var PRICES = DATA.prices, FOR_SALE = WORKS.filter(function (w) { return w.id in PRICES; });
 
-  var state = { filter: 'all', storeFilter: 'all', cart: loadCart(), lb: null, sent: false, reason: 'Drawing lessons' };
+  var state = { filter: 'all', storeFilter: 'all', storeView: 'forsale', cart: loadCart(), lb: null, sent: false, reason: 'Drawing lessons' };
 
   // Store selection persists across pages/visits (the prototype was one page, so it never lost it).
   function loadCart() { try { var c = JSON.parse(localStorage.getItem('ep-cart') || '[]');
@@ -41,7 +41,10 @@
     });
   }
 
-  function storeList() { return state.storeFilter === 'all' ? FOR_SALE : FOR_SALE.filter(function (w) { return w.cat === state.storeFilter; }); }
+  function storeList() {
+    var byView = FOR_SALE.filter(function (w) { return (DATA.status[w.id] === 'sold') === (state.storeView === 'sold'); });
+    return state.storeView === 'sold' || state.storeFilter === 'all' ? byView : byView.filter(function (w) { return w.cat === state.storeFilter; });
+  }
   // Lightbox list: Work uses its filter (as in Design); Store steps through its own filtered list (per the Store handoff spec).
   function list() {
     if (PAGE === 'store') return storeList();
@@ -59,13 +62,14 @@
     var vals = {};
     if (PAGE === 'store') {
       DATA.storeCats.forEach(function (k) { setIf('scat:' + k, state.storeFilter === k); setIf('scat-off:' + k, state.storeFilter !== k); });
+      DATA.storeViews.forEach(function (k) { setIf('sview:' + k, state.storeView === k); setIf('sview-off:' + k, state.storeView !== k); });
       var inList = {}; storeList().forEach(function (w) { inList[w.id] = 1; });
       FOR_SALE.forEach(function (w) { var c = state.cart.indexOf(w.id) >= 0;
         setIf('sitem:' + w.id, !!inList[w.id]); setIf('cart:' + w.id, c); setIf('cart-off:' + w.id, !c); });
       var cart = state.cart.map(function (id) { return BY[id]; });
       var total = cart.reduce(function (t, w) { return t + (PRICES[w.id] || 0); }, 0), anyTbc = cart.some(function (w) { return PRICES[w.id] == null; });
       var titles = cart.map(function (w) { return w.title; }).join(', ');
-      var body = 'Hello Esmée,\n\nI would like to purchase:\n' + cart.map(function (w) { return '- ' + w.title + ' (' + w.meta + ') — ' + fmt(PRICES[w.id]); }).join('\n') + '\n\nName:\nShipping city / pickup:\n';
+      var body = 'Hello Esmée,\n\nI would like to purchase:\n' + cart.map(function (w) { return '- ' + w.title + ' (' + w.meta + '): ' + fmt(PRICES[w.id]); }).join('\n') + '\n\nName:\nShipping city / pickup:\n';
       setIf('cartbar', cart.length > 0);
       vals.cartSummary = cart.length + ' ' + (cart.length === 1 ? 'work' : 'works') + ' selected' + (total ? ' · $' + total.toLocaleString('en-CA') + ' CAD' + (anyTbc ? ' + price on request' : '') : '');
       vals.cartTitles = titles;
@@ -145,7 +149,7 @@
   }
   function syncHash() {
     if ((PAGE !== 'work' && PAGE !== 'store') || !history.replaceState) return;
-    var f = PAGE === 'store' ? state.storeFilter : state.filter;
+    var f = PAGE === 'store' ? (state.storeView === 'sold' ? 'sold' : state.storeFilter) : state.filter;
     history.replaceState(null, '', f === 'all' ? location.pathname : '#' + f);
   }
   // Back/forward cache: never restore a page with the curtain closed.
@@ -179,7 +183,8 @@
 
     var h = (location.hash || '').slice(1);
     if (PAGE === 'work' && DATA.cats.indexOf(h) > 0) state.filter = h;
-    if (PAGE === 'store' && DATA.storeCats.indexOf(h) > 0) state.storeFilter = h;
+    if (PAGE === 'store' && h === 'sold') state.storeView = 'sold';
+    else if (PAGE === 'store' && DATA.storeCats.indexOf(h) > 0) state.storeFilter = h;
     render();
 
     fine = window.matchMedia && window.matchMedia('(pointer:fine)').matches;
@@ -220,6 +225,7 @@
       if (act === 'stripNext' && strip) strip.scrollBy({ left: strip.clientWidth * .6, behavior: 'smooth' });
       if (act === 'filter') { setState({ filter: val }); syncHash(); }
       if (act === 'storeFilter') { setState({ storeFilter: val }); syncHash(); }
+      if (act === 'storeView') { setState({ storeView: val, storeFilter: 'all' }); syncHash(); }
       if (act === 'toggle') { var c = state.cart.indexOf(val) >= 0 ? state.cart.filter(function (x) { return x !== val; }) : state.cart.concat([val]);
         setState({ cart: c }); saveCart(); }
       if (act === 'clearCart') { setState({ cart: [] }); saveCart(); }
