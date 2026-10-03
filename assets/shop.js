@@ -67,7 +67,6 @@
       '<div style="margin-top:var(--space-sm)">' +
       '<div class="ep-sum"><span>' + c.ids.length + (c.ids.length === 1 ? ' work' : ' works') + '</span><b>' + esc(t.label) + '</b></div>' +
       '<div class="ep-sum"><span>Shipping</span><b>Quoted by Esmée</b></div>' +
-      '<div class="ep-sum"><span>Taxes</span><b>Shown on the invoice</b></div>' +
       '<div class="ep-sum ep-sum-total"><span>Due today</span><b>$0.00</b></div></div>' +
       '<a class="ep-btn ep-btn-block" href="/checkout/" data-go="checkout" data-cursor="Checkout" style="margin-top:var(--space-lg)">Request to purchase <span>→</span></a>' +
       '<p class="ep-note">Nothing is charged now. Esmée confirms the work and the shipping, then sends a secure online invoice.</p>' +

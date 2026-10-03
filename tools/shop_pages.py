@@ -301,7 +301,7 @@ def page_terms():
 <h2>Requests and availability</h2>
 <p>Sending a purchase request does not complete a sale. A sale is made once Esmée confirms in writing that the work is available and you have paid the invoice. Esmée may decline a request, for example if the work has already been sold.</p>
 <h2>Prices and payment</h2>
-<p>Prices are in Canadian dollars. Where a price is shown as "Price on request", Esmée will send it with her reply. Shipping and any applicable taxes are shown on your invoice before you pay.</p>
+<p>Prices are in Canadian dollars. Where a price is shown as "Price on request", Esmée will send it with her reply. Shipping is added to your invoice, and you see the full amount before you pay. No GST/HST is added to the price.</p>
 <h2>Copyright</h2>
 <p>Buying a work gives you the physical piece. Copyright stays with Esmée, so images of the work may not be reproduced, sold or published without her written permission.</p>
 <h2>Shipping and returns</h2>
