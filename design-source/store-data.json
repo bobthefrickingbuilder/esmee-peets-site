@@ -7,7 +7,7 @@
   "year": null,
   "category": "painting",
   "priceCAD": 600,
-  "status": "available",
+  "status": "sold",
   "image": "artwork/flux.jpg",
   "shipTier": "large"
  },
