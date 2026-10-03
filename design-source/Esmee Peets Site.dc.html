@@ -190,16 +190,6 @@ input,textarea,button{font:inherit;color:inherit}
   <sc-if value="{{ isStore }}">
     <main data-screen-label="Store" style="padding:var(--page-head-top) var(--gutter) var(--section-y)">
       <div style="max-width:var(--max-w); margin:0 auto">
-        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs); margin-bottom:var(--space-lg)">
-          <sc-for list="{{ storeViews }}" as="v" hint-placeholder-count="2">
-            <sc-if value="{{ v.active }}">
-              <button onClick="{{ v.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--gold); background:var(--gold); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ v.label }}<span style="opacity:.6">{{ v.count }}</span></button>
-            </sc-if>
-            <sc-if value="{{ v.inactive }}" hint-placeholder-val="{{ true }}">
-              <button onClick="{{ v.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ v.label }}<span style="opacity:.6">{{ v.count }}</span></button>
-            </sc-if>
-          </sc-for>
-        </div>
         <div data-reveal="1" style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-xl)">
           <sc-if value="{{ storeViewForSale }}">
             <div>
@@ -215,18 +205,30 @@ input,textarea,button{font:inherit;color:inherit}
               <p style="margin:var(--space-md) 0 0; max-width:48ch; color:var(--ink-dim)">A record of original pieces that have already found a home.</p>
             </div>
           </sc-if>
-          <sc-if value="{{ storeViewForSale }}">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-md)">
             <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs)">
-              <sc-for list="{{ storeCats }}" as="c" hint-placeholder-count="4">
-                <sc-if value="{{ c.active }}">
-                  <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:var(--ink); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+              <sc-for list="{{ storeViews }}" as="v" hint-placeholder-count="2">
+                <sc-if value="{{ v.active }}">
+                  <button onClick="{{ v.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--gold); background:var(--gold); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ v.label }}<span style="opacity:.6">{{ v.count }}</span></button>
                 </sc-if>
-                <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}">
-                  <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+                <sc-if value="{{ v.inactive }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ v.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ v.label }}<span style="opacity:.6">{{ v.count }}</span></button>
                 </sc-if>
               </sc-for>
             </div>
-          </sc-if>
+            <sc-if value="{{ storeViewForSale }}">
+              <div style="display:flex; flex-wrap:wrap; gap:var(--space-2xs)">
+                <sc-for list="{{ storeCats }}" as="c" hint-placeholder-count="4">
+                  <sc-if value="{{ c.active }}">
+                    <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--ink); background:var(--ink); color:var(--bg); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+                  </sc-if>
+                  <sc-if value="{{ c.inactive }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ c.select }}" style="display:flex; gap:.5rem; align-items:baseline; padding:.6rem 1.1rem; border-radius:var(--radius-pill); border:1px solid var(--line); background:transparent; color:var(--ink-dim); font-size:var(--fs-pill); letter-spacing:var(--tr-pill); white-space:nowrap" style-hover="border-color:var(--ink-faint); color:var(--ink)">{{ c.label }}<span style="opacity:.6">{{ c.count }}</span></button>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
         </div>
         <div style="margin-top:var(--space-4xl); display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:var(--space-3xl) var(--grid-gap)">
           <sc-for list="{{ storeItems }}" as="w" hint-placeholder-count="9">
