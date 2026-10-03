@@ -6,7 +6,7 @@
   "dimensions": "36 x 48 in",
   "year": null,
   "category": "painting",
-  "priceCAD": 1800,
+  "priceCAD": 600,
   "status": "available",
   "image": "artwork/flux.jpg",
   "shipTier": "large"
@@ -29,7 +29,7 @@
   "dimensions": null,
   "year": null,
   "category": "drawing",
-  "priceCAD": 600,
+  "priceCAD": 250,
   "status": "available",
   "image": "artwork/regard-brouille.jpg",
   "shipTier": "small"
@@ -85,7 +85,7 @@
   "dimensions": "30 x 40 in",
   "year": null,
   "category": "painting",
-  "priceCAD": 1200,
+  "priceCAD": 500,
   "status": "available",
   "image": "artwork/inspiration.jpg",
   "shipTier": "medium"

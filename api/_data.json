@@ -2,7 +2,7 @@
  "catalog": {
   "flux": {
    "title": "Flux",
-   "priceCAD": 1800,
+   "priceCAD": 600,
    "status": "available",
    "shipTier": "large",
    "description": "Acrylic on canvas, 36 x 48 in",
@@ -18,7 +18,7 @@
   },
   "regard-brouille": {
    "title": "Regard brouillé",
-   "priceCAD": 600,
+   "priceCAD": 250,
    "status": "available",
    "shipTier": "small",
    "description": "Graphite",
@@ -58,7 +58,7 @@
   },
   "inspiration": {
    "title": "Inspiration",
-   "priceCAD": 1200,
+   "priceCAD": 500,
    "status": "available",
    "shipTier": "medium",
    "description": "Acrylic on canvas, 30 x 40 in",
