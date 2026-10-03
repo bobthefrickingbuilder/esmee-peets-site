@@ -248,10 +248,30 @@
       if (act === 'lbPrev') step(-1);
       if (act === 'lbNext') step(1);
     });
-    // Contact form: no backend (matches Design's prototype), shows the "sent" state only.
+    // Contact form: sends through FormSubmit (free) to Esmée's inbox. Falls back to a mailto link on failure.
+    var CONTACT_TO = 'esmeepeets@gmail.com';
     document.addEventListener('submit', function (e) {
-      if (!e.target.matches('[data-action="submit"]')) return;
-      e.preventDefault(); setState({ sent: true });
+      var f = e.target;
+      if (!f.matches('[data-action="submit"]')) return;
+      e.preventDefault();
+      var err = f.querySelector('[data-form-error]'), btn = f.querySelector('button[type="submit"]');
+      function fail() {
+        if (btn) btn.disabled = false;
+        if (err) { err.hidden = false; err.innerHTML = 'Sorry, that did not go through. Please try again, or write to <a href="mailto:' + CONTACT_TO + '" style="border-bottom:1px solid var(--gold)">' + CONTACT_TO + '</a>.'; }
+      }
+      var v = function (n) { var el = f.elements[n]; return el ? el.value : ''; };
+      if (v('_honey')) { setState({ sent: true }); return; }
+      if (err) err.hidden = true;
+      if (btn) btn.disabled = true;
+      fetch('https://formsubmit.co/ajax/' + CONTACT_TO, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name: v('name'), email: v('email'), message: v('message'), about: state.reason,
+          _subject: 'Website message (' + state.reason + ') from ' + v('name'), _template: 'table' })
+      }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (res.ok && String(res.j.success) !== 'false') { if (btn) btn.disabled = false; setState({ sent: true }); } else fail();
+        }).catch(fail);
     });
 
     window.addEventListener('ep-cart-change', syncNavCart); window.addEventListener('storage', syncNavCart);
