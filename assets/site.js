@@ -11,7 +11,7 @@
   var URLS = { home: '/', work: '/work/', store: '/store/', about: '/about/', contact: '/contact/' };
   var PRICES = DATA.prices, FOR_SALE = WORKS.filter(function (w) { return w.id in PRICES; });
 
-  var state = { filter: 'all', storeFilter: 'all', storeView: 'forsale', cart: loadCart(), lb: null, sent: false, reason: 'Drawing lessons' };
+  var state = { filter: 'all', storeFilter: 'all', storeView: 'forsale', cart: loadCart(), lb: null, sent: false, reason: 'Commission' };
 
   // Store selection persists across pages/visits (the prototype was one page, so it never lost it).
   function loadCart() { try { var c = JSON.parse(localStorage.getItem('ep-cart') || '[]');

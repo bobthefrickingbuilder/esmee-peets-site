@@ -228,7 +228,7 @@ class Ref:
 def context(page):
     initial = {'notsent': True, 'sent': False, 'lb': False}
     for k, _ in CATS: initial['cat:' + k] = (k == 'all'); initial['cat-off:' + k] = (k != 'all')
-    for r in REASONS: initial['reason:' + r] = (r == 'Drawing lessons'); initial['reason-off:' + r] = (r != 'Drawing lessons')
+    for r in REASONS: initial['reason:' + r] = (r == REASONS[0]); initial['reason-off:' + r] = (r != REASONS[0])
     for w in WORKS: initial['work:' + w['id']] = True
     for k, _ in STORE_CATS: initial['scat:' + k] = (k == 'all'); initial['scat-off:' + k] = (k != 'all')
     for k, _, _ in STORE_VIEWS: initial['sview:' + k] = (k == 'forsale'); initial['sview-off:' + k] = (k != 'forsale')
