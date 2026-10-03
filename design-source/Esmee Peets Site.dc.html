@@ -259,7 +259,7 @@ input,textarea,button{font:inherit;color:inherit}
           </div>
           <div style="display:flex; align-items:center; gap:var(--space-sm)">
             <button onClick="{{ clearCart }}" style="background:transparent; border:0; padding:0 0 3px; border-bottom:1px solid var(--line); font-size:var(--fs-meta); color:var(--ink-dim)">Clear</button>
-            <a href="{{ cartMailto }}" data-cursor="Send" style="display:inline-flex; gap:.6rem; padding:.9rem 1.4rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; white-space:nowrap" style-hover="background:var(--gold); color:var(--bg)">Request to buy →</a>
+            <a href="/cart/" data-go="cart" data-cursor="Cart" style="display:inline-flex; gap:.6rem; padding:.9rem 1.4rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; white-space:nowrap" style-hover="background:var(--gold); color:var(--bg)">Review cart →</a>
           </div>
         </div>
       </sc-if>

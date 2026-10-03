@@ -9,6 +9,9 @@ Regenerates index.html, work/, about/, contact/ and assets/site.css. assets/site
 Intentional deviations from Design live here: the green curtain (CURTAIN) and the client-approved statement text (STATEMENT_RE).
 """
 import ast, html, json, os, re, sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import shop_pages
 from html.parser import HTMLParser
 
 SRC = sys.argv[1]      # proto dir
@@ -339,6 +342,9 @@ def page_html(page):
         body, n = PORTRAIT_RE.subn(PORTRAIT_IMG, body); assert n == 1
     if page == 'home':
         body, n = HOME_FOOTER_RE.subn(HOME_FOOTER_TEXT, body); assert n == 1
+    body, n = re.subn(r'<span>© 2026 Esmée Peets</span>',
+                      '<span>© 2026 Esmée Peets</span><span class="ep-foot-links"><a href="/shipping-returns/" data-go="shipping">Shipping &amp; returns</a>'
+                      '<a href="/privacy/" data-go="privacy">Privacy</a><a href="/terms/" data-go="terms">Terms</a></span>', body); assert n == 1
     title, path = META[page]
     url = SITE + '/' + path
     person_jsonld = f'<script type="application/ld+json">{PERSON_JSONLD}</script>\n' if page == 'home' else ''
@@ -401,6 +407,7 @@ def css():
         'header>a{white-space:nowrap;font-size:1.1rem!important}header>nav{gap:.7rem!important;font-size:.7rem!important;letter-spacing:.04em!important}}',
         '/* arriving from an internal link: curtain starts closed (no flash before site.js runs) */',
         'html.ep-arrive [data-curtain]>span{transform:scaleY(1)!important}',
+        shop_pages.SHOP_CSS,
         '',
     ])
 
@@ -412,6 +419,10 @@ pages = {pg: page_html(pg) for pg in META}
 for pg, h in pages.items():
     d = os.path.join(OUT, META[pg][1]); os.makedirs(d, exist_ok=True)
     open(os.path.join(d, 'index.html'), 'w', encoding='utf-8', newline='\n').write(h)
+for rel, h in shop_pages.build(pages['contact']).items():
+    d = os.path.dirname(os.path.join(OUT, rel))
+    if d: os.makedirs(d, exist_ok=True)
+    open(os.path.join(OUT, rel), 'w', encoding='utf-8', newline='\n').write(h)
 open(os.path.join(OUT, 'assets', 'site.css'), 'w', encoding='utf-8', newline='\n').write(css())
 _unused = ({'works': [{k: w[k] for k in ('id', 'title', 'cat', 'src', 'medium', 'dimsLine', 'yearLine', 'noteLine')} for w in WORKS],
            'cats': [k for k, _ in CATS], 'reasons': REASONS},
