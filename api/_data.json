@@ -82,7 +82,7 @@
   }
  },
  "shipping": {
-  "_readme": "Flat shipping rates in CAD, by work size and destination. PLACEHOLDER numbers: Esmee should check them against a Canada Post quote (tracked, insured, crated/boxed) before launch. Each work in store-data.json has a shipTier (small, medium or large).",
+  "_readme": "Flat shipping rates in CAD, by work size and destination. Researched estimates (Oct 2026), not carrier quotes: Canada Post out-of-spec items (length + girth over 118 in, any side over 2 m) cost $300 extra ($400 Nov 2 to Jan 10), and anything with a side over 1 m (39.4 in) adds a $21 handling fee ($30 peak). A 36 x 48 in canvas boxed flat is out-of-spec for Canada Post, so the large rates assume a courier or crate. Replace with real quotes before relying on them. Each work in store-data.json has a shipTier (small, medium or large).",
   "pickupCities": [
    "Ottawa",
    "Montréal"
@@ -95,19 +95,19 @@
   },
   "rates": {
    "small": {
-    "CA": 40,
-    "US": 65,
-    "INTL": 95
+    "CA": 35,
+    "US": 55,
+    "INTL": 85
    },
    "medium": {
-    "CA": 85,
-    "US": 140,
-    "INTL": 220
+    "CA": 95,
+    "US": 150,
+    "INTL": 230
    },
    "large": {
-    "CA": 140,
-    "US": 240,
-    "INTL": 380
+    "CA": 200,
+    "US": 300,
+    "INTL": 450
    }
   },
   "zoneNames": {
