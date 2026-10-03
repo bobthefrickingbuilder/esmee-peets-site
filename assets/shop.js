@@ -1,15 +1,10 @@
 /* Esmée Peets: cart, checkout and thank-you pages.
-   The cart is the same list the Store page keeps in localStorage ('ep-cart'). There is no payment on the site:
-   checkout sends a purchase REQUEST; Esmée confirms availability and shipping, then sends a secure online invoice.
-
-   To make the request form deliver straight to Esmée's inbox, set an endpoint (for example a Formspree form URL)
-   below, or define window.EP_SHOP = { endpoint: '...' } before this script. With no endpoint, the form falls back
-   to opening the visitor's email app with the request filled in. */
+   The cart is the list the Store page keeps in localStorage ('ep-cart'). Checkout sends only the work ids and the
+   delivery choice to /api/checkout; the server looks up the real prices and shipping, creates a Stripe Checkout
+   session and returns its address. Card details are only ever typed on Stripe's page. */
 (function () {
   'use strict';
-  var CONFIG = { endpoint: '', email: 'esmeepeets@gmail.com' };
-  if (window.EP_SHOP) for (var k in window.EP_SHOP) CONFIG[k] = window.EP_SHOP[k];
-
+  var EMAIL = 'esmeepeets@gmail.com';
   var KIND = document.currentScript.getAttribute('data-shop');
   var DATA = JSON.parse(document.getElementById('ep-data').textContent);
   var BY = {}; DATA.works.forEach(function (w) { BY[w.id] = w; });
@@ -17,7 +12,7 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
 
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function money(n) { return '$' + n.toLocaleString('en-CA') + ' CAD'; }
+  function money(n) { return '$' + n.toLocaleString('en-CA', { minimumFractionDigits: n % 1 ? 2 : 0 }) + ' CAD'; }
   function priceLabel(id) { return PRICES[id] == null ? 'Price on request' : money(PRICES[id]); }
 
   function readCart() {
@@ -31,10 +26,10 @@
     try { localStorage.setItem('ep-cart', JSON.stringify(ids)); } catch (e) {}
     window.dispatchEvent(new Event('ep-cart-change'));
   }
-  function totals(ids) {
-    var total = 0, tbc = false;
-    ids.forEach(function (id) { if (PRICES[id] == null) tbc = true; else total += PRICES[id]; });
-    return { total: total, tbc: tbc, label: total ? money(total) + (tbc ? ' + price on request' : '') : 'Price on request' };
+  function allPriced(ids) { return ids.every(function (id) { return PRICES[id] != null; }); }
+  function subtotal(ids) { return ids.reduce(function (t, id) { return t + (PRICES[id] || 0); }, 0); }
+  function mailtoFor(ids) {
+    return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Purchase: ' + ids.map(function (id) { return BY[id].title; }).join(', '));
   }
 
   /* ---------------- cart ---------------- */
@@ -43,7 +38,7 @@
       '<div style="font-family:var(--serif);font-size:var(--fs-h2);line-height:1.1">Nothing here <em>yet.</em></div>' +
       '<p style="margin:0;color:var(--ink-dim);max-width:46ch">' +
       (dropped ? 'The work you selected has since been sold or reserved, so it was taken out of your cart. ' : '') +
-      'Browse the store and choose a work to add it to your cart.</p>' +
+      'Browse the store and add a work to your cart.</p>' +
       '<a class="ep-btn" href="/store/" data-go="store">Visit the store <span>→</span></a></div>';
   }
   function renderCart() {
@@ -61,15 +56,17 @@
         '<button type="button" class="ep-link ep-link-dim" data-remove="' + esc(id) + '">Remove</button></div></div>';
     }).join('');
     list.innerHTML = (c.dropped ? '<p class="ep-status" style="margin-bottom:var(--space-lg)">A work in your cart has since been sold or reserved, so it was removed.</p>' : '') + rows;
-    var t = totals(c.ids);
+    var priced = allPriced(c.ids);
     sum.hidden = false;
     sum.innerHTML = '<div class="ep-cap" style="color:var(--gold)">Summary</div>' +
       '<div style="margin-top:var(--space-sm)">' +
-      '<div class="ep-sum"><span>' + c.ids.length + (c.ids.length === 1 ? ' work' : ' works') + '</span><b>' + esc(t.label) + '</b></div>' +
-      '<div class="ep-sum"><span>Shipping</span><b>Quoted by Esmée</b></div>' +
-      '<div class="ep-sum ep-sum-total"><span>Due today</span><b>$0.00</b></div></div>' +
-      '<a class="ep-btn ep-btn-block" href="/checkout/" data-go="checkout" data-cursor="Checkout" style="margin-top:var(--space-lg)">Request to purchase <span>→</span></a>' +
-      '<p class="ep-note">Nothing is charged now. Esmée confirms the work and the shipping, then sends a secure online invoice.</p>' +
+      '<div class="ep-sum"><span>' + c.ids.length + (c.ids.length === 1 ? ' work' : ' works') + '</span><b>' + (priced ? esc(money(subtotal(c.ids))) : 'Price on request') + '</b></div>' +
+      '<div class="ep-sum"><span>Shipping</span><b>Calculated at checkout</b></div></div>' +
+      (priced
+        ? '<a class="ep-btn ep-btn-block" href="/checkout/" data-go="checkout" data-cursor="Checkout" style="margin-top:var(--space-lg)">Checkout <span>→</span></a>' +
+          '<p class="ep-note">Secure payment by Stripe. You see the exact shipping cost before you pay.</p>'
+        : '<a class="ep-btn ep-btn-block" href="' + esc(mailtoFor(c.ids)) + '" style="margin-top:var(--space-lg)">Email Esmée to buy <span>→</span></a>' +
+          '<p class="ep-note">A work in your cart has no set price yet, so it cannot be bought online. Email Esmée and she will help.</p>') +
       '<div class="ep-actions" style="margin-top:var(--space-md);justify-content:space-between">' +
       '<a class="ep-link ep-link-dim" href="/store/" data-go="store">Continue browsing</a>' +
       '<button type="button" class="ep-link ep-link-dim" data-clear="1">Clear cart</button></div>';
@@ -91,98 +88,100 @@
       return '<div class="ep-mini"><img src="' + esc(w.src) + '" alt=""><div><b>' + esc(w.title) + '</b><div style="font-size:var(--fs-meta);color:var(--ink-faint)">' + esc(w.meta) + '</div></div><span style="color:var(--ink-dim)">' + esc(priceLabel(id)) + '</span></div>';
     }).join('');
   }
-  function newRef() { return 'EP-' + Date.now().toString(36).toUpperCase().slice(-6); }
-  function orderText(d, ids, t, ref) {
-    var lines = ['Purchase request ' + ref, '', 'Works:'];
-    ids.forEach(function (id) { lines.push('- ' + BY[id].title + ' (' + BY[id].meta + '): ' + priceLabel(id)); });
-    lines.push('Total: ' + t.label, '', 'Name: ' + d.name, 'Email: ' + d.email);
-    if (d.phone) lines.push('Phone: ' + d.phone);
-    if (d.delivery === 'pickup') lines.push('Delivery: local pickup in ' + d.pickupCity);
-    else {
-      lines.push('Delivery: ship to');
-      lines.push([d.address1, d.address2].filter(Boolean).join(', '));
-      lines.push([d.city, d.region, d.postal].filter(Boolean).join(', '));
-      lines.push(d.country);
-    }
-    if (d.notes) lines.push('', 'Notes: ' + d.notes);
-    return lines.join('\n');
-  }
   function initCheckout() {
     var c = readCart(), main = $('#ep-checkout-main'), sum = $('#ep-checkout-summary'), grid = $('[data-ep="checkout-grid"]');
     var form = $('#ep-form');
-    if (!c.ids.length) {
+    if (!c.ids.length) { grid.classList.add('ep-grid-one'); main.innerHTML = cartEmpty(c.dropped); sum.hidden = true; return; }
+    if (!allPriced(c.ids)) {
       grid.classList.add('ep-grid-one');
-      main.innerHTML = cartEmpty(c.dropped); sum.hidden = true; return;
+      main.innerHTML = '<p style="margin:0;color:var(--ink-dim)">A work in your cart has no set price yet, so it cannot be bought online. <a href="' + esc(mailtoFor(c.ids)) + '" style="border-bottom:1px solid var(--gold)">Email Esmée</a> and she will help.</p>';
+      sum.hidden = true; return;
     }
-    var t = totals(c.ids);
-    sum.hidden = false;
-    sum.innerHTML = '<div class="ep-cap" style="color:var(--gold)">Your works</div>' +
-      '<div style="margin-top:var(--space-sm)">' + itemsHtml(c.ids) + '</div>' +
-      '<div class="ep-sum ep-sum-total"><span>Total</span><b>' + esc(t.label) + '</b></div>' +
-      '<div class="ep-sum"><span>Shipping</span><b>Quoted by Esmée</b></div>' +
-      '<div class="ep-sum"><span>Due today</span><b>$0.00</b></div>' +
-      '<div class="ep-cap" style="color:var(--gold);margin-top:var(--space-xl)">What happens next</div>' +
-      '<ol class="ep-steps">' +
-      '<li><span><b>Esmée confirms</b>She checks the work is available and replies with shipping.</span></li>' +
-      '<li><span><b>You get an invoice</b>A secure online invoice arrives by email.</span></li>' +
-      '<li><span><b>Your work ships</b>Tracked and insured, or ready for pickup.</span></li></ol>' +
-      '<a class="ep-link ep-link-dim" href="/cart/" data-go="cart" style="display:inline-block;margin-top:var(--space-lg)">Edit cart</a>';
-    form.hidden = false;
+    var SHIP = JSON.parse($('#ep-ship').textContent);
+    var SHIP_TIER = SHIP.workTiers || {};
+    var COUNTRY = {}; SHIP.countries.forEach(function (k) { COUNTRY[k.code] = k; });
 
-    var ship = $('#ep-ship'), pick = $('#ep-pickup');
-    function syncDelivery() {
-      var pickup = form.elements.delivery.value === 'pickup';
-      ship.hidden = pickup; pick.hidden = !pickup;
-      ['address1', 'city', 'postal', 'country'].forEach(function (n) { form.elements[n].required = !pickup; });
+    // Same rule the server applies: the dearest work pays in full, each extra work pays a share.
+    function shipCost(country) {
+      var zone = COUNTRY[country].zone;
+      var rates = c.ids.map(function (id) { return SHIP.rates[SHIP_TIER[id]][zone]; }).sort(function (a, b) { return b - a; });
+      return Math.round(rates.reduce(function (t, r, i) { return t + (i === 0 ? r : r * SHIP.extraWorkFactor); }, 0));
     }
-    form.addEventListener('change', function (e) { if (e.target.name === 'delivery') syncDelivery(); });
-    syncDelivery();
+
+    var sel = form.elements.country;
+    sel.innerHTML = SHIP.countries.map(function (k) { return '<option value="' + k.code + '"' + (k.code === 'CA' ? ' selected' : '') + '>' + esc(k.name) + '</option>'; }).join('');
+    form.elements.pickupCity.innerHTML = SHIP.pickupCities.map(function (n) { return '<option>' + esc(n) + '</option>'; }).join('');
+    var pick = $('#ep-pickup'), pickOpt = $('#ep-pickup-opt'), shipNote = $('#ep-ship-note');
+
+    function state() {
+      var country = sel.value, pickupOk = country === 'CA';
+      pickOpt.hidden = !pickupOk;
+      if (!pickupOk && form.elements.delivery.value === 'pickup') form.elements.delivery.value = 'ship';
+      var pickup = form.elements.delivery.value === 'pickup';
+      pick.hidden = !pickup; shipNote.hidden = pickup;
+      return { country: country, pickup: pickup, ship: pickup ? 0 : shipCost(country) };
+    }
+    function drawSummary() {
+      var st = state(), sub = subtotal(c.ids);
+      sum.hidden = false;
+      sum.innerHTML = '<div class="ep-cap" style="color:var(--gold)">Your works</div>' +
+        '<div style="margin-top:var(--space-sm)">' + itemsHtml(c.ids) + '</div>' +
+        '<div class="ep-sum" style="margin-top:var(--space-sm)"><span>Subtotal</span><b>' + esc(money(sub)) + '</b></div>' +
+        '<div class="ep-sum"><span>Shipping</span><b>' + (st.pickup ? 'Free pickup' : esc(money(st.ship))) + '</b></div>' +
+        '<div class="ep-sum ep-sum-total"><span>Total</span><b>' + esc(money(sub + st.ship)) + '</b></div>' +
+        '<p class="ep-note">No GST/HST is added.' + (st.pickup ? '' : ' Tracked and insured shipping.') + ' <a href="/shipping-returns/" data-go="shipping" style="border-bottom:1px solid var(--line)">Shipping details</a></p>' +
+        '<a class="ep-link ep-link-dim" href="/cart/" data-go="cart" style="display:inline-block;margin-top:var(--space-md)">Edit cart</a>';
+    }
+    form.hidden = false;
+    form.addEventListener('change', drawSummary);
+    drawSummary();
 
     var err = $('#ep-form-error'), status = $('#ep-form-status'), btn = $('#ep-submit');
-    function showErr(msg) { err.textContent = msg; err.hidden = false; status.hidden = true; }
+    function showErr(html) { err.innerHTML = html; err.hidden = false; status.hidden = true; btn.disabled = false; }
+    var fallback = ' Please try again, or <a href="' + esc(mailtoFor(c.ids)) + '" style="border-bottom:1px solid var(--gold)">email Esmée</a> to buy.';
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      err.hidden = true;
-      if (form.elements.website.value) return; // spam trap
+      e.preventDefault(); err.hidden = true;
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      var cart = readCart().ids;
-      if (!cart.length) { showErr('Your cart is empty, or the work you chose is no longer available.'); return; }
-      var d = {}; Array.prototype.forEach.call(form.elements, function (el) { if (el.name && el.type !== 'checkbox' && el.type !== 'radio') d[el.name] = (el.value || '').trim(); });
-      d.delivery = form.elements.delivery.value;
-      var ref = newRef(), tt = totals(cart), text = orderText(d, cart, tt, ref);
-      var subject = 'Purchase request ' + ref + ': ' + cart.map(function (id) { return BY[id].title; }).join(', ');
-
-      if (CONFIG.endpoint) {
-        btn.disabled = true; status.textContent = 'Sending your request...'; status.hidden = false;
-        var payload = { _subject: subject, reference: ref, name: d.name, email: d.email, phone: d.phone, delivery: d.delivery, details: text,
-          works: cart.map(function (id) { return { id: id, title: BY[id].title, price: PRICES[id] }; }), total: tt.label };
-        fetch(CONFIG.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
-          .then(function (r) { if (!r.ok) throw new Error('bad status'); })
-          .then(function () {
-            try { sessionStorage.setItem('ep-last-order', JSON.stringify({ ref: ref, titles: cart.map(function (id) { return BY[id].title; }), total: tt.label, delivery: d.delivery === 'pickup' ? 'Local pickup in ' + d.pickupCity : 'Shipping to ' + [d.city, d.country].filter(Boolean).join(', '), email: d.email })); } catch (x) {}
-            writeCart([]); location.href = '/thank-you/';
-          })
-          .catch(function () { btn.disabled = false; showErr('Sorry, that did not go through. Please try again, or email ' + CONFIG.email + ' directly.'); });
-      } else {
-        status.innerHTML = 'Your email app should open with your request filled in. Press send there to finish. If nothing opens, email <a href="mailto:' + CONFIG.email + '" style="border-bottom:1px solid var(--gold)">' + CONFIG.email + '</a> with the works you want and your delivery details.';
-        status.hidden = false;
-        location.href = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
-      }
+      var st = state();
+      btn.disabled = true; status.textContent = 'Taking you to the secure payment page...'; status.hidden = false;
+      fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        ids: readCart().ids, delivery: st.pickup ? 'pickup' : 'ship', country: st.country, pickupCity: form.elements.pickupCity.value,
+        email: form.elements.email.value.trim(), notes: form.elements.notes.value.trim() }) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, body: j }; }); })
+        .then(function (r) {
+          if (r.status === 200 && r.body.url) { location.href = r.body.url; return; }
+          if (r.status === 409) {
+            var gone = BY[r.body.id] ? BY[r.body.id].title : 'A work in your cart';
+            writeCart(readCart().ids.filter(function (x) { return x !== r.body.id; }));
+            showErr(esc(gone) + ' has just been sold or is no longer available, so it was taken out of your cart. <a href="/cart/" data-go="cart" style="border-bottom:1px solid var(--gold)">Review your cart</a>'); return;
+          }
+          if (r.status === 503) { showErr('Online payment is not switched on yet. <a href="' + esc(mailtoFor(c.ids)) + '" style="border-bottom:1px solid var(--gold)">Email Esmée</a> to buy this work.'); return; }
+          showErr('Sorry, we could not start the payment.' + fallback);
+        })
+        .catch(function () { showErr('Sorry, we could not reach the payment service.' + fallback); });
     });
+    // Coming back from Stripe with the Back button restores a disabled button; make sure the form is usable.
+    window.addEventListener('pageshow', function () { btn.disabled = false; status.hidden = true; });
   }
 
   /* ---------------- thank you ---------------- */
   function initThanks() {
-    var o = null; try { o = JSON.parse(sessionStorage.getItem('ep-last-order') || 'null'); } catch (e) {}
-    var box = $('#ep-order');
-    if (!o) { box.parentNode.removeChild(box); var g = $('.ep-grid'); if (g) g.classList.add('ep-grid-one'); return; }
-    box.hidden = false;
-    box.innerHTML = '<div class="ep-cap" style="color:var(--gold)">Your request</div>' +
-      '<div style="font-family:var(--serif);font-size:var(--fs-h2);line-height:1.1;margin-top:var(--space-sm)">' + esc(o.ref) + '</div>' +
-      '<div style="margin-top:var(--space-md)">' + o.titles.map(function (n) { return '<div class="ep-sum"><span>' + esc(n) + '</span></div>'; }).join('') + '</div>' +
-      '<div class="ep-sum ep-sum-total"><span>Total</span><b>' + esc(o.total) + '</b></div>' +
-      '<div class="ep-sum"><span>Delivery</span><b>' + esc(o.delivery) + '</b></div>' +
-      '<p class="ep-note">Keep this reference if you write to Esmée about your request.</p>';
+    var box = $('#ep-order'), id = new URLSearchParams(location.search).get('session_id');
+    function drop() { box.parentNode.removeChild(box); var g = $('.ep-grid'); if (g) g.classList.add('ep-grid-one'); }
+    if (!id) { drop(); return; }
+    fetch('/api/session?id=' + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (o) {
+      if (!o || !o.paid) { drop(); return; }
+      writeCart([]);
+      $('#ep-thanks-eyebrow').textContent = 'Payment received';
+      $('#ep-thanks-lead').textContent = 'Your payment went through. A receipt is on its way' + (o.email ? ' to ' + o.email : '') + ', and Esmée will be in touch about delivery.';
+      box.hidden = false;
+      box.innerHTML = '<div class="ep-cap" style="color:var(--gold)">Your order</div>' +
+        '<div style="font-family:var(--serif);font-size:var(--fs-h2);line-height:1.1;margin-top:var(--space-sm)">' + esc(o.ref) + '</div>' +
+        '<div style="margin-top:var(--space-md)">' + o.titles.map(function (n) { return '<div class="ep-sum"><span>' + esc(n) + '</span></div>'; }).join('') + '</div>' +
+        '<div class="ep-sum"><span>' + esc(o.delivery) + '</span><b>' + (o.shipping ? esc(money(o.shipping)) : 'Free') + '</b></div>' +
+        '<div class="ep-sum ep-sum-total"><span>Total paid</span><b>' + esc(money(o.total)) + '</b></div>' +
+        '<p class="ep-note">Keep this reference if you write to Esmée about your order.</p>';
+    }).catch(drop);
   }
 
   function init() {

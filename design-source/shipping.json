@@ -1,0 +1,37 @@
+{
+  "_readme": "Flat shipping rates in CAD, by work size and destination. PLACEHOLDER numbers: Esmee should check them against a Canada Post quote (tracked, insured, crated/boxed) before launch. Each work in store-data.json has a shipTier (small, medium or large).",
+  "pickupCities": ["Ottawa", "Montréal"],
+  "extraWorkFactor": 0.5,
+  "tiers": {
+    "small": "up to about 16 x 20 in, and works on paper",
+    "medium": "up to about 30 x 40 in",
+    "large": "larger than 30 x 40 in"
+  },
+  "rates": {
+    "small":  { "CA": 40,  "US": 65,  "INTL": 95 },
+    "medium": { "CA": 85,  "US": 140, "INTL": 220 },
+    "large":  { "CA": 140, "US": 240, "INTL": 380 }
+  },
+  "zoneNames": { "CA": "Canada", "US": "United States", "INTL": "Elsewhere" },
+  "countries": [
+    { "code": "CA", "name": "Canada", "zone": "CA" },
+    { "code": "US", "name": "United States", "zone": "US" },
+    { "code": "GB", "name": "United Kingdom", "zone": "INTL" },
+    { "code": "FR", "name": "France", "zone": "INTL" },
+    { "code": "DE", "name": "Germany", "zone": "INTL" },
+    { "code": "BE", "name": "Belgium", "zone": "INTL" },
+    { "code": "NL", "name": "Netherlands", "zone": "INTL" },
+    { "code": "CH", "name": "Switzerland", "zone": "INTL" },
+    { "code": "IT", "name": "Italy", "zone": "INTL" },
+    { "code": "ES", "name": "Spain", "zone": "INTL" },
+    { "code": "PT", "name": "Portugal", "zone": "INTL" },
+    { "code": "IE", "name": "Ireland", "zone": "INTL" },
+    { "code": "SE", "name": "Sweden", "zone": "INTL" },
+    { "code": "NO", "name": "Norway", "zone": "INTL" },
+    { "code": "DK", "name": "Denmark", "zone": "INTL" },
+    { "code": "FI", "name": "Finland", "zone": "INTL" },
+    { "code": "AU", "name": "Australia", "zone": "INTL" },
+    { "code": "NZ", "name": "New Zealand", "zone": "INTL" },
+    { "code": "JP", "name": "Japan", "zone": "INTL" }
+  ]
+}

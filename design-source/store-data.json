@@ -1,112 +1,115 @@
 [
-  {
-    "id": "flux",
-    "title": "Flux",
-    "medium": "Acrylic on canvas",
-    "dimensions": "36 x 48 in",
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/flux.jpg"
-  },
-  {
-    "id": "jecoute",
-    "title": "J'écoute",
-    "medium": "Acrylic on canvas",
-    "dimensions": "16 x 20 in",
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/jecoute.jpg"
-  },
-  {
-    "id": "regard-brouille",
-    "title": "Regard brouillé",
-    "medium": "Graphite",
-    "dimensions": null,
-    "year": null,
-    "category": "drawing",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/regard-brouille.jpg"
-  },
-  {
-    "id": "etreinte",
-    "title": "Étreinte",
-    "medium": "Acrylic on canvas",
-    "dimensions": "30 x 40 in",
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/etreinte.jpg"
-  },
-  {
-    "id": "pigeon",
-    "title": "Pigeon",
-    "medium": "Graphite",
-    "dimensions": null,
-    "year": "2025",
-    "category": "drawing",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/pigeon.jpg"
-  },
-  {
-    "id": "still-life",
-    "title": "Still Life",
-    "medium": "Mixed media",
-    "dimensions": null,
-    "year": "2025",
-    "category": "mixed",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/still-life.jpg"
-  },
-  {
-    "id": "la-vie-en-rose",
-    "title": "La vie en rose",
-    "medium": "Acrylic",
-    "dimensions": null,
-    "year": "2023",
-    "category": "painting",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/la-vie-en-rose.jpg"
-  },
-  {
-    "id": "inspiration",
-    "title": "Inspiration",
-    "medium": "Acrylic on canvas",
-    "dimensions": "30 x 40 in",
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "available",
-    "image": "artwork/inspiration.jpg"
-  },
-  {
-    "id": "grand-papa",
-    "title": "Grand-papa",
-    "medium": "Acrylic on canvas",
-    "dimensions": null,
-    "year": null,
-    "category": "painting",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/grand-papa.jpg"
-  },
-  {
-    "id": "chien-etude",
-    "title": "Untitled (Dog Study)",
-    "medium": "Graphite",
-    "dimensions": null,
-    "year": null,
-    "category": "drawing",
-    "priceCAD": null,
-    "status": "sold",
-    "image": "artwork/chien-etude.jpg"
-  }
+ {
+  "id": "flux",
+  "title": "Flux",
+  "medium": "Acrylic on canvas",
+  "dimensions": "36 x 48 in",
+  "year": null,
+  "category": "painting",
+  "priceCAD": 1800,
+  "status": "available",
+  "image": "artwork/flux.jpg",
+  "shipTier": "large"
+ },
+ {
+  "id": "jecoute",
+  "title": "J'écoute",
+  "medium": "Acrylic on canvas",
+  "dimensions": "16 x 20 in",
+  "year": null,
+  "category": "painting",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/jecoute.jpg"
+ },
+ {
+  "id": "regard-brouille",
+  "title": "Regard brouillé",
+  "medium": "Graphite",
+  "dimensions": null,
+  "year": null,
+  "category": "drawing",
+  "priceCAD": 600,
+  "status": "available",
+  "image": "artwork/regard-brouille.jpg",
+  "shipTier": "small"
+ },
+ {
+  "id": "etreinte",
+  "title": "Étreinte",
+  "medium": "Acrylic on canvas",
+  "dimensions": "30 x 40 in",
+  "year": null,
+  "category": "painting",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/etreinte.jpg"
+ },
+ {
+  "id": "pigeon",
+  "title": "Pigeon",
+  "medium": "Graphite",
+  "dimensions": null,
+  "year": "2025",
+  "category": "drawing",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/pigeon.jpg"
+ },
+ {
+  "id": "still-life",
+  "title": "Still Life",
+  "medium": "Mixed media",
+  "dimensions": null,
+  "year": "2025",
+  "category": "mixed",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/still-life.jpg"
+ },
+ {
+  "id": "la-vie-en-rose",
+  "title": "La vie en rose",
+  "medium": "Acrylic",
+  "dimensions": null,
+  "year": "2023",
+  "category": "painting",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/la-vie-en-rose.jpg"
+ },
+ {
+  "id": "inspiration",
+  "title": "Inspiration",
+  "medium": "Acrylic on canvas",
+  "dimensions": "30 x 40 in",
+  "year": null,
+  "category": "painting",
+  "priceCAD": 1200,
+  "status": "available",
+  "image": "artwork/inspiration.jpg",
+  "shipTier": "medium"
+ },
+ {
+  "id": "grand-papa",
+  "title": "Grand-papa",
+  "medium": "Acrylic on canvas",
+  "dimensions": null,
+  "year": null,
+  "category": "painting",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/grand-papa.jpg"
+ },
+ {
+  "id": "chien-etude",
+  "title": "Untitled (Dog Study)",
+  "medium": "Graphite",
+  "dimensions": null,
+  "year": null,
+  "category": "drawing",
+  "priceCAD": null,
+  "status": "sold",
+  "image": "artwork/chien-etude.jpg"
+ }
 ]

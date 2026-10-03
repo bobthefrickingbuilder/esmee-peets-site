@@ -308,6 +308,12 @@ textarea.ep-input{resize:vertical;min-height:5.5rem}
 .ep-prose li{margin-top:.5rem}
 .ep-prose a{color:var(--ink);border-bottom:1px solid var(--gold)}
 .ep-draft{margin-top:var(--space-xl);padding:.9rem 1.1rem;border:1px dashed var(--gold);border-radius:var(--radius-sm);font-size:var(--fs-small);color:var(--ink-dim);line-height:1.5}
+.ep-table-wrap{margin-top:var(--space-lg);overflow-x:auto}
+.ep-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);min-width:420px}
+.ep-table th,.ep-table td{padding:.8rem .9rem;border-bottom:1px solid var(--line);text-align:right;font-weight:var(--fw-regular);color:var(--ink)}
+.ep-table th:first-child{text-align:left}
+.ep-table thead th{font-size:var(--fs-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--ink-faint)}
+.ep-table small{display:block;margin-top:.2rem;font-size:var(--fs-meta);color:var(--ink-faint)}
 .ep-foot-links{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 .ep-foot-links a{color:var(--ink-faint)}
 .ep-foot-links a:hover{color:var(--gold)}

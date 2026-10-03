@@ -84,7 +84,7 @@
       var titles = cart.map(function (w) { return w.title; }).join(', ');
       var body = 'Hello Esmée,\n\nI would like to purchase:\n' + cart.map(function (w) { return '- ' + w.title + ' (' + w.meta + '): ' + fmt(PRICES[w.id]); }).join('\n') + '\n\nName:\nShipping city / pickup:\n';
       setIf('cartbar', cart.length > 0);
-      vals.cartSummary = cart.length + ' ' + (cart.length === 1 ? 'work' : 'works') + ' selected' + (total ? ' · $' + total.toLocaleString('en-CA') + ' CAD' + (anyTbc ? ' + price on request' : '') : '');
+      vals.cartSummary = cart.length + ' ' + (cart.length === 1 ? 'work' : 'works') + ' in your cart' + (total ? ' · $' + total.toLocaleString('en-CA') + ' CAD' + (anyTbc ? ' + price on request' : '') : '');
       vals.cartTitles = titles;
       vals.cartMailto = 'mailto:esmeepeets@gmail.com?subject=' + encodeURIComponent('Purchase request: ' + titles) + '&body=' + encodeURIComponent(body);
     }
