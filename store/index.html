@@ -298,7 +298,7 @@
           </div>
           <div style="display:flex; align-items:center; gap:var(--space-sm)">
             <button data-action="clearCart" style="background:transparent; border:0; padding:0 0 3px; border-bottom:1px solid var(--line); font-size:var(--fs-meta); color:var(--ink-dim)">Clear</button>
-            <a class="scp1" data-bind-href="cartMailto" data-cursor="Send" style="display:inline-flex; gap:.6rem; padding:.9rem 1.4rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; white-space:nowrap">Request to buy →</a>
+            <a class="scp1" href="/cart/" data-go="cart" data-cursor="Cart" style="display:inline-flex; gap:.6rem; padding:.9rem 1.4rem; border-radius:var(--radius-pill); background:var(--ink); color:var(--bg); font-size:var(--fs-btn); letter-spacing:var(--tr-btn); text-transform:uppercase; white-space:nowrap">Review cart →</a>
           </div>
         </div></template>
     </main>
@@ -320,7 +320,7 @@
         </div>
       
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--space-md); font-size:var(--fs-footer); color:var(--ink-faint)">
-        <span>© 2026 Esmée Peets</span>
+        <span>© 2026 Esmée Peets</span><span class="ep-foot-links"><a href="/shipping-returns/" data-go="shipping">Shipping &amp; returns</a><a href="/privacy/" data-go="privacy">Privacy</a><a href="/terms/" data-go="terms">Terms</a></span>
         <a href="mailto:esmeepeets@gmail.com" style="color:var(--ink-dim)">esmeepeets@gmail.com</a>
       </div>
     </div>

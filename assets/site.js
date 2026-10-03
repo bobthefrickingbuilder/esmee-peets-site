@@ -8,7 +8,8 @@
   var DATA = JSON.parse(document.getElementById('ep-data').textContent);
   var WORKS = DATA.works, BY = {};
   WORKS.forEach(function (w) { BY[w.id] = w; });
-  var URLS = { home: '/', work: '/work/', store: '/store/', about: '/about/', contact: '/contact/' };
+  var URLS = { home: '/', work: '/work/', store: '/store/', about: '/about/', contact: '/contact/', cart: '/cart/', checkout: '/checkout/',
+    shipping: '/shipping-returns/', privacy: '/privacy/', terms: '/terms/' };
   var PRICES = DATA.prices, FOR_SALE = WORKS.filter(function (w) { return w.id in PRICES; });
 
   var state = { filter: 'all', storeFilter: 'all', storeView: 'forsale', cart: loadCart(), lb: null, sent: false, reason: 'Commission' };
@@ -50,6 +51,17 @@
     if (PAGE === 'store') return storeList();
     return PAGE === 'work' && state.filter !== 'all' ? WORKS.filter(function (w) { return w.cat === state.filter; }) : WORKS;
   }
+  // "Cart (n)" link in the header, shown on every page while the visitor has works selected.
+  function syncNavCart() {
+    var nav = $('header nav'); if (!nav) return;
+    var n = loadCart().length, a = $('a[data-ep-cart]', nav);
+    if (!n) { if (a) a.remove(); return; }
+    if (!a) {
+      a = document.createElement('a'); a.href = '/cart/'; a.setAttribute('data-go', 'cart'); a.setAttribute('data-ep-cart', '1');
+      a.style.cssText = 'color:var(--gold); padding-bottom:4px; border-bottom:1px solid ' + (PAGE === 'cart' ? 'var(--gold)' : 'transparent'); nav.appendChild(a);
+    }
+    a.textContent = 'Cart (' + n + ')';
+  }
   function fmt(n) { return n == null ? 'Price on request' : '$' + n.toLocaleString('en-CA') + ' CAD'; }
   function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -58,6 +70,7 @@
     var shown = {}; list().forEach(function (w) { shown[w.id] = 1; });
     if (PAGE === 'work') WORKS.forEach(function (w) { setIf('work:' + w.id, !!shown[w.id]); });
     setIf('notsent', !state.sent); setIf('sent', state.sent);
+    syncNavCart();
     DATA.reasons.forEach(function (r) { setIf('reason:' + r, state.reason === r); setIf('reason-off:' + r, state.reason !== r); });
     var vals = {};
     if (PAGE === 'store') {
@@ -73,7 +86,7 @@
       setIf('cartbar', cart.length > 0);
       vals.cartSummary = cart.length + ' ' + (cart.length === 1 ? 'work' : 'works') + ' selected' + (total ? ' · $' + total.toLocaleString('en-CA') + ' CAD' + (anyTbc ? ' + price on request' : '') : '');
       vals.cartTitles = titles;
-      vals.cartMailto = 'mailto:esmeepeets@gmail.com?subject=' + encodeURIComponent('Purchase request — ' + titles) + '&body=' + encodeURIComponent(body);
+      vals.cartMailto = 'mailto:esmeepeets@gmail.com?subject=' + encodeURIComponent('Purchase request: ' + titles) + '&body=' + encodeURIComponent(body);
     }
     setIf('lb', state.lb != null);
     if (state.lb != null) {
@@ -235,12 +248,13 @@
       if (act === 'lbPrev') step(-1);
       if (act === 'lbNext') step(1);
     });
-    // Contact form: no backend (matches Design's prototype) — shows the "sent" state only.
+    // Contact form: no backend (matches Design's prototype), shows the "sent" state only.
     document.addEventListener('submit', function (e) {
       if (!e.target.matches('[data-action="submit"]')) return;
       e.preventDefault(); setState({ sent: true });
     });
 
+    window.addEventListener('ep-cart-change', syncNavCart); window.addEventListener('storage', syncNavCart);
     playVideo(); setTimeout(setupReveal, 30);
   }
 
