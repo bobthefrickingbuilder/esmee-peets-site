@@ -471,7 +471,7 @@ const CREDS = ['Ottawa Art Gallery, Learning & Engagement','Concordia University
 // Store: works offered for sale. Set a number (CAD) to show a price; null shows "Price on request".
 const PRICES = { flux:null, jecoute:null, 'regard-brouille':null, etreinte:null, pigeon:null, resonance:null, 'still-life':null,
   'la-vie-en-rose':null, inspiration:null, 'portrait-decoupe':null, epanouissement:null, 'grand-papa':null, 'chien-etude':null };
-const REASONS = ['Commission','Drawing lessons','Workshops','Something else'];
+const REASONS = ['Commission','Drawing lessons','Purchase inquiry','Something else'];
 
 class Component extends DCLogic {
   state = { page: (() => { try { return localStorage.getItem('ep-page') || 'home'; } catch (e) { return 'home'; } })(),
