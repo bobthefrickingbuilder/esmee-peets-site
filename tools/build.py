@@ -297,7 +297,8 @@ PORTRAIT_RE = re.compile(
 PORTRAIT_IMG = (
     '<div data-reveal="1" style="position:relative; max-width:460px">'
     '<img src="/assets/img/esmee-portrait.jpg" alt="Portrait of Esmée Peets" '
-    'style="width:100%; height:auto; display:block; border-radius:6px"></div>'
+    'style="width:100%; height:auto; display:block; border-radius:6px">'
+    '<div style="margin-top:.5rem; font-size:9px; line-height:1.3; letter-spacing:.04em; color:var(--text-meta)">Photo by Vincent Kember</div></div>'
 )
 
 META = {
