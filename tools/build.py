@@ -300,6 +300,19 @@ DESC = ('Esmée Peets is a visual artist in Ottawa/Montréal working in painting
 SITE = 'https://esmeepeets.com'
 OG_IMAGE = SITE + '/assets/img/esmee-portrait.jpg'
 
+PERSON_JSONLD = json.dumps({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    'name': 'Esmée Peets',
+    'jobTitle': 'Visual Artist',
+    'nationality': 'Canadian',
+    'url': SITE + '/',
+    'image': OG_IMAGE,
+    'email': 'mailto:esmeepeets@gmail.com',
+    'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'Concordia University'},
+    'knowsAbout': ['Painting', 'Graphite Drawing', 'Multimedia Art'],
+}, ensure_ascii=False)
+
 def page_html(page):
     body = render(ROOT.kids, [context(page)]).strip()
     body = fix_grain(body)
@@ -314,6 +327,7 @@ def page_html(page):
         body, n = HOME_FOOTER_RE.subn(HOME_FOOTER_TEXT, body); assert n == 1
     title, path = META[page]
     url = SITE + '/' + path
+    person_jsonld = f'<script type="application/ld+json">{PERSON_JSONLD}</script>\n' if page == 'home' else ''
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -342,7 +356,7 @@ def page_html(page):
 <script>try{{if(sessionStorage.getItem('ep-curtain'))document.documentElement.classList.add('ep-arrive')}}catch(e){{}}</script>
 <script defer src="/assets/site.js" data-page="{page}"></script>
 <script defer src="/_vercel/insights/script.js"></script>
-</head>
+{person_jsonld}</head>
 <body>
 <div id="dc-root"><div class="sc-host">{body}</div></div>
 <script id="ep-data" type="application/json">{DATA}</script>
