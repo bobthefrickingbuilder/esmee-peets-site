@@ -38,7 +38,6 @@ for w in WORKS:
     w['yearLine'] = w.get('year') or ''
 BY = {w['id']: w for w in WORKS}
 CATS = js_lit('CATS')
-EXPERIENCE = js_lit('EXPERIENCE')
 CREDS = js_lit('CREDS')
 REASONS = js_lit('REASONS')
 # Store: prices + availability are edited in design-source/store-data.json (Design's handoff data file):
@@ -254,7 +253,6 @@ def context(page):
         'tiles': [{'label': l, 'count': pad(count(k)), 'src': BY[i]['src'], 'go': Nav('work', k)} for k, l, i in [('painting', 'Painting', 'etreinte'), ('drawing', 'Drawing', 'pigeon'), ('collab', 'Collaborations', 'smokin-cocotte')]],
         'cats': [{'label': l, 'count': count(k), 'active': Dyn('cat:' + k), 'inactive': Dyn('cat-off:' + k), 'select': Act('filter', k)} for k, l in CATS],
         'filtered': [dict(with_open(w), __if='work:' + w['id']) for w in WORKS],
-        'experience': EXPERIENCE,
         'storeCats': [{'label': l, 'count': store_count(k), 'active': Dyn('scat:' + k), 'inactive': Dyn('scat-off:' + k), 'select': Act('storeFilter', k)} for k, l in STORE_CATS],
         'storeViews': [{'label': l, 'count': len(lst), 'active': Dyn('sview:' + k), 'inactive': Dyn('sview-off:' + k), 'select': Act('storeView', k)} for k, l, lst in STORE_VIEWS],
         'storeViewForSale': Dyn('sview:forsale'), 'storeViewSold': Dyn('sview:sold'),
