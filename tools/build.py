@@ -347,8 +347,10 @@ def page_html(page):
         body, n = HOME_FOOTER_RE.subn(HOME_FOOTER_TEXT, body); assert n == 1
     body, n = re.subn(r'<span>© 2026 Esmée Peets</span>',
                       '<span>© 2026 Esmée Peets</span><span class="ep-foot-links"><a href="/shipping-returns/" data-go="shipping">Shipping &amp; returns</a>'
-                      '<a href="/privacy/" data-go="privacy">Privacy</a><a href="/terms/" data-go="terms">Terms</a>'
-                      '<a class="ep-foot-req" href="https://www.matthewmenardmusic.com/alterations" target="_blank" rel="noopener">Request a change</a></span>', body); assert n == 1
+                      '<a href="/privacy/" data-go="privacy">Privacy</a><a href="/terms/" data-go="terms">Terms</a></span>', body); assert n == 1
+    # Builder credit; doubles as the client's way to reach the change-request page.
+    body, n = re.subn(r'(esmeepeets@gmail\.com</a>\s*</div>)',
+                      r'\1\n      <p class="ep-credit"><a href="https://www.matthewmenardmusic.com/alterations" target="_blank" rel="noopener">Site by Matthew Menard</a></p>', body); assert n == 1
     title, path = META[page]
     url = SITE + '/' + path
     person_jsonld = f'<script type="application/ld+json">{PERSON_JSONLD}</script>\n' if page == 'home' else ''

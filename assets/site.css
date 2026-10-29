@@ -317,6 +317,9 @@ textarea.ep-input{resize:vertical;min-height:5.5rem}
 .ep-foot-links{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 .ep-foot-links a{color:var(--ink-faint)}
 .ep-foot-links a:hover{color:var(--gold)}
-.ep-foot-req{padding:.15rem 0;margin:-.15rem 0}
-.ep-foot-req:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ep-credit{margin:var(--space-md) 0 0;font-size:var(--fs-eyebrow);text-align:right}
+.ep-credit a{display:inline-block;padding:.3rem 0;color:var(--ink-faint);transition:color var(--dur-hover) var(--ease)}
+.ep-credit a:hover{color:var(--ink-dim)}
+.ep-credit a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:520px){.ep-credit{text-align:left}}
 
