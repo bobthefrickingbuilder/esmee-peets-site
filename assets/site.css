@@ -317,4 +317,6 @@ textarea.ep-input{resize:vertical;min-height:5.5rem}
 .ep-foot-links{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 .ep-foot-links a{color:var(--ink-faint)}
 .ep-foot-links a:hover{color:var(--gold)}
+.ep-foot-req{padding:.15rem 0;margin:-.15rem 0}
+.ep-foot-req:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
